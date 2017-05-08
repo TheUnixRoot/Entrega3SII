@@ -42,16 +42,33 @@ public class Crud_anunciosBean {
         }
     }
     
+    /**
+     * Obtiene la url destino tras comprobar los parametros del contexto
+     * Segun la id del anuncio.
+     * @return Devuelve una url de vista y escritura para el anuncio solicitado. 
+     */
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return "edit_anuncio.xhtml?id=" + params.get("id");
     }
     
+    /**
+     * Dado un anuncio correcto, se extrae su byte[] multimedia y 
+     * se genera la imagen para ser mostrada.
+     * @param adv Anuncio del que generar la imagen
+     * @return Imagen del anuncio 
+     */
     public StreamedContent generar(Anuncio adv) {
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
     
+    /**
+     * Publica en la web el anuncio proporcionado por el parametro de contexto
+     * id, si hubiera uno, lo pone offline y el clickeado en online
+     * @throws NumberFormatException si el id de los parametros no es un numero
+     * @return null, para permanecer en la pagina actual
+     */
     public String publicar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Anuncio anun = new Anuncio();
@@ -60,7 +77,7 @@ public class Crud_anunciosBean {
         int idx = lista.indexOf(anun);
         anun = lista.get(idx);
         System.out.println(anun.getId());
-        for(Anuncio a : lista) {
+        for (Anuncio a : lista) {
             if (a.getLugar().equals(anun.getLugar())) {
                 a.setOnline(false);
             }
