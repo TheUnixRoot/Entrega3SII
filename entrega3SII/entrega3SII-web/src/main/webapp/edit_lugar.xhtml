@@ -8,23 +8,23 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
-            Edición del anuncio
+            Edición del lugar
         </ui:define>
         <ui:define name="navBarName">
-            <ui:param name="nombrePagina" value="Edición del anuncio" />
+            <ui:param name="nombrePagina" value="Edición del lugar" />
         </ui:define>
         <ui:define name="cuerpo">
             <c:if test="#{controlAutorizacion.periodista}" >
-                    <section id="cuerpo">
+                <section id="cuerpo">
                     <article id="#{mod_LugarBean.adv.id}">
                         <p:layout fullPage="false">
                             <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
                                 <h:form>
                                     <p:panelGrid columns="1" layout="grid" >
+                                        
                                         <p:growl id="messages" showDetail="true" />
                                         <p:fileUpload value="null" mode="simple" skinSimple="true"/>
-                                        <p:commandButton value="Submit" ajax="false" 
-                                                         actionListener="null" disabled="true" />
+                                        <p:commandButton value="Submit" ajax="false" actionListener="null" disabled="true" />
                                         
                                     </p:panelGrid>
                                 </h:form>
@@ -35,10 +35,13 @@
                                         
                                         <p:outputLabel value="Nombre" style="font-size: large" />
                                         <p:inputText value="#{mod_LugarBean.adv.nombre}" style="font-size: large" />
+                                        
                                         <p:outputLabel value="Descripcion" style="font-size: large" />
                                         <p:inputText value="#{mod_LugarBean.adv.descripcion}" style="font-size: large" />
+                                        
                                         <p:outputLabel value="Direccion:" style="font-size: large" />
                                         <p:inputText value="#{mod_LugarBean.adv.geolocalizacion.direccion}" style="font-size: large" />
+                                        
                                         <p:outputLabel value="Ciudad:" style="font-size: large" />
                                         <p:inputText value="#{mod_LugarBean.adv.geolocalizacion.ciudad}" style="font-size: large" />
                                          

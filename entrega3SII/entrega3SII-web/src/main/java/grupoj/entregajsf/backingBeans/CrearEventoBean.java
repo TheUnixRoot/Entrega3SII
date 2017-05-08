@@ -55,61 +55,14 @@ public class CrearEventoBean {
     private UIComponent enviar;
     UploadedFile file;
     
+    //inicializa la lista de lugares y de eventos
     @PostConstruct
     public void init() {
         
         lugares = persistencia.getListaLugares();
         eventos = persistencia.getListaEventos();
-        
-       
     }
     
-    public String insertarEvento() throws InterruptedException{
-      if(existeEvento(nombre)){
-          
-      
-      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Evento ya existente en la base de datos","Lugar ya existente en la base de datos");
-      FacesContext.getCurrentInstance().addMessage("mensaje", fm);
-      
-      return null;
-      }
-      else{
-      
-      Evento e=new Evento();
-      fecha_inicio.setHours(hora.getHours());
-      fecha_inicio.setMinutes(hora.getMinutes());
-      e.setNombre(nombre);
-      e.setPrecio(precio);
-      e.setDonde_comprar(donde_comprar);
-      e.setFecha_inicio(fecha_inicio);
-      e.setFecha_fin(fecha_fin);
-      e.setDescripcion(descripcion);
-      e.setOcurre_in(buscarLugar(ocurre_in));
-      e.setBorrado(false);
-      
-      if(file == null){
-      e.setMultimedia(new byte[1]);
-      }else{
-      e.setMultimedia(file.getContents());
-      }
-      
-      if(cr.isAdministrador() || cr.isPeriodista()){
-      e.setValidado(true);
-      }
-      else{
-      e.setValidado(false);
-      }
-      e.setSubido_by(cr.getUsuario());
-     
-      
-      eventos.add(e);
-      
-      persistencia.setListaEventos(eventos);
-      return "index.xhtml";
-      }
-     
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -208,10 +161,6 @@ public class CrearEventoBean {
         this.file = file;
     }
 
-    
-
-
-
     public Date getHora() {
         return hora;
     }
@@ -252,9 +201,56 @@ public class CrearEventoBean {
         this.borrad = borrad;
     }
 
+    // inserta un nuevo evento.
     
+    public String insertarEvento() throws InterruptedException{
+        
+      if(existeEvento(nombre)){
+          
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Evento ya existente en la base de datos","Lugar ya existente en la base de datos");
+        FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+        
+        return null;
+      }
+      else{
+      
+        Evento e=new Evento();
+        fecha_inicio.setHours(hora.getHours());
+        fecha_inicio.setMinutes(hora.getMinutes());
+        e.setNombre(nombre);
+        e.setPrecio(precio);
+        e.setDonde_comprar(donde_comprar);
+        e.setFecha_inicio(fecha_inicio);
+        e.setFecha_fin(fecha_fin);
+        e.setDescripcion(descripcion);
+        e.setOcurre_in(buscarLugar(ocurre_in));
+        e.setBorrado(false);
+      
+        if(file == null){
+            e.setMultimedia(new byte[1]);
+        }
+        else{
+            e.setMultimedia(file.getContents());
+        }
+      
+        if(cr.isAdministrador() || cr.isPeriodista()){
+            e.setValidado(true);
+        }
+        else{
+            e.setValidado(false);
+        }
+        
+        e.setSubido_by(cr.getUsuario());
+        eventos.add(e);
+        persistencia.setListaEventos(eventos);
+        
+        return "index.xhtml";
+      }
+     
+    }
     
-
+    //comprueba que existe un evento
+    
     private boolean existeEvento(String nombre){
     
     boolean b=false;
@@ -266,6 +262,7 @@ public class CrearEventoBean {
     return b;
     }
     
+    //busca y devuelve un lugar 
     private Lugar buscarLugar(String o){
     
     Lugar lg = new Lugar();

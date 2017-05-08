@@ -8,12 +8,8 @@ package grupoj.entregajsf.backingBeans;
 
 
 import grupoj.prentrega1.Lugar;
-import grupoj.prentrega1.Usuario;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -35,6 +31,7 @@ public class verLugarBean {
     
     private List<Lugar> listaLugares;
     
+    //inicializamos la lista de lugares
     @PostConstruct
     public void init() {
         listaLugares = persistencia.getListaLugares();
@@ -45,24 +42,25 @@ public class verLugarBean {
     }
 
     public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException{
-        //this.listaLugares = listaLugares;
+        
         persistencia.setListaLugares(listaLugares);
     }
     
-    
+    // navegamos a la pagina edit_lugar con el parametro "id" que vamos a utilizar
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return "edit_lugar.xhtml?id=" + params.get("id");
     }
     
-    
+    // navegamos a la pagina verLugar con el parametro "id" que vamos a utilizar
     public String viajarv() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return "verLugar.xhtml?id=" + params.get("id");
     }
     
+    // navegamos a la pagina eliminarLugar con el parametro "id" que vamos a utilizar
     public String viajarE() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         

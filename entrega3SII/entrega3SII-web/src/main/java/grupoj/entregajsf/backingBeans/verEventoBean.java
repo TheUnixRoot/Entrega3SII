@@ -31,6 +31,7 @@ public class verEventoBean {
     
     private List<Evento> listaEventos;
     
+    // inicalizamos la lista de eventos
     @PostConstruct
     public void init() {
         listaEventos = persistencia.getListaEventos();
@@ -46,20 +47,21 @@ public class verEventoBean {
         
     }
     
-    
+    // navegamos a la pagina edit_evento con el parametro "id" que vamos a utilizar
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return "edit_evento.xhtml?id=" + params.get("id");
     }
     
-    
+    // navegamos a la pagina ver_evento con el parametro "id" que vamos a utilizar
     public String viajarv() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return "ver_Evento.xhtml?id=" + params.get("id");
     }
     
+    // navegamos a la pagina eliminarEvento con el parametro "id" que vamos a utilizar
     public String viajarE() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         

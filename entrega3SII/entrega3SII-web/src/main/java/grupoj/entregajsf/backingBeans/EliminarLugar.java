@@ -8,16 +8,10 @@ package grupoj.entregajsf.backingBeans;
 
 
 import grupoj.prentrega1.Lugar;
-import grupoj.prentrega1.Usuario;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 
@@ -47,7 +41,6 @@ public class EliminarLugar {
     }
 
     public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException{
-        //this.listaLugares = listaLugares;
         persistencia.setListaLugares(listaLugares);
     }
 
@@ -67,7 +60,7 @@ public class EliminarLugar {
         this.adv = adv;
     }
     
-    
+    // elimina un lugar (falta por hacer)
     public String eliminarLugar() throws InterruptedException{
     
      

@@ -8,7 +8,6 @@ package grupoj.entregajsf.backingBeans;
 
 
 import grupoj.prentrega1.Evento;
-import grupoj.prentrega1.Lugar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -21,6 +20,7 @@ import mockingBeans.PersistenceMock;
  *
  * @author migue
  */
+
 @Named(value = "eliminarEvento")
 @RequestScoped
 public class EliminarEvento {
@@ -42,7 +42,6 @@ public class EliminarEvento {
     }
 
     public void setListaLugares(List<Evento> listaEventos) throws InterruptedException{
-        //this.listaLugares = listaLugares;
         persistencia.setListaEventos(listaEventos);
     }
 
@@ -62,16 +61,16 @@ public class EliminarEvento {
         this.adv = adv;
     }
     
+    //elimina evento (falta por hacer)
     
     public String eliminarEvento() throws InterruptedException{
     
-     if(valor.equals("si")){
+        if(valor.equals("si")){
      
-     }else{
-     
-     }
-    return "gestionar_Evento.xhtml";
-    }
+        }else{
     
+        }
+        return "gestionar_Evento.xhtml";
+    }
     
 }

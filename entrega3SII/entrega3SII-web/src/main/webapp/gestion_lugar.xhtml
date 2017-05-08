@@ -9,7 +9,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
-            Gestion de Lugar
+            Gestion de Lugares
         </ui:define>
         <ui:define name="navBarName">
             <ui:param name="nombrePagina" value="Gestion de lugares" />
@@ -25,16 +25,19 @@
                     <h:form>
                         <p:dataGrid columns="1" layout="grid" value="#{verLugarBean.listaLugares}" var="lgr">
                             
-                            
                             <p:panelGrid columns="2" layout="grid">
+                                
                                 <p:outputLabel value="#{lgr.nombre}"/>
                                 <p:outputLabel value="#{lgr.fotos}"/>
+                                
                                 <p:commandLink value="Editar Lugar" style="color:red" action="#{verLugarBean.viajar()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
-                                 <p:commandLink value="Ver Lugar" style="color:red" action="#{verLugarBean.viajarv()}">
+                                
+                                <p:commandLink value="Ver Lugar" style="color:red" action="#{verLugarBean.viajarv()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
+                                
                                 <p:commandLink value="eliminar Lugar" style="color:red" action="#{verLugarBean.viajarE()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
@@ -42,7 +45,6 @@
                             </p:panelGrid>
                         </p:dataGrid>
                     </h:form>
-                    
                 </section>
             </c:if>
             <c:if test="${!controlAutorizacion.administrador}">

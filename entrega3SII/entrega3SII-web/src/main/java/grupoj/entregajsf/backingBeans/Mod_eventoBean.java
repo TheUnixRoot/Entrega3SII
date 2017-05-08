@@ -27,16 +27,8 @@ public class Mod_eventoBean {
     private Evento adv;
     private Long ids;
 
-    public Long getIds() {
-        return ids;
-    }
 
-    public void setIds(Long ids) {
-        this.ids = ids;
-    }
-    
-    
-    
+    //inicializa el objeto evento con el evento que tiene el id que le hemos pasado como parametro.
     @PostConstruct
     public void init() {
         Evento add = new Evento();
@@ -54,7 +46,6 @@ public class Mod_eventoBean {
                 );
         
     }
-    
 
     public PersistenceMock getPersistencia() {
         return persistencia;
@@ -72,11 +63,17 @@ public class Mod_eventoBean {
         this.adv = adv;
     }
     
+    public Long getIds() {
+        return ids;
+    }
+
+    public void setIds(Long ids) {
+        this.ids = ids;
+    }
     
+     //modifica un evento de la lista (Falta por hacer)
     public String modificarEvento(){
-        
-       
-        
+           
         return "gestion_evento.xhtml";
     
     }

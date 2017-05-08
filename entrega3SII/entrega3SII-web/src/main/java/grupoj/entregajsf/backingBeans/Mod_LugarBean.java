@@ -28,16 +28,7 @@ public class Mod_LugarBean {
     private Lugar adv;
     private Long ids;
 
-    public Long getIds() {
-        return ids;
-    }
-
-    public void setIds(Long ids) {
-        this.ids = ids;
-    }
-    
-    
-    
+    //inicializa el objeto lugar con el lugar que tiene el id que le hemos pasado como parametro.
     @PostConstruct
     public void init() {
         Lugar add = new Lugar();
@@ -72,7 +63,15 @@ public class Mod_LugarBean {
         this.adv = adv;
     }
     
+    public Long getIds() {
+        return ids;
+    }
+
+    public void setIds(Long ids) {
+        this.ids = ids;
+    }
     
+    //modifica un evento de la lista (Falta por hacer)
     public String modificarEvento(){
 
         return "gestion_lugar.xhtml";
