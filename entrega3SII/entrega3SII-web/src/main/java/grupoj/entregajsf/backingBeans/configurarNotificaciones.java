@@ -18,14 +18,13 @@ import mockingBeans.PersistenceMock;
 
 /**
  *
- * @author David
- * Ahora mismo falta de todo.... 
- * Mirar la configuración que tiene el usuario, cargarla y despues
- * enviar en el caso de que haya cambios
+ * @author David Ahora mismo falta de todo.... Mirar la configuración que tiene
+ * el usuario, cargarla y despues enviar en el caso de que haya cambios
  */
 @Named(value = "configurarNotificaciones")
 @Dependent
 public class configurarNotificaciones {
+
     @Inject
     private PersistenceMock persistencia;
     @Inject
@@ -43,14 +42,14 @@ public class configurarNotificaciones {
     public void setNotificacion(String notificacion) {
         this.notificacion = notificacion;
     }
-    
+
     public String getNotificacionesActivas() {
         return notificacionesActivas;
     }
 
     public void setNotificacionesActivas(String notificacionesActivas) {
         this.notificacionesActivas = notificacionesActivas;
-        System.out.println("Ha cambiado: "+this.notificacionesActivas);
+        System.out.println("Ha cambiado: " + this.notificacionesActivas);
     }
 
     public Usuario getUsuLogueado() {
@@ -76,56 +75,67 @@ public class configurarNotificaciones {
     public void setListaNotif(List<String> listaNotif) {
         this.listaNotif = listaNotif;
     }
-    
+
     @PostConstruct
     public void init() {
         usuLogueado = ctrAut.getUsuario(); // Usuario que se ha logueado, ahora esta el de persistencia.
         tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
-        
+
         listaNotif = new ArrayList<>();
         rellenaLista();
     }
 
     private void insertaLista(TipoNotificacion n) {
-        switch(n) {
-            case Email: 
+        switch (n) {
+            case Email:
                 listaNotif.add("Email");
                 break;
-                
-            case Cuenta: 
+
+            case Cuenta:
                 listaNotif.add("Cuenta");
-                break; 
-                
-            case Ambos: 
+                break;
+
+            case Ambos:
                 listaNotif.add("Ambos");
-                break;  
-              
+                break;
+
         }
     }
-    
-    private void rellenaLista () {
-        
+
+    /**
+     * Rellena la lista de notificaciones a mostrar siendo la primera opción la
+     * que tinene configurada el usuario.
+     */
+    private void rellenaLista() {
+
         if (tipoNotUsuario == TipoNotificacion.Desactivado) {
             notificacionesActivas = "1";
         } else {
             notificacionesActivas = "0";
         }
-        
+
         insertaLista(tipoNotUsuario);
         if (tipoNotUsuario != TipoNotificacion.Email) {
             insertaLista(TipoNotificacion.Email);
         }
-        
+
         if (tipoNotUsuario != TipoNotificacion.Cuenta) {
             insertaLista(TipoNotificacion.Cuenta);
         }
-        
+
         if (tipoNotUsuario != TipoNotificacion.Ambos) {
             insertaLista(TipoNotificacion.Ambos);
         }
-        
+
     }
-    
+
+    /**
+     * Recoge los datos de la configuración de las notificaciones del usuario y
+     * modifica las opciones de configuración de él.
+     *
+     * @return null, recarga la página actualizando la información.
+     * @throws InterruptedException
+     */
     public String tratarInformacion() throws InterruptedException {
         if (notificacion == null) {
             notificacion = "Desactivado";
@@ -140,15 +150,14 @@ public class configurarNotificaciones {
             case "Ambos":
                 tipoNotUsuario = TipoNotificacion.Ambos;
                 break;
-            default: 
+            default:
                 break;
         }
 
-        System.out.println("Esta activa: "+notificacionesActivas);
         if (notificacionesActivas.equals("1")) {
             this.tipoNotUsuario = TipoNotificacion.Desactivado;
-        } 
-        
+        }
+
         if (this.tipoNotUsuario != usuLogueado.getTipoNotificacionesRecibir()) {
             Usuario usuPrima = usuLogueado;
             usuPrima.setTipoNotificacionesRecibir(tipoNotUsuario);
@@ -158,8 +167,8 @@ public class configurarNotificaciones {
             this.persistencia.setListaUsuarios(listaUsu);
             ctrAut.setUsuario(usuPrima);
         }
-        
+
         return null;
     }
-    
+
 }
