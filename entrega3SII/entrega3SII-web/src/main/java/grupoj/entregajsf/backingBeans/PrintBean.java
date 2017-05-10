@@ -19,7 +19,7 @@ import org.primefaces.model.StreamedContent;
 import java.util.Map;
 
 /**
- *
+ * @deprecated 
  * @author juanp
  */
 @Named(value = "printBean")
@@ -55,6 +55,11 @@ public class PrintBean implements Serializable {
         this.pdf = pdf;
     }
     
+    /**
+     * Dado el evento pasado como parametro de la web, se obtiene un pdf
+     * con los datos relevantes del mismo
+     * @return Archivo pdf generado
+     */
     public StreamedContent getFile() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Evento evprima = new Evento();

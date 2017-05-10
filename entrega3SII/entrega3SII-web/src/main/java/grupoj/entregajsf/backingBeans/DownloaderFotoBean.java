@@ -5,8 +5,6 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import grupoj.entregajsf.dropbox.DropboxController;
-import grupoj.entregajsf.dropbox.DropboxControllerException;
 import grupoj.prentrega1.Usuario;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -14,7 +12,6 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
@@ -22,7 +19,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 /**
- *
+ * @deprecated No se utiliza en el proyecto
  * @author juanp
  */
 @Named(value = "downloaderFotoBean")
@@ -36,6 +33,13 @@ public class DownloaderFotoBean implements Serializable{
     public DownloaderFotoBean()  {
     }
     
+    /**
+     * Itera por la lista de usuarios obtenidas desde la persistencia
+     * para generar las diversas imagenes, el iterador es propio del
+     * bean, por lo que debe ser llamada siempre la misma instancia 
+     * del mismo para avanzar
+     * @return Imagen de un usuario o null si no hubiera
+     */
     public StreamedContent generar() {
         StreamedContent con = null;
         try {

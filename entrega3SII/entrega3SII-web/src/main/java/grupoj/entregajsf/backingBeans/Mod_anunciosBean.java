@@ -15,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
@@ -39,11 +38,8 @@ public class Mod_anunciosBean implements Serializable{
     StreamedContent mul;
     
     /**
-     * Creates a new instance of New_anuncioBean
+     * Crea un bean que contiene un anuncio valido, pasado como parametro 
      */
-    
-    public Mod_anunciosBean () {
-    }
     
     @PostConstruct
     public void init() {
@@ -116,20 +112,37 @@ public class Mod_anunciosBean implements Serializable{
         this.adv.setLugar(res);
     }
     
+    /**
+     * Getter por el cual se obtiene la imagen del anuncio para ser mostrada
+     * @return Imagen del anuncio
+     */
     public StreamedContent getMultimedia() {
         adv = lista.get(
                 lista.indexOf(adv));
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
-    
+
+    /**
+     * Metodo necesario pero no utilizar, es inefectivo
+     * @param multimedia No se utilizara
+     */
     public void setMultimedia(StreamedContent multimedia) {
         multimedia = null;
     }
     
+    /**
+     * Metodo necesario pero no utilizar, es inefectivo
+     * @return 
+     */
     public UploadedFile getMultimedia2() {
         return file;
     }
     
+    /**
+     * Setter que encapsula el guardado de una nueva imagen en el anuncio del
+     * bean
+     * @param multimedia Imagen que reemplazara la que ya tiene el anuncio
+     */
     public void setMultimedia2(UploadedFile multimedia) {
         adv = lista.get(
                 lista.indexOf(adv));
@@ -149,6 +162,13 @@ public class Mod_anunciosBean implements Serializable{
         this.adv.setOnline(online);
     }
     
+    /**
+     * Almacena el anuncio tratado y actualiza el estado de la aplicación,
+     * poniendo en linea el anuncio si así se indicase en la vista y 
+     * sacando de linea el que hubiera en su posicion.
+     * No permite sacar de linea a un anuncio, solo si este se reemplaza.
+     * @return Vuelve siempre a la pagina gestion_anuncios.xhtml
+     */
     public String grabar() {
         
         if(adv.isOnline()) {

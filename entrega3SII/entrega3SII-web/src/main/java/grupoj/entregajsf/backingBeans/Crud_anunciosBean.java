@@ -43,8 +43,8 @@ public class Crud_anunciosBean {
     }
     
     /**
-     * Obtiene la url destino tras comprobar los parametros del contexto
-     * Segun la id del anuncio.
+     * Obtiene la url destino tras comprobar los parametros del contexto,
+     * segun la id del anuncio.
      * @return Devuelve una url de vista y escritura para el anuncio solicitado. 
      */
     public String viajar() {
