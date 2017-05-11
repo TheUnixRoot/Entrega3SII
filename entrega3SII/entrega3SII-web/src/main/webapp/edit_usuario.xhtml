@@ -17,12 +17,13 @@
             <c:if test="#{controlAutorizacion.administrador}" >
                 <section id="cuerpo">
                     <p:layout fullPage="false">
-                        <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
+                        <p:layoutUnit style="top: 0; bottom: 0; overflow-x: auto; overflow-y: auto" position="center" closable="false" collapsible="false" resizable="false" >
                             <h:form>
                                 <p:panelGrid columns="1">
                                     <p:graphicImage width="150" value="#{mod_usuariosBean.generar()}">
                                         <f:param name="id" value="#{mod_usuariosBean.usr.id}"/>
                                     </p:graphicImage>
+                                    <p:outputLabel value="Advertencia, los cambios se aplican de forma inmediata" style="color: red; font-size: x-large"/>
                                     <p:outputLabel value="Nombre" style="font-size: large" />
                                     <p:inputText value="#{mod_usuariosBean.usr.nombre}" style="font-size: large" />
                                     <p:outputLabel value="Apellidos" style="font-size: large" />
@@ -32,7 +33,7 @@
                                     <p:outputLabel value="Teléfono" style="font-size: large" />
                                     <p:inputText value="#{mod_usuariosBean.usr.telefono}" style="font-size: large" />
                                     <p:selectBooleanButton  onLabel="Borrado" offLabel="Activado" value="#{mod_usuariosBean.usr.borrado}" />
-                                    <p:commandButton value="Aplicar cambios" action="#{mod_usuariosBean.change()}" >
+                                    <p:commandButton value="Volver" action="#{navigationBean.goTo('gestion_usuarios.xhtml')}">
                                         <f:param name="id" value="#{mod_usuariosBean.usr.id}"/>
                                     </p:commandButton>
                                 </p:panelGrid>

@@ -44,17 +44,48 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="#{nombrePagina}" expanded="true">
-                                <p:menuitem value="Gestion de usuarios" action="gestion_usuarios.xhtml" rendered="${controlAutorizacion.administrador}"/>
-                                <p:menuitem value="Gestion de anuncios" action="gestion_anuncios.xhtml" rendered="${controlAutorizacion.administrador}"/>
-                                <p:menuitem value="Busqueda" action="buscarEvento.xhtml"/>
-                                <p:menuitem value="Contactar con administrador" action="contactoAdmin.xhtml"/>
-                                <p:menuitem value="Enviar notificaciones" action="enviarNotificaciones.xhtml" rendered="${controlAutorizacion.periodista}"/>
-                                <p:menuitem value="Gestion de lugares" action="gestion_lugar.xhtml" rendered="${controlAutorizacion.periodista}"/>
-                                <p:menuitem value="Gestion de eventos" action="gestion_evento.xhtml" rendered="${controlAutorizacion.periodista}"/>
-                                <p:menuitem value="Nuevo evento" action="crearEvento.xhtml" rendered="${controlAutorizacion.usuario != null}"/>
-                                <p:menuitem value="Configuración de perfil" action="configurarPerfil.xhtml" rendered="${controlAutorizacion.usuario != null}"/>
-                                <p:menuitem value="Configuración de notificaciones" action="configurarNotificaciones.xhtml" rendered="${controlAutorizacion.usuario != null}"/>
-                                <p:menuitem value="Ver notificaciones" action="ver_noti.xhtml" rendered="#{controlAutorizacion.usuario != null}" />                               
+                                
+                                <p:menuitem value="Gestion de usuarios" 
+                                action="#{navigationBean.goTo('gestion_usuarios.xhtml')}" 
+                                rendered="${controlAutorizacion.administrador}"/>
+                                
+                                <p:menuitem value="Gestion de anuncios" 
+                                action="#{navigationBean.goTo('gestion_anuncios.xhtml')}" 
+                                rendered="${controlAutorizacion.administrador}"/>
+                                
+                                <p:menuitem value="Busqueda" 
+                                action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
+                                
+                                <p:menuitem value="Contactar con administrador" 
+                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"/>
+                                
+                                <p:menuitem value="Enviar notificaciones" 
+                                action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 
+                                rendered="${controlAutorizacion.periodista}"/>
+                                
+                                <p:menuitem value="Gestion de lugares" 
+                                action="#{navigationBean.goTo('gestion_lugar.xhtml')}" 
+                                rendered="${controlAutorizacion.periodista}"/>
+                                
+                                <p:menuitem value="Gestion de eventos" 
+                                action="#{navigationBean.goTo('gestion_evento.xhtml')}" 
+                                rendered="${controlAutorizacion.periodista}"/>
+                                
+                                <p:menuitem value="Nuevo evento" 
+                                action="#{navigationBean.goTo('crearEvento.xhtml')}" 
+                                rendered="${controlAutorizacion.usuario != null}"/>
+                                
+                                <p:menuitem value="Configuración de perfil" 
+                                action="#{navigationBean.goTo('configurarPerfil.xhtml')}" 
+                                rendered="${controlAutorizacion.usuario != null}"/>
+                                
+                                <p:menuitem value="Configuración de notificaciones" 
+                                action="#{navigationBean.goTo('configurarNotificaciones.xhtml')}" 
+                                rendered="${controlAutorizacion.usuario != null}"/>
+                                
+                                <p:menuitem value="Ver notificaciones" 
+                                action="#{navigationBean.goTo('ver_noti.xhtml')}" 
+                                rendered="#{controlAutorizacion.usuario != null}" />                               
                             </p:submenu>
                         </p:menu>
                     </h:form>

@@ -17,7 +17,7 @@
             <c:if test="#{controlAutorizacion.administrador}" >
                 <section id="cuerpo">
                     <p:layout fullPage="false">
-                        <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
+                        <p:layoutUnit style="top: 0; bottom: 0; overflow-x: auto; overflow-y: auto" position="center" closable="false" collapsible="false" resizable="false">
                             <p:panelGrid columns="1">
                                 <p:graphicImage width="150" value="#{mod_usuariosBean.generar()}">
                                     <f:param name="id" value="#{mod_usuariosBean.usr.id}"/>
@@ -33,6 +33,9 @@
                                 <p:outputLabel value="Borrado" style="font-size: large" />
                                 <p:outputLabel value="Usuario borrado" style="font-size: large" rendered="#{mod_usuariosBean.usr.borrado}" />
                                 <p:outputLabel value="Usuario activo" style="font-size: large" rendered="#{!mod_usuariosBean.usr.borrado}" />
+                                <p:commandButton value="Volver" action="#{mod_usuariosBean.change()}" >
+                                    <f:param name="id" value="#{mod_usuariosBean.usr.id}"/>
+                                </p:commandButton>
                             </p:panelGrid>
                         </p:layoutUnit>
                     </p:layout>

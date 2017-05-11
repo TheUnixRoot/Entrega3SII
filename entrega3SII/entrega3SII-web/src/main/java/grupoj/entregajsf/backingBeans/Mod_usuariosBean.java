@@ -49,9 +49,10 @@ public class Mod_usuariosBean implements Serializable {
         //System.out.println(id);
         if ( this.persistencia.getListaUsuarios().contains(uuu) ) 
             this.usr = this.persistencia.getListaUsuarios()
-                    .get(
-                            this.persistencia.getListaUsuarios().indexOf(uuu)
-                    );
+                            .get(
+                                this.persistencia.getListaUsuarios().indexOf(uuu)
+                            );
+            
         else
             this.usr = null;
         uuu = null;
@@ -120,9 +121,10 @@ public class Mod_usuariosBean implements Serializable {
     /**
      * Método que modifica al usuario de persistencia contenido en el bean
      * por los atributos nuevos.
+     * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String change() {
-        System.out.println("Changeeeeeeeee");
+        //System.out.println("Changeeeeeeeee");
         this.usr.getId();
         Iterator<Usuario> it = persistencia.getListaUsuarios().iterator();
         boolean find = false;
@@ -141,6 +143,6 @@ public class Mod_usuariosBean implements Serializable {
                 find = true;
             }
         }
-        return null;
+        return "gestion_usuarios.xhtml";
     }
 }
