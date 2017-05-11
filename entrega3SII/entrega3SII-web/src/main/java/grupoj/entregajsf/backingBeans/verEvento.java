@@ -11,15 +11,16 @@ import grupoj.entregajsf.toPDF.PdfCreator;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Usuario;
 import java.io.ByteArrayInputStream;
+import java.io.Serializable;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -28,8 +29,8 @@ import org.primefaces.model.StreamedContent;
  * @author anaes
  */
 @Named(value = "verEvento")
-@Dependent
-public class verEvento {
+@ViewScoped
+public class verEvento implements Serializable {
 
     
     @Inject

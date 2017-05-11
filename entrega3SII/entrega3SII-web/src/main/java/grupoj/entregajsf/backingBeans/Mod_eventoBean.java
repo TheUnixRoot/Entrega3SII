@@ -6,12 +6,17 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.prentrega1.Evento;
+import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
+import org.omnifaces.cdi.ViewScoped;
 
 
 /**
@@ -19,8 +24,8 @@ import mockingBeans.PersistenceMock;
  * @author migue
  */
 @Named(value = "mod_eventoBean")
-@RequestScoped
-public class Mod_eventoBean {
+@ViewScoped
+public class Mod_eventoBean implements Serializable {
 
     @Inject
     PersistenceMock persistencia;
@@ -75,7 +80,15 @@ public class Mod_eventoBean {
     
     public String modificarEvento(){
         
-       
+       List<Evento> lista = persistencia.getListaEventos();
+       lista.set(
+               persistencia.getListaEventos().indexOf(adv),
+               adv);
+        try {
+            persistencia.setListaEventos(lista);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         return "gestion_evento.xhtml";
     
