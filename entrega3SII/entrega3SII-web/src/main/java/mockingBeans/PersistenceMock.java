@@ -27,25 +27,8 @@ import javax.enterprise.context.ApplicationScoped;
 public class PersistenceMock implements Serializable {
     
     private List<Usuario> listaUsuarios;
-
-
     private Formulario formulario;
-    
-
-
     private List<Mensaje> listaMensajes;
-    
-    /*public List<Mensaje> getListaMensajes() {
-        return listaMensajes;
-    }
-
-    public void setListaMensajes(List<Mensaje> listaMensajes) {
-        this.listaMensajes = listaMensajes;
-    }
-    public void addMessage(Mensaje msg){
-        listaMensajes.add(msg);
-    }*/
-
     private List<Evento> listaEventos;
     private List<Lugar> listaLugares;
     private List<Tag> listaTags;
@@ -88,18 +71,18 @@ public class PersistenceMock implements Serializable {
         listaTags.add(tag3);
         
         Tag tag4 = new Tag();
-        tag3.setId(4L);
-        tag3.setTexto("Ópera");
+        tag4.setId(4L);
+        tag4.setTexto("Ópera");
         listaTags.add(tag4);
         
         Tag tag5 = new Tag();
-        tag3.setId(5L);
-        tag3.setTexto("Cine");
+        tag5.setId(5L);
+        tag5.setTexto("Cine");
         listaTags.add(tag5);
         
         Tag tag6 = new Tag();
-        tag3.setId(6L);
-        tag3.setTexto("Deportes");
+        tag6.setId(6L);
+        tag6.setTexto("Deportes");
         listaTags.add(tag6);
        
         
@@ -111,7 +94,9 @@ public class PersistenceMock implements Serializable {
         
         formulario = new Formulario();
         formulario.setForm_tags(listaTags);
-
+        formulario.setId(System.currentTimeMillis());
+        formulario.setHistorialEventos(new ArrayList<Evento>());
+        
         Usuario usr = new Usuario();
         usr.setId(1L);
         usr.setEmail("usuario@normal.com");
@@ -126,7 +111,7 @@ public class PersistenceMock implements Serializable {
             System.err.println("Error al acceder al recurso en linea " + ex.getMessage());
         }
         usr.setForm(formulario);
-
+        formulario.setUsuario(usr);
         //usr.setForm(this.formulario);
         usr.setMsg_send(listaMensajes);
 
@@ -167,23 +152,27 @@ public class PersistenceMock implements Serializable {
         }
         listaUsuarios.add(adm);
         
-        Geolocalizacion geo = new Geolocalizacion();
-        Lugar lug = new Lugar();
-        
-        geo.setDireccion("NombreCalle");
-        lug.setNombre("Recinto ferial");
-        lug.setBorrado(false);
-        geo.setLugar(lug);
-        lug.setGeolocalizacion(geo);
-        
-        Lugar lug2 = new Lugar();
+        Lugar lugar1 = new Lugar();
+        lugar1.setId(1L);
+        lugar1.setNombre("plazuela");
+        lugar1.setDescripcion("Un sitio muy chu-chuli");
+        listaLugares.add(lugar1);
         Geolocalizacion geo2 = new Geolocalizacion();
-        geo2.setDireccion("Nombre de la calle");
-        lug2.setNombre("Recinto ferial");
-        lug2.setBorrado(false);
-        geo2.setLugar(lug2);
-        lug.setGeolocalizacion(geo2);
+        geo2.setCiudad("Malaga");
+        geo2.setDireccion("Plaza de Mitjanas");
+        geo2.setLugar(lugar1);
+        lugar1.setGeolocalizacion(geo2);
         
+        Lugar lugar2 = new Lugar();
+        lugar2.setId(2L);
+        lugar2.setNombre("campo futbol");
+        lugar2.setDescripcion("estadio grande");
+        listaLugares.add(lugar2);
+        Geolocalizacion geo1 = new Geolocalizacion();
+        geo1.setCiudad("Malaga");
+        geo1.setDireccion("Bulevar Luis Pasteur, 35, campus de Teatinos, 29071, Malaga");
+        geo1.setLugar(lugar2);
+        lugar2.setGeolocalizacion(geo1);
         
         Evento e = new Evento();
         e.setNombre("Feria Málaga");
@@ -193,7 +182,7 @@ public class PersistenceMock implements Serializable {
         e.setPrecio(20);
         e.setDonde_comprar("www.malaga.com");
         e.setTagged_by(listaTags);
-        e.setOcurre_in(lug);
+        e.setOcurre_in(lugar1);
         e.setId(25L);
         e.setFecha_inicio(new Date());
 
@@ -209,7 +198,7 @@ public class PersistenceMock implements Serializable {
         e2.setPrecio(50);
         e2.setDonde_comprar("www.antequera.com");
         e2.setTagged_by(listaTags2);
-        e2.setOcurre_in(lug2);
+        e2.setOcurre_in(lugar2);
         e2.setId(25L);
         e2.setFecha_inicio(new Date());
 
@@ -225,15 +214,8 @@ public class PersistenceMock implements Serializable {
         adm.getNotificaciones().add(ne);
         
         
-       /* Geolocalizacion geo1 = new Geolocalizacion();
-        Lugar lug1 = new Lugar();
         
-        geo1.setDireccion("Bulevar Luis Pasteur, 35, campus de Teatinos, 29071, Malaga");
-        lug1.setBorrado(false);
-        lug1.setNombre("ETSI Informatica");
-        lug1.setGeolocalizacion(geo1);
-        geo1.setLugar(lug1);
-        
+        /**
         Evento ev = new Evento();
         ev.setId(1L);
         ev.setNombre("Evento 1");
@@ -289,7 +271,6 @@ public class PersistenceMock implements Serializable {
             adv3.setMultimedia(
                     DropboxController.downloadFile("/default.jpg"));
         } catch (DropboxControllerException ex) {
-            ex.printStackTrace();
             System.err.println("Error al acceder al recurso en linea " + ex.getMessage());
         }
         listaAnuncios.add(adv3);
@@ -310,18 +291,8 @@ public class PersistenceMock implements Serializable {
         }
         listaAnuncios.add(adv4);
 
-        Lugar lugar1 = new Lugar();
-        lugar1.setId(1L);
-        lugar1.setNombre("plazuela");
-        lugar1.setDescripcion("Un sitio muy chu-chuli");
-        listaLugares.add(lugar1);
         
-        Lugar lugar2 = new Lugar();
-        lugar2.setId(2L);
-        lugar2.setNombre("campo futbol");
-        lugar2.setDescripcion("estadio grande");
-        listaLugares.add(lugar2);
-
+        
         
         
         mutexUsuarios = new Semaphore(1);
@@ -351,6 +322,14 @@ public class PersistenceMock implements Serializable {
         mutexEventos.acquire();
         this.listaEventos = listaEventos;
         mutexEventos.release();
+    }
+
+    public List<Mensaje> getListaMensajes() {
+        return listaMensajes;
+    }
+
+    public void setListaMensajes(List<Mensaje> listaMensajes) {
+        this.listaMensajes = listaMensajes;
     }
 
     

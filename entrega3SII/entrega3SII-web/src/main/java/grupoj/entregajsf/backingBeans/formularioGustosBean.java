@@ -39,6 +39,8 @@ public class formularioGustosBean {
     
     @Inject
     private ControlAutorizacion control;
+    @Inject
+    private PersistenceMock persistencia;
     
     public formularioGustosBean() {
         
@@ -71,14 +73,11 @@ public class formularioGustosBean {
             this.selectedGustos[i] = g.getTexto();
             i++;
         }
-        
         gustos = new ArrayList<>();
-        gustos.add("Musica");
-        gustos.add("Teatro");
-        gustos.add("Opera");
-        gustos.add("Cine");
-        gustos.add("Arte");
-        gustos.add("Deportes");
+        List<Tag> lgustos = persistencia.getListaTags();
+        for(Tag g : lgustos) {
+            gustos.add(g.getTexto());
+        }
     }
 
     public String[] getSelectedGustos() {
