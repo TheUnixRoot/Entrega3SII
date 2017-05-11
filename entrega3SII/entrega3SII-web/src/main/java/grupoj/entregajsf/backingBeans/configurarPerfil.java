@@ -15,8 +15,12 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import java.io.ByteArrayInputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -30,23 +34,29 @@ public class configurarPerfil{
     
     @Inject
     private PersistenceMock persistencia;
+    /*
     private List<Usuario> listaUsuario;
     private byte[] foto;
+    */
     private Usuario usuario;
+    /*
     private String nombre;
     private String apellidos;
     private String email;
     private String contrasenia;
     private String telefono;
     private Date fechaNacimiento;
-    
+    */
     /**
      * Creates a new instance of configurarPerfil
      */
     @PostConstruct
     public void init() {
+        /*
         listaUsuario = persistencia.getListaUsuarios();
+        */
         usuario = control.getUsuario();
+        /*
         listaUsuario.remove(usuario);
         foto = usuario.getMultimedia();
         nombre = usuario.getNombre();
@@ -55,68 +65,53 @@ public class configurarPerfil{
         contrasenia = usuario.getPassword();
         telefono = usuario.getTelefono();
         fechaNacimiento = usuario.getFechaNacimiento();
-                
+          */      
     }
 
-    public byte[] getFoto() {
-        return foto;
+    public StreamedContent getFoto() {
+        return new DefaultStreamedContent(new ByteArrayInputStream(this.usuario.getMultimedia()));
     }
 
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
+    public void setFoto(StreamedContent foto) {
+        
+    }
+    public UploadedFile getFoto2() {
+        return null;
+    }
+
+    public void setFoto2(UploadedFile foto) {
+        System.out.println("jummm");
+        this.usuario.setMultimedia(foto.getContents());
+    }
+
+    public ControlAutorizacion getControl() {
+        return control;
+    }
+
+    public void setControl(ControlAutorizacion control) {
+        this.control = control;
+    }
+
+    public PersistenceMock getPersistencia() {
+        return persistencia;
+    }
+
+    public void setPersistencia(PersistenceMock persistencia) {
+        this.persistencia = persistencia;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
     
     
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
     
     public String configurar(){
-        
+        /*
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
         usuario.setEmail(email);
@@ -124,14 +119,17 @@ public class configurarPerfil{
         usuario.setTelefono(telefono);
         usuario.setFechaNacimiento(fechaNacimiento);
         usuario.setMultimedia(foto);
-        listaUsuario.add(usuario);
+        */
+        List<Usuario> listaUsuario = persistencia.getListaUsuarios();
+        listaUsuario.set(
+                listaUsuario.indexOf(usuario), usuario);
         try {
             persistencia.setListaUsuarios(listaUsuario);
         } catch (InterruptedException ex) {
             Logger.getLogger(configurarPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return "index.html";
+        return "index.xhtml";
 
     }
     
