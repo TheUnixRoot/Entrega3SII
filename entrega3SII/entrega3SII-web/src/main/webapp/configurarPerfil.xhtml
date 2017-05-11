@@ -52,13 +52,14 @@
                         <p:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:" />
                         <p:calendar id="fechaNacimiento" value="#{configurarPerfil.usuario.fechaNacimiento}" showOn="button" />    
 
-                        <p:link outcome="formularioGustos.xhtml" value="Rellena un formulario sobre tus gustos">
-                        <f:param name="productId" value="formularioGustos.xhtml" />
-                        </p:link>
-
-                        <p:commandButton value="Guardar" action="#{configurarPerfil.configurar()}" ajax="false"/>  
+                        <p:commandLink action="formularioGustos.xhtml" value="Rellena un formulario sobre tus gustos">
+                            <f:param name="productId" value="formularioGustos.xhtml" />
+                        </p:commandLink>
+                        <p:commandButton value="Volver" action="#{navigationBean.goTo('index.xhtml')}" ajax="false"/>  
 
                     </p:panelGrid>    
+                    <p:outputLabel value="Advertencia, los cambios se aplican de forma inmediata" style="color: red; font-size: x-large"/>
+                        
                 </h:form>  
             </section>
         </ui:define>
