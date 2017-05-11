@@ -6,7 +6,10 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Notificacion;
+import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
@@ -118,6 +121,8 @@ public class SignupBean {
         List<Usuario> list = persistencia.getListaUsuarios();
         usuario.setId(System.currentTimeMillis());
         usuario.setBorrado(false);
+        usuario.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
+        usuario.setNotificaciones(new ArrayList<Notificacion>());
         list.add(usuario);
         try {
             persistencia.setListaUsuarios(list);
