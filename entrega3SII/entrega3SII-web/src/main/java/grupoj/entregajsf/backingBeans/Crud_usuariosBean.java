@@ -57,21 +57,27 @@ public class Crud_usuariosBean implements Serializable{
     /**
      * Dado un usuario correcto, se extrae su byte[] multimedia y 
      * se genera la imagen para ser mostrada.
-     * @param usu Usuario al que generar la imagen
      * @return Imagen del usuario
      */
-    public StreamedContent generar(Usuario usu) {
+    public StreamedContent generar() {
         StreamedContent con = null;
-        byte[] mul = usu.getMultimedia();
-        if(mul == null) {
-            return null;
-        }
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            con = new DefaultStreamedContent(new ByteArrayInputStream(usu.getMultimedia())); 
+            Usuario uu = new Usuario();
+            uu.setId(Long.parseLong(params.get("id")));
+            byte[] mul = persistencia
+                    .getListaUsuarios()
+                    .get(persistencia
+                            .getListaUsuarios()
+                            .indexOf(uu)
+                    )
+                    .getMultimedia();
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
+            
         } catch (ArrayIndexOutOfBoundsException ie) {
-            System.err.println(ie.getMessage() + " id usuario recibido " + usu.getId());
+            System.err.println(ie.getMessage() + " id usuario recibido " + params.get("id"));
         } catch (NumberFormatException ne) {
-            System.err.println("Error al convertir la id del parametro " + usu.getId() + " excep: " + ne.getMessage());
+            System.err.println("Error al convertir la id del parametro " + params.get("id") + " excep: " + ne.getMessage());
         }
         return con;
     }  
