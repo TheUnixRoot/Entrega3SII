@@ -32,7 +32,6 @@ public class Mod_anunciosBean implements Serializable{
 
     @Inject
     PersistenceMock persistencia;
-    List<Anuncio> lista;
     Anuncio adv;
     UploadedFile file;
     StreamedContent mul;
@@ -46,70 +45,26 @@ public class Mod_anunciosBean implements Serializable{
         Map<String, String> mapa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         adv = new Anuncio();
         adv.setId(Long.parseLong(mapa.get("id")));
-        lista = persistencia.getListaAnuncios();
+        adv = persistencia.getListaAnuncios()
+                .get(
+                    persistencia.getListaAnuncios()
+                            .indexOf(adv));
     }
-    
-    public long getId() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        return this.adv.getId();
+
+    public PersistenceMock getPersistencia() {
+        return persistencia;
     }
-    
-    public void setId(long id) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        this.adv.setId(id);
+
+    public void setPersistencia(PersistenceMock persistencia) {
+        this.persistencia = persistencia;
     }
-    
-    public String getEmpresa() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        return this.adv.getEmpresa();
+
+    public Anuncio getAdv() {
+        return adv;
     }
-    
-    public void setEmpresa(String empresa) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        this.adv.setEmpresa(empresa);
-    }
-    
-    public Date getFecha_public() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        return this.adv.getFecha_public();
-    }
-    
-    public void setFecha_public(Date fecha_publicacion) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        this.adv.setFecha_public(fecha_publicacion);
-    }
-    
-    public int getDias_contratados() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        return this.adv.getDias_contratados();
-    }
-    
-    public void setDias_contratados(int dias_contratados) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        this.adv.setDias_contratados(dias_contratados);
-    }
-    
-    public boolean isLugar() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        if (this.adv.getLugar() == null)
-            return false;
-        return this.adv.getLugar().equals("top");
-    }
-    
-    public void setLugar(boolean lugar) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        String res = lugar ? "top":"bot";
-        this.adv.setLugar(res);
+
+    public void setAdv(Anuncio adv) {
+        this.adv = adv;
     }
     
     /**
@@ -117,8 +72,6 @@ public class Mod_anunciosBean implements Serializable{
      * @return Imagen del anuncio
      */
     public StreamedContent getMultimedia() {
-        adv = lista.get(
-                lista.indexOf(adv));
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
 
@@ -144,23 +97,19 @@ public class Mod_anunciosBean implements Serializable{
      * @param multimedia Imagen que reemplazara la que ya tiene el anuncio
      */
     public void setMultimedia2(UploadedFile multimedia) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        adv.setMultimedia(multimedia.getContents());
+        if(multimedia.getContents().length > 0)
+            adv.setMultimedia(multimedia.getContents());
         this.file = multimedia;
     }
     
-    public boolean isOnline() {
-        adv = lista.get(
-                lista.indexOf(adv));
-        return this.adv.isOnline();
+    public void setLugar(boolean isArriba) {
+        adv.setLugar(isArriba?"top":"bot");
     }
     
-    public void setOnline(boolean online) {
-        adv = lista.get(
-                lista.indexOf(adv));
-        this.adv.setOnline(online);
+    public boolean getLugar() {
+        return adv.getLugar().equals("top");
     }
+    
     
     /**
      * Almacena el anuncio tratado y actualiza el estado de la aplicación,
@@ -171,15 +120,17 @@ public class Mod_anunciosBean implements Serializable{
      */
     public String grabar() {
         
+        List<Anuncio> lista = persistencia.getListaAnuncios();
+        
         if(adv.isOnline()) {
-            for(Anuncio a:lista) {
+            for(Anuncio a: lista) {
                 if(a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
                 }
             }
         } else {
             boolean find = false;
-            for(Anuncio a:lista) {
+            for(Anuncio a: lista) {
                 if(a.isOnline()) {
                     find = true;
                 }

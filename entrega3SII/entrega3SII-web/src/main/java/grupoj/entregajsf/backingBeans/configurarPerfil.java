@@ -81,7 +81,8 @@ public class configurarPerfil{
 
     public void setFoto2(UploadedFile foto) {
         //System.out.println("jummm");
-        this.usuario.setMultimedia(foto.getContents());
+        if(foto.getContents().length > 0)
+            this.usuario.setMultimedia(foto.getContents());
     }
 
     public ControlAutorizacion getControl() {

@@ -102,7 +102,7 @@ public class SignupBean {
      */
     public String submit() {
         List<Usuario> list = persistencia.getListaUsuarios();
-        usuario.setId((long)list.size());
+        usuario.setId(System.currentTimeMillis());
         usuario.setBorrado(false);
         list.add(usuario);
         try {
