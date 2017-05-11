@@ -80,7 +80,7 @@ public class configurarPerfil{
     }
 
     public void setFoto2(UploadedFile foto) {
-        System.out.println("jummm");
+        //System.out.println("jummm");
         this.usuario.setMultimedia(foto.getContents());
     }
 

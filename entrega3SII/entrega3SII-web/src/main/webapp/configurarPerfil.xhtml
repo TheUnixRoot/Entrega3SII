@@ -52,8 +52,9 @@
                         <p:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:" />
                         <p:calendar id="fechaNacimiento" value="#{configurarPerfil.usuario.fechaNacimiento}" showOn="button" />    
 
-                        <p:commandLink action="formularioGustos.xhtml" value="Rellena un formulario sobre tus gustos">
+                        <p:commandLink action="#{navigationBean.goTo('formularioGustos.xhtml')}" value="Rellena un formulario sobre tus gustos">
                             <f:param name="productId" value="formularioGustos.xhtml" />
+                            <p:ajax update="telef" />
                         </p:commandLink>
                         <p:commandButton value="Volver" action="#{navigationBean.goTo('index.xhtml')}" ajax="false"/>  
 

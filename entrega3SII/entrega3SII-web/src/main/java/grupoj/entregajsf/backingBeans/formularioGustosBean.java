@@ -6,6 +6,7 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Formulario;
 import grupoj.prentrega1.Tag;
 import grupoj.prentrega1.Usuario;
@@ -15,16 +16,17 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-//import mockingBeans.PersistenceMock;
+import javax.inject.Named;
+import mockingBeans.PersistenceMock;
 
 
 /**
  *
  * @author JesusAlberto
  */
-
 @ManagedBean
 public class formularioGustosBean {
 
@@ -37,7 +39,7 @@ public class formularioGustosBean {
     
     @Inject
     private ControlAutorizacion control;
-
+    
     public formularioGustosBean() {
         
        // this.persistencia = new PersistenceMock();
@@ -46,13 +48,37 @@ public class formularioGustosBean {
  
     @PostConstruct
     public void init() {
-       gustos = new ArrayList<>();
-       gustos.add("Musica");
-       gustos.add("Teatro");
-       gustos.add("Opera");
-       gustos.add("Cine");
-       gustos.add("Arte");
-       gustos.add("Deportes");
+        this.user = control.getUsuario();
+        Formulario f = this.user.getForm();
+        if (f == null) {
+            f = new Formulario();
+            f.setId(System.currentTimeMillis());
+            List<Evento> h = new ArrayList<>();
+            f.setHistorialEventos(h);
+            f.setUsuario(user);
+            this.user.setForm(f);
+        }
+        this.formulario = this.user.getForm();
+        this.tags = formulario.getForm_tags();
+        if(tags == null) {
+            tags = new ArrayList<>();
+            this.formulario.setForm_tags(tags);
+        }
+        
+        this.selectedGustos = new String[10];
+        int i = 0;
+        for(Tag g : tags) {
+            this.selectedGustos[i] = g.getTexto();
+            i++;
+        }
+        
+        gustos = new ArrayList<>();
+        gustos.add("Musica");
+        gustos.add("Teatro");
+        gustos.add("Opera");
+        gustos.add("Cine");
+        gustos.add("Arte");
+        gustos.add("Deportes");
     }
 
     public String[] getSelectedGustos() {
@@ -69,27 +95,21 @@ public class formularioGustosBean {
     
     public String saveGustos(){       
         
-        this.user = control.getUsuario();
-                
-        List<Tag> l = new ArrayList<>();
-        this.formulario = new Formulario();
-        this.formulario.setId(Long.MIN_VALUE);
-        formulario.setUsuario(this.user);
         long i = 0;
-              
+        tags = new ArrayList<>();
         for(String gusto : this.selectedGustos){
             Tag tag= new Tag();
-            tag.setId(i);
+            tag.setId(System.currentTimeMillis());
             tag.setTexto(gusto);
             tag.setForm(this.formulario);
-            l.add(tag);
+            tags.add(tag);
             i++;
         }
-       
-        this.formulario.setForm_tags(l);
+        this.formulario.setForm_tags(tags);
+        formulario.setUsuario(this.user);
         this.user.setForm(this.formulario);
         FacesContext.getCurrentInstance()
             .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
-         return "index.xhtml";
+         return null;
     }
 }
