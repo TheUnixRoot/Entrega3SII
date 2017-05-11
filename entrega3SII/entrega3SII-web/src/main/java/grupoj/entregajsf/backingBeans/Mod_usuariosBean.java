@@ -18,6 +18,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -120,7 +121,7 @@ public class Mod_usuariosBean implements Serializable {
      * Método que modifica al usuario de persistencia contenido en el bean
      * por los atributos nuevos.
      */
-    public void change() {
+    public String change() {
         System.out.println("Changeeeeeeeee");
         this.usr.getId();
         Iterator<Usuario> it = persistencia.getListaUsuarios().iterator();
@@ -140,5 +141,6 @@ public class Mod_usuariosBean implements Serializable {
                 find = true;
             }
         }
+        return null;
     }
 }

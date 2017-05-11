@@ -31,9 +31,10 @@
                                     <p:inputText value="#{mod_usuariosBean.usr.email}" style="font-size: large" />
                                     <p:outputLabel value="Teléfono" style="font-size: large" />
                                     <p:inputText value="#{mod_usuariosBean.usr.telefono}" style="font-size: large" />
-                                    <p:selectBooleanButton  onLabel="Borrado" offLabel="Activado" value="#{mod_usuariosBean.usr.borrado}" >
-                                        <p:ajax listener="#{mod_usuariosBean.change()}" />
-                                    </p:selectBooleanButton>
+                                    <p:selectBooleanButton  onLabel="Borrado" offLabel="Activado" value="#{mod_usuariosBean.usr.borrado}" />
+                                    <p:commandButton value="Aplicar cambios" action="#{mod_usuariosBean.change()}" >
+                                        <f:param name="id" value="#{mod_usuariosBean.usr.id}"/>
+                                    </p:commandButton>
                                 </p:panelGrid>
                             </h:form>
                         </p:layoutUnit>
