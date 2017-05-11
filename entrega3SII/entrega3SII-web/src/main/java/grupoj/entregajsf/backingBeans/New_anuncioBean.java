@@ -94,6 +94,11 @@ public class New_anuncioBean {
         this.adv.setOnline(online);
     }
     
+    /**
+     * Dada la persistencia y los datos para el anuncio, lo crea y almacena en 
+     * persistencia.
+     * @return Vuelve a gestion_anuncios.xhtml siempre
+     */
     public String grabar() {
         List<Anuncio> lista = persistencia.getListaAnuncios();
         

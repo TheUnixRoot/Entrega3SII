@@ -9,7 +9,6 @@ import grupoj.prentrega1.Anuncio;
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
@@ -26,11 +25,18 @@ public class Show_anunciosBean {
     
     @Inject
     PersistenceMock persistencia;
-
+    
+    /**
+     * Create a new instance of Show_anunciosBean
+     */
     public Show_anunciosBean() {
         
     }
     
+    /**
+     * Obtiene de persistencia el anuncion online que se ubicará en top
+     * @return Imagen del anuncio o null en su defecto
+     */
     public StreamedContent getTop() {
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
@@ -47,6 +53,10 @@ public class Show_anunciosBean {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
     
+    /**
+     * Obtiene de persistencia el anuncion online que se ubicará en bottom
+     * @return Imagen del anuncio o null en su defecto
+     */
     public StreamedContent getBottom() {
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
@@ -62,6 +72,11 @@ public class Show_anunciosBean {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
     
+    /**
+     * Obtiene de persistencia el logotipo online que se ubicará en self, 
+     * tratado como anuncio propio de la aplicacion
+     * @return Imagen del logotipo empresarial o null en su defecto
+     */
     public StreamedContent getSelf() {
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;

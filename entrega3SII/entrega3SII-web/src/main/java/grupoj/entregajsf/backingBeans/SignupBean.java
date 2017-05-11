@@ -8,15 +8,8 @@ package grupoj.entregajsf.backingBeans;
 import grupoj.prentrega1.Usuario;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 
@@ -103,6 +96,10 @@ public class SignupBean {
         this.usuario.setFechaNacimiento(fechaNacimiento);
     }
     
+    /**
+     * Da de alta un usuario con los campos previamente rellenados como atributos
+     * @return Vuelve a index.xhtml siempre
+     */
     public String submit() {
         List<Usuario> list = persistencia.getListaUsuarios();
         usuario.setId((long)list.size());

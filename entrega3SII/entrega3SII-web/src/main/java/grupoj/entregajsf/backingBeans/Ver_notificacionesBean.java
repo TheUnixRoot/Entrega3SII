@@ -28,6 +28,7 @@ public class Ver_notificacionesBean {
     
     /**
      * Creates a new instance of Ver_notificacionesBean
+     * contains a list of notificaciones for current user
      */
     public Ver_notificacionesBean() {
     }

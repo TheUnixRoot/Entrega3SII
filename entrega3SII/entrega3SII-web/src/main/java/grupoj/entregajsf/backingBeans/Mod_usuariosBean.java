@@ -10,19 +10,14 @@ import javax.inject.Named;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
-import grupoj.entregajsf.dropbox.DropboxController;
-import grupoj.entregajsf.dropbox.DropboxControllerException;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -41,7 +36,8 @@ public class Mod_usuariosBean implements Serializable {
     Usuario usr;
     long id;
     /**
-     * Creates a new instance of Mod_usuariosBean
+     * Crea un nuevo bean que contine al usuario pasado por parámetros
+     * o null si no existiera
      */
     @PostConstruct
     public void init() {
@@ -49,7 +45,7 @@ public class Mod_usuariosBean implements Serializable {
         this.setId(Long.parseLong(req.get("id")));
         Usuario uuu = new Usuario();
         uuu.setId(id);
-        System.out.println(id);
+        //System.out.println(id);
         if ( this.persistencia.getListaUsuarios().contains(uuu) ) 
             this.usr = this.persistencia.getListaUsuarios()
                     .get(
@@ -92,6 +88,11 @@ public class Mod_usuariosBean implements Serializable {
         this.id = id;
     }
     
+    /**
+     * Cuando la instancia posee un usuario correcto, se extrae su byte[] 
+     * multimedia y se genera la imagen para ser mostrada.
+     * @return Imagen del usuario o null en su defecto.
+     */
     public StreamedContent generar() {
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
@@ -114,6 +115,11 @@ public class Mod_usuariosBean implements Serializable {
         }
         return con;
     }
+    
+    /**
+     * Método que modifica al usuario de persistencia contenido en el bean
+     * por los atributos nuevos.
+     */
     public void change() {
         System.out.println("Changeeeeeeeee");
         this.usr.getId();

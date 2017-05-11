@@ -10,7 +10,6 @@ import grupoj.prentrega1.Evento;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,7 +18,8 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 /**
- *
+ * Reedicion de PrintBean por errores de compilación derivados de netbeans
+ * y de las refactorizaciones de nombres
  * @author juanp
  */
 @Named(value = "printpdfBean")
@@ -55,6 +55,11 @@ public class PrintpdfBean {
         this.pdf = pdf;
     }
     
+    /**
+     * Dado el evento pasado como parametro de la web, se obtiene un pdf
+     * con los datos relevantes del mismo
+     * @return Archivo pdf generado
+     */
     public StreamedContent getFile() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Evento evprima = new Evento();

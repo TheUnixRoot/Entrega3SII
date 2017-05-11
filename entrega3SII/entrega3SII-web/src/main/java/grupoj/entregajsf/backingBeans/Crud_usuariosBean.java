@@ -5,18 +5,14 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import grupoj.entregajsf.dropbox.DropboxController;
-import grupoj.entregajsf.dropbox.DropboxControllerException;
 import grupoj.prentrega1.Usuario;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.inject.Inject;
@@ -46,13 +42,24 @@ public class Crud_usuariosBean implements Serializable{
             Logger.getLogger(Crud_usuariosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    /**
+     * Obtiene la url destino tras comprobar los parametros del contexto
+     * Segun la id y el valor de editar.
+     * @return Devuelve una url de vista o de vista y escritura para el usuario
+     * solicitado.
+     */
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
         return params.get("editar").equals("true") ?("edit_usuario.xhtml?id=" + params.get("id")) : ("read_usuario.xhtml?id=" + params.get("id"));
     }
     
+    /**
+     * Dado un usuario correcto, se extrae su byte[] multimedia y 
+     * se genera la imagen para ser mostrada.
+     * @param usu Usuario al que generar la imagen
+     * @return Imagen del usuario
+     */
     public StreamedContent generar(Usuario usu) {
         StreamedContent con = null;
         byte[] mul = usu.getMultimedia();
