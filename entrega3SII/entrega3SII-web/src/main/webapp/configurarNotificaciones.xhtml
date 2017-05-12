@@ -33,7 +33,7 @@ and open the template in the editor.
                         
                         <p:outputLabel value="Como recibir notifiaciones : " />
                         <p:selectOneMenu id="TipoNotificaciones" value="#{configurarNotificaciones.notificacion}" >
-                            <f:selectItems value="#{configurarNotificaciones.listaNotif}" var="n" itemLabel="#{ntfcn}" itemValue="#{ntfcn}"/>
+                            <f:selectItems value="#{configurarNotificaciones.listaNotif}" var="n" itemLabel="#{ntfcn}" itemValue="#{configurarNotificaciones.notificacion}"/>
                         </p:selectOneMenu>
                        
                         <p:commandButton value="Guardar configuración" process="@form" update="confNotificaciones" actionListener="#{configurarNotificaciones.tratarInformacion()}"/>

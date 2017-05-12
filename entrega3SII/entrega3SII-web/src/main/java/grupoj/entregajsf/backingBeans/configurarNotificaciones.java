@@ -79,10 +79,12 @@ public class configurarNotificaciones {
     @PostConstruct
     public void init() {
         usuLogueado = ctrAut.getUsuario(); // Usuario que se ha logueado, ahora esta el de persistencia.
-        tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
+        if (usuLogueado != null) {
+            tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
 
-        listaNotif = new ArrayList<>();
-        rellenaLista();
+            listaNotif = new ArrayList<>();
+            rellenaLista();
+        }
     }
 
     private void insertaLista(TipoNotificacion n) {
