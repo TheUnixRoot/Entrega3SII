@@ -11,32 +11,41 @@
             <ui:param name="nombrePagina" value="Información del evento" />
         </ui:define>
         <ui:define name="cuerpo">
-            
-                    <section id="cuerpo">
-                    <article id="">
-                        <p:layout fullPage="false">
-                            <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
-                            </p:layoutUnit>
-                            <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
-                                <p:panelGrid columns="2">
-                                    
-                                       
-                                        <p:outputLabel value="Nombre:" style="font-size: large" />
-                                        <p:outputLabel value="#{mod_LugarBean.adv.nombre}" style="font-size: large" />
-                                        <p:outputLabel value="Descripcion:" style="font-size: large" />
-                                        <p:outputLabel value="#{mod_LugarBean.adv.descripcion}" style="font-size: large" />
-                                        <p:outputLabel value="Direccion:" style="font-size: large" />
-                                        <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.direccion}" style="font-size: large" />
-                                        <p:outputLabel value="Ciudad:" style="font-size: large" />
-                                        <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.ciudad}" style="font-size: large" />
-                                        <p:outputLabel value="Ciudad:" style="font-size: large" />
-                                        
-                         
-                                </p:panelGrid>
-                            </p:layoutUnit>>
-                        </p:layout>
-                    </article>
-                </section>
+
+            <section id="cuerpo">
+                <article id="">
+                    <p:layout fullPage="false">
+                        <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
+                        </p:layoutUnit>
+                        <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
+                            <p:panelGrid columns="1">
+                                <p:graphicImage width="150" value="#{mod_LugarBean.foto2}">
+                                    <f:param name="id" value="#{mod_LugarBean.adv.id}"/>
+                                </p:graphicImage>
+                            </p:panelGrid> 
+                            <p:panelGrid columns="2">
+
+
+                                <p:outputLabel value="Nombre:" style="font-size: large" />
+                                <p:outputLabel value="#{mod_LugarBean.adv.nombre}" style="font-size: large" />
+                                <p:outputLabel value="Descripcion:" style="font-size: large" />
+                                <p:outputLabel value="#{mod_LugarBean.adv.descripcion}" style="font-size: large" />
+                                <p:outputLabel value="Direccion:" style="font-size: large" />
+                                <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.direccion}" style="font-size: large" />
+                                <p:outputLabel value="Ciudad:" style="font-size: large" />
+                                <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.ciudad}" style="font-size: large" />
+                                <c:if test="#{mod_LugarBean.adv.borrado}" >
+                                    <p:outputLabel value="borrado" style="font-size: large" />
+                                </c:if>
+                                <p:commandButton value="Volver" action="gestion_lugar.xhtml">
+                                    <f:param name="id" value="#{mod_LugarBean.adv.id}"/>
+                                </p:commandButton>
+
+                            </p:panelGrid>
+                        </p:layoutUnit>>
+                    </p:layout>
+                </article>
+            </section>
         </ui:define>
     </ui:composition>
 </html>

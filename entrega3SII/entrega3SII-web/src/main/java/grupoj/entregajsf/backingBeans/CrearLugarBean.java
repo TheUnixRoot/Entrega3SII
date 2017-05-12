@@ -67,6 +67,7 @@ public class CrearLugarBean {
       
       
       Lugar l=new Lugar();
+      l.setId(System.currentTimeMillis());
       l.setNombre(nombre);
       l.setDescripcion(descripcion);
       l.setBorrado(false);
@@ -76,11 +77,10 @@ public class CrearLugarBean {
       g.setCiudad(ciudad);
       l.setGeolocalizacion(g);
       
-     /* if(file == null){
-      l.setFotos(new byte[1]);
-      }else{
-      l.setFotos(file.getContents());
-      }*/
+      if(fotos == null){
+          fotos = new byte[1];
+      }
+      l.setFotos(fotos);
       lugares.add(l);
       persistencia.setListaLugares(lugares);
 
@@ -119,7 +119,10 @@ public class CrearLugarBean {
     }
 
     public void setFile(UploadedFile file) {
-        this.file = file;
+        
+        if(file.getContents().length > 0){
+            this.fotos = (file.getContents());
+        }
     }
 
     

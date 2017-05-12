@@ -6,12 +6,20 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.prentrega1.Lugar;
+import java.io.ByteArrayInputStream;
+import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Dependent;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 
 
@@ -20,8 +28,8 @@ import mockingBeans.PersistenceMock;
  * @author migue
  */
 @Named(value = "mod_LugarBean")
-@RequestScoped
-public class Mod_LugarBean {
+@Dependent
+public class Mod_LugarBean implements Serializable {
 
     @Inject
     PersistenceMock persistencia;
@@ -36,6 +44,28 @@ public class Mod_LugarBean {
         this.ids = ids;
     }
     
+    public UploadedFile getFoto(){
+        return null;
+    }
+    
+    public void setFoto(UploadedFile foto){
+    
+        if(foto.getContents().length > 0){
+            this.adv.setFotos(foto.getContents());
+        }
+    }
+    
+    public StreamedContent getFoto2(){
+    
+        if(adv.getFotos() == null){
+        adv.setFotos(new byte[1]);
+        }
+        return new DefaultStreamedContent(new ByteArrayInputStream(adv.getFotos()));
+    }
+    
+    public void setFoto2(StreamedContent foto){
+    
+    }
     
     
     @PostConstruct
@@ -73,8 +103,21 @@ public class Mod_LugarBean {
     }
     
     
-    public String modificarEvento(){
+    public String modificarLugar(){
 
+        List<Lugar> lista =persistencia.getListaLugares();
+        
+        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
+        
+        try{
+        
+            persistencia.setListaLugares(lista);
+        } catch (InterruptedException ex){
+        
+            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE,null,ex);
+        }
+        
+        
         return "gestion_lugar.xhtml";
 
     }

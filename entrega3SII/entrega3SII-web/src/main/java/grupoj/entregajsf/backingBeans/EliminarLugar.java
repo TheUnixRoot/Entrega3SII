@@ -5,22 +5,16 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-
-
 import grupoj.prentrega1.Lugar;
-import grupoj.prentrega1.Usuario;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
-
 
 /**
  *
@@ -36,26 +30,33 @@ public class EliminarLugar {
     private List<Lugar> listaLugares;
     private Lugar adv;
     private Lugar a;
-    
+
     @PostConstruct
     public void init() {
-       
+
+        Map<String, String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        listaLugares = persistencia.getListaLugares();
+        adv = new Lugar();
+        adv.setId(Long.parseLong(p.get("id")));
+        adv = listaLugares.get(persistencia.getListaLugares().indexOf(adv));
+
     }
 
     public List<Lugar> getListaLugares() {
         return listaLugares;
     }
 
-    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException{
+    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
         //this.listaLugares = listaLugares;
         persistencia.setListaLugares(listaLugares);
     }
 
     public String getValor() {
-        return valor;
+        return adv.isBorrado() ? "si" : "no";
     }
 
     public void setValor(String valor) {
+        adv.setBorrado(valor.equalsIgnoreCase("si"));
         this.valor = valor;
     }
 
@@ -66,13 +67,11 @@ public class EliminarLugar {
     public void setAdv(Lugar adv) {
         this.adv = adv;
     }
-    
-    
-    public String eliminarLugar() throws InterruptedException{
-    
-     
-    return "gestionar_Lugar.xhtml";
+
+    public String eliminarLugar() {
+
+        FacesContext.getCurrentInstance().addMessage("formula:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Lugar borrado", "Lugar borrado"));
+        return null;
     }
-    
-    
+
 }

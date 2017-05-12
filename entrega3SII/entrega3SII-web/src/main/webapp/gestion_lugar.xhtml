@@ -24,25 +24,27 @@
                     </article>
                     <h:form>
                         <p:dataGrid columns="1" layout="grid" value="#{verLugarBean.listaLugares}" var="lgr">
-                            
-                            
+
+
                             <p:panelGrid columns="2" layout="grid">
                                 <p:outputLabel value="#{lgr.nombre}"/>
-                                <p:outputLabel value="#{lgr.fotos}"/>
+                                <p:graphicImage width="150" stream="true" value="#{verLugarBean.generar()}">
+                                    <f:param name="id" value="#{lgr.id}"/>
+                                </p:graphicImage>
                                 <p:commandLink value="Editar Lugar" style="color:red" action="#{verLugarBean.viajar()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
-                                 <p:commandLink value="Ver Lugar" style="color:red" action="#{verLugarBean.viajarv()}">
+                                <p:commandLink value="Ver Lugar" style="color:red" action="#{verLugarBean.viajarv()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
                                 <p:commandLink value="eliminar Lugar" style="color:red" action="#{verLugarBean.viajarE()}">
                                     <f:param name="id" value="#{lgr.id}"/>
                                 </p:commandLink>
-                                
+
                             </p:panelGrid>
                         </p:dataGrid>
                     </h:form>
-                    
+
                 </section>
             </c:if>
             <c:if test="${!controlAutorizacion.administrador}">
