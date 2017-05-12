@@ -22,7 +22,7 @@ and open the template in the editor.
         <section id="cuerpo">
             <article>
                 <h:form id="confNotificaciones">
-                    
+                    <p:growl id="mensaje" autoUpdate="true" />
                     <p:panelGrid columns="2" layout="grid">
                         <p:outputLabel value="Activar notifiaciones : " />
                         <p:selectOneButton id="Notificaciones" value="#{configurarNotificaciones.notificacionesActivas}">

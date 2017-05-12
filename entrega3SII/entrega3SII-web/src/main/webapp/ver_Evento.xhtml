@@ -41,8 +41,10 @@
                                     
                                     </h:form>
                                     <h:form>
-                                        <p:commandButton ajax="false" value="Generar pdf">
+                                        <p:commandButton value="Generar pdf">
                                             <p:fileDownload  value="#{printpdf.file}" >
+                                                <f:param name="id" value="#{verEvento.id}"/>
+                                    
                                             </p:fileDownload>
                                         </p:commandButton>
                                     </h:form>

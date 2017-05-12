@@ -18,18 +18,12 @@
                 <section id="cuerpo">
                     <article id="signup">
                         <p:layout fullPage="false">
-                            <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
-                                <h:form>
-                                    <p:panelGrid columns="1" layout="grid" >
-                                        <p:growl id="messages" showDetail="true" />
-                                        <p:fileUpload value="null" mode="simple" skinSimple="true"/>
-                                        <p:commandButton value="Submit" ajax="false" 
-                                                         actionListener="null" disabled="true" />
-                                    </p:panelGrid>
-                                </h:form>
-                            </p:layoutUnit>
                             <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
-                                <h:form id="fsign">
+                                <h:form id="fsign" enctype="multipart/form-data">
+                                    <p:panelGrid columns="1" layout="grid" >
+                                            <p:growl id="messages" showDetail="true" />
+                                            <p:fileUpload value="#{signupBean.foto}" mode="simple" skinSimple="true"/>
+                                    </p:panelGrid>
                                     <p:panelGrid columns="1" id="psign">
                                         
                                         <p:outputLabel value="Nombre" style="font-size: large" />
@@ -67,7 +61,7 @@
                                         <p:outputLabel value="Fecha de nacimiento" style="font-size: large" />
                                         <p:calendar pattern="dd-MM-yyyy" mask="true" value="#{signupBean.fechaNacimiento}" style="font-size: large"/>
                                     </p:panelGrid>
-                                    <p:commandButton action="#{signupBean.submit()}" value="Registrarse" update="psign" style="font-size: large"/>
+                                    <p:commandButton ajax="false" action="#{signupBean.submit()}" value="Registrarse" update="psign" style="font-size: large"/>
                                 </h:form>
                             </p:layoutUnit>
                         </p:layout>

@@ -5,13 +5,18 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Notificacion;
+import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -20,7 +25,8 @@ import mockingBeans.PersistenceMock;
 @Named(value = "signupBean")
 @RequestScoped
 public class SignupBean {
-    
+    @Inject
+    ControlAutorizacion ctrl;
     @Inject
     PersistenceMock persistencia;
     Usuario usuario;
@@ -96,21 +102,34 @@ public class SignupBean {
         this.usuario.setFechaNacimiento(fechaNacimiento);
     }
     
+    public void setFoto(UploadedFile foto) {
+        if(foto.getContents().length > 0)
+            this.usuario.setMultimedia(foto.getContents());
+        else 
+            this.usuario.setMultimedia(new byte[1]);
+    }
+    
+    public UploadedFile getFoto() {
+        return null;
+    }
+    
     /**
      * Da de alta un usuario con los campos previamente rellenados como atributos
      * @return Vuelve a index.xhtml siempre
      */
     public String submit() {
         List<Usuario> list = persistencia.getListaUsuarios();
-        usuario.setId((long)list.size());
+        usuario.setId(System.currentTimeMillis());
         usuario.setBorrado(false);
+        usuario.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
+        usuario.setNotificaciones(new ArrayList<Notificacion>());
         list.add(usuario);
         try {
             persistencia.setListaUsuarios(list);
+            ctrl.setUsuario(usuario);
         } catch (InterruptedException ex) {
             System.err.println("Error al insertar usuario en persistencia");
         }
-        
         return "index.xhtml";
     }
 }

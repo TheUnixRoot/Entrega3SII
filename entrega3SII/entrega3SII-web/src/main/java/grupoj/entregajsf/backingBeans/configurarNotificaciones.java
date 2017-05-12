@@ -13,6 +13,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 
@@ -170,6 +172,9 @@ public class configurarNotificaciones {
             ctrAut.setUsuario(usuPrima);
         }
 
+        FacesContext.getCurrentInstance()
+            .addMessage("confNotificaciones:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
+        
         return null;
     }
 
