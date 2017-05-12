@@ -5,7 +5,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:bnu="http://bootsfaces.net/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
             Resultado búsqueda avanzada
@@ -16,14 +17,24 @@
         <ui:define name="cuerpo">
             
                 <section id="cuerpo">
-                    <ui:repeat value="#{buscarEvento.listaCoincidencias}" var="evento">
-                        <article id="#{evento.nombre}">
-                        <p:panelGrid columns="2" layout="grid">
-                            <p:outputLabel value="#{evento.nombre}"/>
-                            <p:outputLabel value="#{evento.descripcion}" />
-                        </p:panelGrid>
-                    </article>
-                    </ui:repeat>
+                    <h:form>
+                        <p:dataGrid columns="1" layout="grid" value="#{resultadoBean.listaEventos}" var="ev">
+                            <p:panelGrid columns="2" layout="grid">
+                                <p:outputLabel value="Nombre:" style="font-size: large" />
+                                <p:outputLabel value="#{ev.nombre}" style="font-size: large" />
+                                <p:outputLabel value="Fecha inicio:" style="font-size: large" />
+                                <p:outputLabel value="#{ev.fecha_inicio}" style="font-size: large" />
+                                <p:outputLabel value="Fecha fin:" style="font-size: large" />
+                                <p:outputLabel value="#{ev.fecha_fin}" style="font-size: large" />
+                                <p:outputLabel value="lugar:" style="font-size: large" />
+                                <p:outputLabel value="#{ev.ocurre_in.nombre}" style="font-size: large" />
+                                <p:commandLink value="Ver Evento" style="color:red" action="#{resultadoBean.viajarv()}">
+                                    <f:param name="id" value="#{ev.id}"/>
+                                </p:commandLink>
+                                
+                            </p:panelGrid>
+                        </p:dataGrid>
+                    </h:form>
                 </section>
  
         </ui:define>

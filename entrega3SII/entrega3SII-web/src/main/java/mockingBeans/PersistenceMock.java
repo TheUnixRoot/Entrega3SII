@@ -156,23 +156,25 @@ public class PersistenceMock implements Serializable {
         lugar1.setId(1L);
         lugar1.setNombre("plazuela");
         lugar1.setDescripcion("Un sitio muy chu-chuli");
-        listaLugares.add(lugar1);
         Geolocalizacion geo2 = new Geolocalizacion();
-        geo2.setCiudad("Malaga");
-        geo2.setDireccion("Plaza de Mitjanas");
+        geo2.setId(System.currentTimeMillis()-1);
+        geo2.setCiudad("Torremolinos");
+        geo2.setDireccion("Plaza de tol pueblo");
         geo2.setLugar(lugar1);
         lugar1.setGeolocalizacion(geo2);
+        listaLugares.add(lugar1);
         
         Lugar lugar2 = new Lugar();
         lugar2.setId(2L);
         lugar2.setNombre("campo futbol");
         lugar2.setDescripcion("estadio grande");
-        listaLugares.add(lugar2);
         Geolocalizacion geo1 = new Geolocalizacion();
+        geo1.setId(System.currentTimeMillis());
         geo1.setCiudad("Malaga");
         geo1.setDireccion("Bulevar Luis Pasteur, 35, campus de Teatinos, 29071, Malaga");
         geo1.setLugar(lugar2);
         lugar2.setGeolocalizacion(geo1);
+        listaLugares.add(lugar2);
         
         Evento e = new Evento();
         e.setNombre("Feria Málaga");
@@ -199,7 +201,7 @@ public class PersistenceMock implements Serializable {
         e2.setDonde_comprar("www.antequera.com");
         e2.setTagged_by(listaTags2);
         e2.setOcurre_in(lugar2);
-        e2.setId(25L);
+        e2.setId(5L);
         e2.setFecha_inicio(new Date());
 
         e2.setFecha_fin(new Date());
