@@ -9,6 +9,7 @@ import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
 import grupoj.prentrega1.Usuario;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -30,9 +31,9 @@ import org.primefaces.model.UploadedFile;
 public class CrearEventoBean {
 
     /**
-     * Creates a new instance 
-     * 
-     * 
+     * Creates a new instance
+     *
+     *
      */
     @Inject
     private PersistenceMock persistencia;
@@ -54,60 +55,63 @@ public class CrearEventoBean {
     private String borrad;
     private UIComponent enviar;
     UploadedFile file;
-    
+
     @PostConstruct
     public void init() {
-        
+
         lugares = persistencia.getListaLugares();
         eventos = persistencia.getListaEventos();
-        
-       
+
     }
-    
-    public String insertarEvento() throws InterruptedException{
-      if(existeEvento(nombre)){
-          
-      
-      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Evento ya existente en la base de datos","Lugar ya existente en la base de datos");
-      FacesContext.getCurrentInstance().addMessage("mensaje", fm);
-      
-      return null;
-      }
-      else{
-      
-      Evento e=new Evento();
-      fecha_inicio.setHours(hora.getHours());
-      fecha_inicio.setMinutes(hora.getMinutes());
-      e.setNombre(nombre);
-      e.setPrecio(precio);
-      e.setDonde_comprar(donde_comprar);
-      e.setFecha_inicio(fecha_inicio);
-      e.setFecha_fin(fecha_fin);
-      e.setDescripcion(descripcion);
-      e.setOcurre_in(buscarLugar(ocurre_in));
-      e.setBorrado(false);
-      
-      if(file == null){
-      e.setMultimedia(new byte[1]);
-      }else{
-      e.setMultimedia(file.getContents());
-      }
-      
-      if(cr.isAdministrador() || cr.isPeriodista()){
-      e.setValidado(true);
-      }
-      else{
-      e.setValidado(false);
-      }
-      e.setSubido_by(cr.getUsuario());
-     
-      
-      eventos.add(e);
-      
-      persistencia.setListaEventos(eventos);
-      return "index.xhtml";
-      }
-     
+
+    public String insertarEvento() throws InterruptedException {
+        if (existeEvento(nombre)) {
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento ya existente en la base de datos", "Lugar ya existente en la base de datos");
+            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+
+            return null;
+        } else {
+
+            Evento e = new Evento();
+            fecha_inicio.setHours(hora.getHours());
+            fecha_inicio.setMinutes(hora.getMinutes());
+            e.setId(System.currentTimeMillis());
+            e.setNombre(nombre);
+            e.setPrecio(precio);
+            e.setDonde_comprar(donde_comprar);
+            e.setFecha_inicio(fecha_inicio);
+            e.setFecha_fin(fecha_fin);
+            e.setDescripcion(descripcion);
+            e.setOcurre_in(buscarLugar(ocurre_in));
+            e.setBorrado(false);
+
+            if (file.getContents().length > 0) {
+                e.setMultimedia(file.getContents());
+            } else {
+                e.setMultimedia(new byte[1]);
+            }
+
+            if (cr.isAdministrador() || cr.isPeriodista()) {
+                e.setValidado(true);
+            } else {
+                e.setValidado(false);
+            }
+            if(cr.getUsuario() != null ) {
+                e.setSubido_by(cr.getUsuario());
+                List<Evento> l = cr.getUsuario().getSubidas();
+                if(l == null) {
+                    l = new ArrayList<>();
+                }
+                l.add(e);
+                cr.getUsuario().setSubidas(l);
+            }
+            eventos.add(e);
+
+            persistencia.setListaEventos(eventos);
+            return "index.xhtml";
+        }
+
     }
 
     public String getNombre() {
@@ -133,8 +137,6 @@ public class CrearEventoBean {
     public void setFecha_fin(Date fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
-
-    
 
     public boolean isValidado() {
         return validado;
@@ -208,10 +210,6 @@ public class CrearEventoBean {
         this.file = file;
     }
 
-    
-
-
-
     public Date getHora() {
         return hora;
     }
@@ -252,34 +250,26 @@ public class CrearEventoBean {
         this.borrad = borrad;
     }
 
-    
-    
+    private boolean existeEvento(String nombre) {
 
-    private boolean existeEvento(String nombre){
-    
-    boolean b=false;
-    for(Evento i : eventos){
-        if(i.getNombre().equals(nombre)){
-        b=true;
+        boolean b = false;
+        for (Evento i : eventos) {
+            if (i.getNombre().equals(nombre)) {
+                b = true;
+            }
         }
-    }
-    return b;
-    }
-    
-    private Lugar buscarLugar(String o){
-    
-    Lugar lg = new Lugar();
-     for(Lugar l : lugares){
-         if(l.getNombre().equals(o)){
-            lg=l;
-        } 
-     }
-     return lg;
+        return b;
     }
 
-    
+    private Lugar buscarLugar(String o) {
 
-    
-    
-    
+        Lugar lg = new Lugar();
+        for (Lugar l : lugares) {
+            if (l.getNombre().equals(o)) {
+                lg = l;
+            }
+        }
+        return lg;
+    }
+
 }

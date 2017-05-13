@@ -211,11 +211,13 @@ public class buscarEvento {
                 }
             }
         }
-        
-        //for(Evento e : listaCoincidencias) System.out.println(e.getNombre());
+        List<Evento> l = new ArrayList<>();
+        for(Evento e : listaCoincidencias)
+            if(!e.isBorrado() && e.isValidado())
+                l.add(e);
         
         try {
-            res.setListaEventos(new ArrayList<>(listaCoincidencias));
+            res.setListaEventos(l);
         } catch (InterruptedException ex) {
             Logger.getLogger(buscarEvento.class.getName()).log(Level.SEVERE, null, ex);
         }
