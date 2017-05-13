@@ -15,40 +15,45 @@
             <ui:param name="nombrePagina" value="Enviar notificaciones" />
         </ui:define>
         <ui:define name="cuerpo">
-        <section id="cuerpo">
-        <h:form>      
-            <c:choose>
-                <c:when test="#{!enviarNotificacionesBean.vacio}">
-                    <p:dataGrid var="evento" value="#{enviarNotificacionesBean.listaCoincidencias}" layout="grid">
-                    <f:facet name="header">
-                        Resultados
-                    </f:facet>
-                    <p:panel header="#{evento.nombre}" style="text-align:center">
-                        <h:panelGrid columns="1" style="width:100%">
-                            <h:outputText value="#{evento.descripcion}" />
-     
-                             <p:selectOneRadio id="eve" value="#{enviarNotificacionesBean.selectedEventoS}">
-                                <f:selectItem itemLabel="#{evento.nombre}" itemValue="#{evento.nombre}" />
-                             </p:selectOneRadio>
-                           
-                        </h:panelGrid>
-                    </p:panel>
-                    </p:dataGrid>
-                </c:when>
-                <c:otherwise>
-                    <p:outputLabel value="No hay eventos"/>
-                </c:otherwise>
-                </c:choose>
-                <br></br>
-                            <p:commandButton value="Enviar notificacion" action="#{enviarNotificacionesBean.enviaNotificacion(0)}"/>
-   
-                            <p:commandButton  value="Editar notificacion" action="#{enviarNotificacionesBean.editarNotificacion()}"/>
+            <c:if test="#{controlAutorizacion.periodista}" >
+                <section id="cuerpo">
+                    <h:form>      
+                        <c:choose>
+                            <c:when test="#{!enviarNotificacionesBean.vacio}">
+                                <p:dataGrid var="evento" value="#{enviarNotificacionesBean.listaCoincidencias}" layout="grid">
+                                    <f:facet name="header">
+                                        Resultados
+                                    </f:facet>
+                                    <p:panel header="#{evento.nombre}" style="text-align:center">
+                                        <h:panelGrid columns="1" style="width:100%">
+                                            <h:outputText value="#{evento.descripcion}" />
 
-                <br></br>
-                <p:commandButton value="Vover a buscar"  icon="ui-icon-check" action="#{enviarNotificacionesBean.volver()}"/>
-                
-        </h:form>
-        </section>
+                                             <p:selectOneRadio id="eve" value="#{enviarNotificacionesBean.selectedEventoS}">
+                                                                                <f:selectItem itemLabel="#{evento.nombre}" itemValue="#{evento.nombre}" />
+                                                                             </p:selectOneRadio>
+
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:dataGrid>
+                            </c:when>
+                            <c:otherwise>
+                                <p:outputLabel value="No hay eventos"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <br></br>
+                        <p:commandButton value="Enviar notificacion" action="#{enviarNotificacionesBean.enviaNotificacion(0)}"/>
+
+                        <p:commandButton  value="Editar notificacion" action="#{enviarNotificacionesBean.editarNotificacion()}"/>
+
+                        <br></br>
+                        <p:commandButton value="Vover a buscar"  icon="ui-icon-check" action="#{enviarNotificacionesBean.volver()}"/>
+
+                    </h:form>
+                </section>
+            </c:if>
+            <c:if test="#{!controlAutorizacion.periodista}" >
+                <p:outputLabel value="403 Forbidden" />
+            </c:if>
         </ui:define>
     </ui:composition>
 </html>

@@ -94,14 +94,16 @@ public class contactoAdminBean {
              }
             admin.getRecibirMensaje().add(message);
         }
-        if(user.getMsg_send()==null){
+        if(user != null) {
+        if(user.getMsg_send() == null){
             List<Mensaje> listaMensajes = new ArrayList<>();
             user.setMsg_send(listaMensajes);
         }
         user.getMsg_send().add(message);
+        }
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.addMessage("formulario:panel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje enviado correctamente", "Mensaje enviado correctamente"));
-        return "index.xhtml";
+        return null;
      }
 
 }

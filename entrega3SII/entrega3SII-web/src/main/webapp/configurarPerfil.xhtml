@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
             Configurar Perfil
@@ -14,55 +15,60 @@
             <ui:param name="nombrePagina" value="Configurar Perfil" />
         </ui:define>
         <ui:define name="cuerpo">
-            <section id="cuerpo">
-                <h:form enctype="multipart/form-data">
-                    <p:panelGrid columns="2" layout="grid">
+            <c:if test="#{controlAutorizacion.usuario != null}" >
+                <section id="cuerpo">
+                    <h:form enctype="multipart/form-data">
+                        <p:panelGrid columns="2" layout="grid">
 
-                        <p:graphicImage width="150" value="#{configurarPerfil.foto}" />    
-                        <p:fileUpload value="#{configurarPerfil.foto2}" mode="simple" skinSimple="true"/>
-                        
-                        <p:outputLabel value="Nombre:" for="nombre" />
-                        <p:inputText id="nombre" value="#{configurarPerfil.usuario.nombre}" />
-                        
-                        <p:outputLabel value="Apellidos:" for="apellidos" />
-                        <p:inputText id="apellidos" value="#{configurarPerfil.usuario.apellidos}" />
+                            <p:graphicImage width="150" value="#{configurarPerfil.foto}" />    
+                            <p:fileUpload value="#{configurarPerfil.foto2}" mode="simple" skinSimple="true"/>
 
-                        <p:outputLabel value="Email:" for="email" />
-                        <p:inputText id="email" value="#{configurarPerfil.usuario.email}" style="font-size: small"
-                                        required="true" validatorMessage="Email no reconocido"
-                                        requiredMessage="Se debe introducir un email"> 
-                            <f:validateRegex pattern="([a-zA-Z0-9]|[._-])+@[a-zA-Z0-9]+\.(com|es|org|co\.uk|net)" />
-                            <p:ajax update="memail" />
-                        </p:inputText>
-                        <h:message for="email" id="memail" style="font-size: large;color: red" />
-                        <p:outputLabel/>
-                        <p:outputLabel value="Contraseña:" for="contrasenia" />
-                        <p:inputText id="contrasenia" value="#{configurarPerfil.usuario.password}" />
-                        
-                        <p:outputLabel value="Teléfono:" for="telefono" />
-                        <p:inputText id="telefono" value="#{configurarPerfil.usuario.telefono}" style="font-size: small"
-                                        required="true" validatorMessage="Teléfono no válido"
-                                        requiredMessage="Se debe introducir un teléfono"> 
-                            <f:validateRegex pattern="([0-9]{9})" />
-                            <p:ajax update="telef" />
-                        </p:inputText>
-                        <h:message for="telefono" id="telef" style="font-size: large;color: red" />
-                        <p:outputLabel/>
-                            
-                        <p:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:" />
-                        <p:calendar id="fechaNacimiento" value="#{configurarPerfil.usuario.fechaNacimiento}" showOn="button" />    
+                            <p:outputLabel value="Nombre:" for="nombre" />
+                            <p:inputText id="nombre" value="#{configurarPerfil.usuario.nombre}" />
 
-                        <p:commandLink action="#{navigationBean.goTo('formularioGustos.xhtml')}" value="Rellena un formulario sobre tus gustos">
-                            <f:param name="productId" value="formularioGustos.xhtml" />
-                            <p:ajax update="telef" />
-                        </p:commandLink>
-                        <p:commandButton value="Volver" action="#{navigationBean.goTo('index.xhtml')}" ajax="false"/>  
+                            <p:outputLabel value="Apellidos:" for="apellidos" />
+                            <p:inputText id="apellidos" value="#{configurarPerfil.usuario.apellidos}" />
 
-                    </p:panelGrid>    
-                    <p:outputLabel value="Advertencia, los cambios se aplican de forma inmediata" style="color: red; font-size: x-large"/>
-                        
-                </h:form>  
-            </section>
+                            <p:outputLabel value="Email:" for="email" />
+                            <p:inputText id="email" value="#{configurarPerfil.usuario.email}" style="font-size: small"
+                                         required="true" validatorMessage="Email no reconocido"
+                                         requiredMessage="Se debe introducir un email"> 
+                                <f:validateRegex pattern="([a-zA-Z0-9]|[._-])+@[a-zA-Z0-9]+\.(com|es|org|co\.uk|net)" />
+                                <p:ajax update="memail" />
+                            </p:inputText>
+                            <h:message for="email" id="memail" style="font-size: large;color: red" />
+                            <p:outputLabel/>
+                            <p:outputLabel value="Contraseña:" for="contrasenia" />
+                            <p:inputText id="contrasenia" value="#{configurarPerfil.usuario.password}" />
+
+                            <p:outputLabel value="Teléfono:" for="telefono" />
+                            <p:inputText id="telefono" value="#{configurarPerfil.usuario.telefono}" style="font-size: small"
+                                         required="true" validatorMessage="Teléfono no válido"
+                                         requiredMessage="Se debe introducir un teléfono"> 
+                                <f:validateRegex pattern="([0-9]{9})" />
+                                <p:ajax update="telef" />
+                            </p:inputText>
+                            <h:message for="telefono" id="telef" style="font-size: large;color: red" />
+                            <p:outputLabel/>
+
+                            <p:outputLabel for="fechaNacimiento" value="Fecha de nacimiento:" />
+                            <p:calendar id="fechaNacimiento" value="#{configurarPerfil.usuario.fechaNacimiento}" showOn="button" />    
+
+                            <p:commandLink action="#{navigationBean.goTo('formularioGustos.xhtml')}" value="Rellena un formulario sobre tus gustos">
+                                <f:param name="productId" value="formularioGustos.xhtml" />
+                                <p:ajax update="telef" />
+                            </p:commandLink>
+                            <p:commandButton value="Volver" action="#{navigationBean.goTo('index.xhtml')}" ajax="false"/>  
+
+                        </p:panelGrid>    
+                        <p:outputLabel value="Advertencia, los cambios se aplican de forma inmediata" style="color: red; font-size: x-large"/>
+
+                    </h:form>  
+                </section>
+            </c:if>
+            <c:if test="#{controlAutorizacion.usuario == null}" >
+                <p:outputLabel value="Inicie sesion para configurar sus notificaciones"/>
+            </c:if>
         </ui:define>
     </ui:composition>
 </html>

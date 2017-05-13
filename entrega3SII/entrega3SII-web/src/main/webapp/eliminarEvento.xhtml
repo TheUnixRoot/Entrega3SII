@@ -7,36 +7,42 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
-        <ui:define name="navBarName">
+        <ui:define name="pageName">
+            Eliminar evento
+        </ui:define><ui:define name="navBarName">
             <ui:param name="nombrePagina" value="Eliminar evento" />
         </ui:define>
         <ui:define name="cuerpo">
+            <c:if test="#{controlAutorizacion.periodista}" >
+                <section id="cuerpo">
+                    <article id="">
+                        <p:layout fullPage="false">
+                            <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
+                            </p:layoutUnit>
+                            <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="¿Esta seguro de que quiere eliminar el Evento?" style="font-size: large" />
+                                    <h:form id="formu">
+                                        <p:growl id="mensaje" autoUpdate="true" />
+                                        <p:outputLabel value="#{eliminarEvento.ev.id}" style="font-size: large; display: none"  />
+                                        <p:selectOneRadio id="console" value="#{eliminarEvento.valor}">
+                                            <f:selectItem itemLabel="si" itemValue="SI" />
+                                            <f:selectItem itemLabel="no" itemValue="NO" />
 
-            <section id="cuerpo">
-                <article id="">
-                    <p:layout fullPage="false">
-                        <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
-                        </p:layoutUnit>
-                        <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
-                            <p:panelGrid columns="2">
-                                <p:outputLabel value="¿Esta seguro de que quiere eliminar el Evento?" style="font-size: large" />
-                                <h:form id="formu">
-                                    <p:growl id="mensaje" autoUpdate="true" />
-                                    <p:outputLabel value="#{eliminarEvento.ev.id}" style="font-size: large; display: none"  />
-                                    <p:selectOneRadio id="console" value="#{eliminarEvento.valor}">
-                                        <f:selectItem itemLabel="si" itemValue="SI" />
-                                        <f:selectItem itemLabel="no" itemValue="NO" />
-
-                                    </p:selectOneRadio>
-                                    <p:commandButton  value="Enviar" action="#{eliminarEvento.eliminarEvento()}">
-                                        <f:param name="id" value="#{eliminarEvento.ev.id}"/>
-                                    </p:commandButton>
-                                </h:form>
-                            </p:panelGrid>
-                        </p:layoutUnit>
-                    </p:layout>
-                </article>
-            </section>
+                                        </p:selectOneRadio>
+                                        <p:commandButton  value="Enviar" action="#{eliminarEvento.eliminarEvento()}">
+                                            <f:param name="id" value="#{eliminarEvento.ev.id}"/>
+                                        </p:commandButton>
+                                    </h:form>
+                                </p:panelGrid>
+                            </p:layoutUnit>
+                        </p:layout>
+                    </article>
+                </section>
+            </c:if>
+            <c:if test="#{!controlAutorizacion.periodista}" >
+                <p:outputLabel value="403 Forbidden" />
+            </c:if>
         </ui:define>
     </ui:composition>
 </html>

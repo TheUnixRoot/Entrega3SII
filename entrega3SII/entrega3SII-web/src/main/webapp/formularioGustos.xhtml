@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
             Formulario de gustos
@@ -14,16 +15,21 @@
             <ui:param name="nombrePagina" value="Formulario de gustos" />
         </ui:define>
         <ui:define name="cuerpo">
-            <section id="cuerpo">
-                <h:form>    
-                    <h3>Formulario sobre gustos</h3>
-                    <p:selectManyCheckbox id="grid" value="#{formularioGustosBean.selectedGustos}" layout="responsive" columns="2">
-                        <f:selectItems value="#{formularioGustosBean.gustos}" var="gusto" itemLabel="#{gusto}" itemValue="#{gusto}" />
-                    </p:selectManyCheckbox> 
-                    <p:growl id="growlmensaje" autoUpdate="true" />
-                    <p:commandButton value="Enviar" update="growlmensaje" icon="ui-icon-check" action="#{formularioGustosBean.saveGustos()}"/>
-                </h:form>
-            </section>
+            <c:if test="#{controlAutorizacion.usuario != null}" >
+                <section id="cuerpo">
+                    <h:form>    
+                        <h3>Formulario sobre gustos</h3>
+                        <p:selectManyCheckbox id="grid" value="#{formularioGustosBean.selectedGustos}" layout="responsive" columns="2">
+                            <f:selectItems value="#{formularioGustosBean.gustos}" var="gusto" itemLabel="#{gusto}" itemValue="#{gusto}" />
+                        </p:selectManyCheckbox> 
+                        <p:growl id="growlmensaje" autoUpdate="true" />
+                        <p:commandButton value="Enviar" update="growlmensaje" icon="ui-icon-check" action="#{formularioGustosBean.saveGustos()}"/>
+                    </h:form>
+                </section>
+            </c:if>
+            <c:if test="#{controlAutorizacion.usuario == null}" >
+                <p:outputLabel value="Inicie sesion para configurar sus notificaciones"/>
+            </c:if>
         </ui:define>
     </ui:composition>
 </html>

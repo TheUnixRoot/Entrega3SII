@@ -5,7 +5,8 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
             Enviar notificaciones
@@ -14,16 +15,21 @@
             <ui:param name="nombrePagina" value="Enviar notificaciones" />
         </ui:define>
         <ui:define name="cuerpo">
-        <section id="cuerpo">
-        <h:form>    
-            <h3>Editar notificacion</h3>
-            <p:inputTextarea id ="notificacion" value="#{enviarNotificacionesBean.notificacionPersonalizada}" rows="2" cols="50" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" />
-            <p:watermark for="notificacion" value="Notificacion" /> 
-            <br></br>
-            <p:commandButton value="Enviar" action="#{enviarNotificacionesBean.enviaNotificacion(1)}"/>
-            <h:outputText id="display" />
-        </h:form>
-        </section>
+            <c:if test="#{controlAutorizacion.periodista}" >
+                <section id="cuerpo">
+                    <h:form>    
+                        <h3>Editar notificacion</h3>
+                        <p:inputTextarea id ="notificacion" value="#{enviarNotificacionesBean.notificacionPersonalizada}" rows="2" cols="50" counter="display" maxlength="100" counterTemplate="{0} characters remaining." autoResize="true" />
+                        <p:watermark for="notificacion" value="Notificacion" /> 
+                        <br></br>
+                        <p:commandButton value="Enviar" action="#{enviarNotificacionesBean.enviaNotificacion(1)}"/>
+                        <h:outputText id="display" />
+                    </h:form>
+                </section>
+            </c:if>
+            <c:if test="#{!controlAutorizacion.periodista}" >
+                <p:outputLabel value="403 Forbidden" />
+            </c:if>
         </ui:define>
     </ui:composition>
 </html>
