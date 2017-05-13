@@ -41,6 +41,7 @@ public class PersistenceMock implements Serializable {
     private Semaphore mutexLugares;
     private Semaphore mutexTags;
     private Semaphore mutexAnuncios;
+    private Semaphore mutexMensajes;
     
     
     /**
@@ -185,6 +186,9 @@ public class PersistenceMock implements Serializable {
         e.setDonde_comprar("www.malaga.com");
         e.setTagged_by(listaTags);
         e.setOcurre_in(lugar1);
+        List<Evento> lein = new ArrayList<>();
+        lein.add(e);
+        lugar1.setOcurren_at(lein);
         e.setId(25L);
         e.setFecha_inicio(new Date());
 
@@ -201,6 +205,9 @@ public class PersistenceMock implements Serializable {
         e2.setDonde_comprar("www.antequera.com");
         e2.setTagged_by(listaTags2);
         e2.setOcurre_in(lugar2);
+        List<Evento> lein2 = new ArrayList<>();
+        lein2.add(e2);
+        lugar2.setOcurren_at(lein2);
         e2.setId(5L);
         e2.setFecha_inicio(new Date());
 
@@ -302,6 +309,7 @@ public class PersistenceMock implements Serializable {
         mutexLugares = new Semaphore(1);
         mutexTags = new Semaphore(1);
         mutexAnuncios = new Semaphore(1);
+        mutexMensajes = new Semaphore(1);
         
         System.out.println("Persistencia creada en Singleton");
     }
@@ -330,11 +338,11 @@ public class PersistenceMock implements Serializable {
         return listaMensajes;
     }
 
-    public void setListaMensajes(List<Mensaje> listaMensajes) {
+    public void setListaMensajes(List<Mensaje> listaMensajes) throws InterruptedException {
+        mutexMensajes.acquire();
         this.listaMensajes = listaMensajes;
+        mutexMensajes.release();
     }
-
-    
     
     public List<Anuncio> getListaAnuncios() {
         return listaAnuncios;

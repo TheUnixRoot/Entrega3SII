@@ -30,11 +30,6 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class CrearEventoBean {
 
-    /**
-     * Creates a new instance
-     *
-     *
-     */
     @Inject
     private PersistenceMock persistencia;
     @Inject
@@ -54,7 +49,7 @@ public class CrearEventoBean {
     private Usuario subido_by;
     private String borrad;
     private UIComponent enviar;
-    UploadedFile file;
+    private byte[] foto;
 
     @PostConstruct
     public void init() {
@@ -84,20 +79,22 @@ public class CrearEventoBean {
             e.setFecha_fin(fecha_fin);
             e.setDescripcion(descripcion);
             e.setOcurre_in(buscarLugar(ocurre_in));
+            
+            List<Evento> lugListEv = buscarLugar(ocurre_in).getOcurren_at();
+            lugListEv.add(e);
+            buscarLugar(ocurre_in).setOcurren_at(lugListEv);
+            
             e.setBorrado(false);
 
-            if (file.getContents().length > 0) {
-                e.setMultimedia(file.getContents());
-            } else {
-                e.setMultimedia(new byte[1]);
-            }
+            e.setMultimedia(foto);
 
-            if (cr.isAdministrador() || cr.isPeriodista()) {
-                e.setValidado(true);
-            } else {
-                e.setValidado(false);
-            }
+            
             if(cr.getUsuario() != null ) {
+                if (cr.isAdministrador() || cr.isPeriodista()) {
+                    e.setValidado(true);
+                } else {
+                    e.setValidado(false);
+                }
                 e.setSubido_by(cr.getUsuario());
                 List<Evento> l = cr.getUsuario().getSubidas();
                 if(l == null) {
@@ -203,11 +200,14 @@ public class CrearEventoBean {
     }
 
     public UploadedFile getFile() {
-        return file;
+        return null;
     }
 
     public void setFile(UploadedFile file) {
-        this.file = file;
+        if (file.getContents().length > 0) 
+            this.foto = file.getContents();
+        else 
+            this.foto = new byte[1];
     }
 
     public Date getHora() {

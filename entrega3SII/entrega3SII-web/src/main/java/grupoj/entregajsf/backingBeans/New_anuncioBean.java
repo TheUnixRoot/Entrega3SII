@@ -23,9 +23,9 @@ import org.primefaces.model.UploadedFile;
 public class New_anuncioBean {
 
     @Inject
-    PersistenceMock persistencia;
-    Anuncio adv;
-    UploadedFile file;
+    private PersistenceMock persistencia;
+    private Anuncio adv;
+    private UploadedFile file;
     
     /**
      * Creates a new instance of New_anuncioBean
@@ -82,7 +82,10 @@ public class New_anuncioBean {
     }
     
     public void setMultimedia(UploadedFile multimedia) {
-        adv.setMultimedia(multimedia.getContents());
+        if(multimedia.getContents() != null && multimedia.getContents().length > 0)
+            adv.setMultimedia(multimedia.getContents());
+        else
+            adv.setMultimedia(new byte[1]);
         this.file = multimedia;
     }
     
