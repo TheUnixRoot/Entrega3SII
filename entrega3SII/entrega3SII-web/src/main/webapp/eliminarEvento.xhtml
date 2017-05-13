@@ -20,17 +20,20 @@
                         <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
                             <p:panelGrid columns="2">
                                 <p:outputLabel value="¿Esta seguro de que quiere eliminar el Evento?" style="font-size: large" />
-                                <h:form>
-                                    <p:outputLabel value="#{eliminarEvento.adv.id}" style="font-size: large; display: none"  />
+                                <h:form id="formu">
+                                    <p:growl id="mensaje" autoUpdate="true" />
+                                    <p:outputLabel value="#{eliminarEvento.ev.id}" style="font-size: large; display: none"  />
                                     <p:selectOneRadio id="console" value="#{eliminarEvento.valor}">
                                         <f:selectItem itemLabel="si" itemValue="SI" />
                                         <f:selectItem itemLabel="no" itemValue="NO" />
 
                                     </p:selectOneRadio>
-                                    <p:commandButton  value="Enviar" action="#{eliminarEvento.eliminarEvento()}"/>
+                                    <p:commandButton  value="Enviar" action="#{eliminarEvento.eliminarEvento()}">
+                                        <f:param name="id" value="#{eliminarEvento.ev.id}"/>
+                                    </p:commandButton>
                                 </h:form>
                             </p:panelGrid>
-                        </p:layoutUnit>>
+                        </p:layoutUnit>
                     </p:layout>
                 </article>
             </section>

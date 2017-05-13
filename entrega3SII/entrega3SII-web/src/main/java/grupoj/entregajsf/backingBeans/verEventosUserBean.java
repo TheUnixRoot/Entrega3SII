@@ -39,7 +39,7 @@ public class verEventosUserBean {
     public List<Evento> getListaEventos() {
         List<Evento> lista = new ArrayList<>();
         for (Evento e : listaEventos) {
-            if(e.isValidado())
+            if(e.isValidado() && !e.isBorrado())
                 lista.add(e);
         }
         
