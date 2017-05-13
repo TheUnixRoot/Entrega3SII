@@ -78,7 +78,7 @@ public class EliminarEvento {
 
     public String eliminarEvento() {
         FacesContext.getCurrentInstance()
-                .addMessage("formu:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento borrado", "Evento borrado"));
+                .addMessage("formu:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento actualizado", "Evento actualizado"));
         return null;
     }
     
