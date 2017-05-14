@@ -9,6 +9,7 @@ import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Geolocalizacion;
 import grupoj.prentrega1.Lugar;
+import grupoj.prentrega1.Valoracion_lug;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -133,7 +134,7 @@ public class CrearLugarBean {
         l.setGeolocalizacion(g);
         g.setLugar(l);
         l.setOcurren_at(new ArrayList<Evento>());
-//        l.setValoraciones_sobre(new Array);
+        l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         lugares.add(l);
         try {
             persistencia.setListaLugares(lugares);

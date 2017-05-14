@@ -169,6 +169,7 @@ public class PersistenceMock implements Serializable {
         lugar1.setId(1L);
         lugar1.setNombre("plazuela");
         lugar1.setDescripcion("Un sitio muy chu-chuli");
+        lugar1.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         Geolocalizacion geo2 = new Geolocalizacion();
         geo2.setId(System.currentTimeMillis()-1);
         geo2.setCiudad("Torremolinos");
@@ -181,6 +182,7 @@ public class PersistenceMock implements Serializable {
         lugar2.setId(2L);
         lugar2.setNombre("campo futbol");
         lugar2.setDescripcion("estadio grande");
+        lugar2.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         Geolocalizacion geo1 = new Geolocalizacion();
         geo1.setId(System.currentTimeMillis());
         geo1.setCiudad("Malaga");
@@ -211,6 +213,7 @@ public class PersistenceMock implements Serializable {
 
         e.setFecha_fin(new Date());
         e.setInteresados_at(new ArrayList<Usuario>());
+        e.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
         listaEventos.add(e);
         
         Evento e2 = new Evento();
@@ -235,7 +238,7 @@ public class PersistenceMock implements Serializable {
 
         e2.setFecha_fin(new Date());
         e2.setInteresados_at(new ArrayList<Usuario>());
-        
+        e2.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
         listaEventos.add(e2);
         
         Notificacion ne = new Notificacion();

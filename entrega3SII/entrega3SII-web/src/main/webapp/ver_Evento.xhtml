@@ -14,7 +14,6 @@
             <ui:param name="nombrePagina" value="Información del evento" />
         </ui:define>
         <ui:define name="cuerpo">
-
             <section id="cuerpo">
                 <article id="#{verEvento.evento.nombre}">
                     <p:layout fullPage="false">
@@ -50,25 +49,30 @@
                                     <p:commandButton ajax="false" value="Generar pdf">
                                         <p:fileDownload  value="#{verEvento.file}" >
                                         </p:fileDownload>
-                                            <f:param name="id" value="#{verEvento.evento.id}"/>
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
                                     </p:commandButton>
                                 </h:form>
                             </p:panelGrid>
                             <h:form enctype="multipart/form-data" id="añadirAEvento">                
 
                                 <p:panelGrid columns="2" layout="grid">
-                                    <p:inputTextarea id="Comentario" placeholder="Añade tu comentario sobre el evento..." value="#{aniadirAEvento.comEvento}" cols="100" rows="6" />
+                                    <p:inputTextarea placeholder="Añade tu comentario sobre el evento..." 
+                                                     value="#{verEvento.comEvento}" cols="100" rows="6" />
 
                                     <h:outputText value=" " />
                                     <h:outputText value="Valoración del evento: " />
-                                    <p:rating id="Valoracion" value="#{aniadirAEvento.valEvento}"/>
+                                    <p:rating value="#{verEvento.valEvento}">
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:rating>
 
                                     <h:outputText value="Seleccionar imagen del evento para subir: " />
                                     <p:growl id="imgEvento" showDetail="true" />
 
                                     <p:row>
                                         <p:column colspan="2">
-                                            <p:fileUpload skinSimple="true" mode="simple" value="#{aniadirAEvento.fEvento}"/>
+                                            <p:fileUpload skinSimple="true" mode="simple" value="#{verEvento.fotoValEvento}">
+                                                <f:param name="id" value="#{verEvento.evento.id}"/>
+                                            </p:fileUpload>
                                         </p:column>
                                     </p:row>
 
@@ -77,7 +81,7 @@
 
                                     <p:commandButton value="Comentar y valorar evento"  
                                                      update="añadirAEvento" 
-                                                     action="#{aniadirAEvento.añadirComentarioEvento()}" 
+                                                     action="#{verEvento.añadirComentarioEvento()}" 
                                                      ajax="false" onclick="this.Valoracion.value = ''" >
                                         <f:param name="id" value="#{verEvento.evento.id}"/>
                                     </p:commandButton>
@@ -88,17 +92,22 @@
                             <h:form enctype="multipart/form-data" id="añadirALugar">                
 
                                 <p:panelGrid columns="2" layout="grid">
-                                    <p:inputTextarea id="Comentario" placeholder="Añade tu comentario sobre el lugar..." value="#{aniadirAEvento.comLugar}" autoResize="true" cols="100" rows="6" />
+                                    <p:inputTextarea placeholder="Añade tu comentario sobre el lugar..." 
+                                                     value="#{verEvento.comLugar}" autoResize="true" cols="100" rows="6" />
                                     <h:outputText value=" " />
                                     <h:outputText value="Valoración del lugar: " />
-                                    <p:rating id="Valoracion" value="#{aniadirAEvento.valLugar}"/>
+                                    <p:rating value="#{verEvento.valLugar}">
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:rating>
 
                                     <h:outputText value="Seleccionar imagen del lugar para subir: " />
                                     <p:growl id="imgLugar" showDetail="true" />
 
                                     <p:row>
                                         <p:column colspan="2">
-                                            <p:fileUpload skinSimple="true" mode="simple" value="#{aniadirAEvento.fLugar}"/>
+                                            <p:fileUpload skinSimple="true" mode="simple" value="#{verEvento.fotoValLugar}">
+                                                <f:param name="id" value="#{verEvento.evento.id}"/>
+                                            </p:fileUpload>
                                         </p:column>
                                     </p:row>
 
@@ -107,12 +116,35 @@
 
                                     <p:commandButton value="Comentar y valorar lugar"  
                                                      update="añadirALugar" 
-                                                     action="#{aniadirAEvento.añadirComentarioLugar()}" 
+                                                     action="#{verEvento.añadirComentarioLugar()}" 
                                                      ajax="false" >
                                         <f:param name="id" value="#{verEvento.evento.id}"/>
                                     </p:commandButton>
 
                                 </p:panelGrid>
+                            </h:form>
+                            <h:form>
+                                <p:dataGrid emptyMessage="Nadie ha valorado el evento aún" 
+                                            value="#{verEvento.evento.valoraciones_sobre}" var="valoracion" >
+                                    <p:panelGrid columns="2" layout="grid">
+                                        <p:outputLabel value="#{valoracion.realizado_por.nombre}" style="font-size: large" />
+                                        <p:rating value="#{valoracion.calificacion}" readonly="true" />
+                                        <h:outputText>#{valoracion.comentario}</h:outputText>
+                                        <p:graphicImage width="150" value="#{valoracion.fotos}">
+                                            <f:param name="id" value="#{verEvento.evento.id}"/>
+                                        </p:graphicImage>
+                                    </p:panelGrid>
+                                </p:dataGrid>
+                                <p:dataGrid  emptyMessage="Nadie ha valorado el lugar aún" value="#{verEvento.evento.ocurre_in.valoraciones_sobre}" var="valoracion" >
+                                    <p:panelGrid columns="2" layout="grid">
+                                        <p:outputLabel value="#{valoracion.realizado_por.nombre}" style="font-size: large" />
+                                        <p:rating value="#{valoracion.calificacion}" readonly="true" />
+                                        <h:outputText>#{valoracion.comentario}</h:outputText>
+                                        <p:graphicImage width="150" value="#{valoracion.fotos}">
+                                            <f:param name="id" value="#{verEvento.evento.id}"/>
+                                        </p:graphicImage>
+                                    </p:panelGrid>
+                                </p:dataGrid>
                             </h:form>
                         </p:layoutUnit>
                     </p:layout>

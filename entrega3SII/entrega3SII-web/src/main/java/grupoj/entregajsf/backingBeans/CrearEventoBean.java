@@ -10,6 +10,7 @@ import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
 import grupoj.prentrega1.Tag;
 import grupoj.prentrega1.Usuario;
+import grupoj.prentrega1.Valoracion_eve;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -293,6 +294,7 @@ public class CrearEventoBean {
         e.setTagged_by(tle);
         e.setMultimedia(foto);
         e.setInteresados_at(new ArrayList<Usuario>());
+        e.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
         if (cr.getUsuario() != null) {
             if (cr.isAdministrador() || cr.isPeriodista()) {
                 e.setValidado(true);
