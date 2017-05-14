@@ -8,10 +8,12 @@ package grupoj.entregajsf.backingBeans;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
+import grupoj.prentrega1.Tag;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -50,64 +52,13 @@ public class CrearEventoBean {
     private String borrad;
     private UIComponent enviar;
     private byte[] foto;
+    private String tags;
 
     @PostConstruct
     public void init() {
 
         lugares = persistencia.getListaLugares();
         eventos = persistencia.getListaEventos();
-
-    }
-
-    public String insertarEvento() throws InterruptedException {
-        if (existeEvento(nombre)) {
-
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento ya existente en la base de datos", "Lugar ya existente en la base de datos");
-            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
-
-            return null;
-        } else {
-
-            Evento e = new Evento();
-            fecha_inicio.setHours(hora.getHours());
-            fecha_inicio.setMinutes(hora.getMinutes());
-            e.setId(System.currentTimeMillis());
-            e.setNombre(nombre);
-            e.setPrecio(precio);
-            e.setDonde_comprar(donde_comprar);
-            e.setFecha_inicio(fecha_inicio);
-            e.setFecha_fin(fecha_fin);
-            e.setDescripcion(descripcion);
-            e.setOcurre_in(buscarLugar(ocurre_in));
-            
-            List<Evento> lugListEv = buscarLugar(ocurre_in).getOcurren_at();
-            lugListEv.add(e);
-            buscarLugar(ocurre_in).setOcurren_at(lugListEv);
-            
-            e.setBorrado(false);
-
-            e.setMultimedia(foto);
-
-            
-            if(cr.getUsuario() != null ) {
-                if (cr.isAdministrador() || cr.isPeriodista()) {
-                    e.setValidado(true);
-                } else {
-                    e.setValidado(false);
-                }
-                e.setSubido_by(cr.getUsuario());
-                List<Evento> l = cr.getUsuario().getSubidas();
-                if(l == null) {
-                    l = new ArrayList<>();
-                }
-                l.add(e);
-                cr.getUsuario().setSubidas(l);
-            }
-            eventos.add(e);
-
-            persistencia.setListaEventos(eventos);
-            return "index.xhtml";
-        }
 
     }
 
@@ -204,10 +155,11 @@ public class CrearEventoBean {
     }
 
     public void setFile(UploadedFile file) {
-        if (file.getContents().length > 0) 
+        if (file.getContents().length > 0) {
             this.foto = file.getContents();
-        else 
+        } else {
             this.foto = new byte[1];
+        }
     }
 
     public Date getHora() {
@@ -250,6 +202,14 @@ public class CrearEventoBean {
         this.borrad = borrad;
     }
 
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
     private boolean existeEvento(String nombre) {
 
         boolean b = false;
@@ -270,6 +230,87 @@ public class CrearEventoBean {
             }
         }
         return lg;
+    }
+
+    public String insertarEvento() throws InterruptedException {
+        if (existeEvento(nombre)) {
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento ya existente en la base de datos", "Evento ya existente en la base de datos");
+            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+
+            return null;
+        }
+        Evento e = new Evento();
+        fecha_inicio.setHours(hora.getHours());
+        fecha_inicio.setMinutes(hora.getMinutes());
+        e.setId(System.currentTimeMillis());
+        e.setNombre(nombre);
+        e.setPrecio(precio);
+        e.setDonde_comprar(donde_comprar);
+        e.setFecha_inicio(fecha_inicio);
+        e.setFecha_fin(fecha_fin);
+        e.setDescripcion(descripcion);
+        e.setOcurre_in(buscarLugar(ocurre_in));
+
+        List<Evento> lugListEv = buscarLugar(ocurre_in).getOcurren_at();
+        lugListEv.add(e);
+        buscarLugar(ocurre_in).setOcurren_at(lugListEv);
+
+        e.setBorrado(false);
+
+        List<Tag> tle = new ArrayList<>();
+        List<Tag> tln = new ArrayList<>();
+        List<Tag> tp = persistencia.getListaTags();
+
+        try (Scanner sc = new Scanner(tags)) {
+            sc.useDelimiter("(,( )*)+");
+            while (sc.hasNext()) {
+                String st = sc.next();
+                boolean find = false;
+                for (Tag tin : tp) {
+                    if (tin.getTexto().equalsIgnoreCase(st)) {
+                        tle.add(tin);
+                        tin.getEventos().add(e);
+                        find = true;
+                    }
+                }
+                if (!find) {
+                    System.out.println(st);
+                    Tag t = new Tag();
+                    t.setId(System.currentTimeMillis());
+                    t.setTexto(st);
+                    List<Evento> let = new ArrayList();
+                    let.add(e);
+                    t.setEventos(let);
+                    tle.add(t);
+                    tln.add(t);
+                }
+            }
+            for (Tag g : tln) {
+                tp.add(g);
+            }
+        }
+        e.setTagged_by(tle);
+        e.setMultimedia(foto);
+
+        if (cr.getUsuario() != null) {
+            if (cr.isAdministrador() || cr.isPeriodista()) {
+                e.setValidado(true);
+            } else {
+                e.setValidado(false);
+            }
+            e.setSubido_by(cr.getUsuario());
+            List<Evento> l = cr.getUsuario().getSubidas();
+            if (l == null) {
+                l = new ArrayList<>();
+            }
+            l.add(e);
+            cr.getUsuario().setSubidas(l);
+        }
+        eventos.add(e);
+
+        persistencia.setListaEventos(eventos);
+        return "index.xhtml";
     }
 
 }

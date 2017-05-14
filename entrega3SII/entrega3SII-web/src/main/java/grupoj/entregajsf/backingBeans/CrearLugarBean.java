@@ -6,8 +6,10 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Geolocalizacion;
 import grupoj.prentrega1.Lugar;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -130,15 +132,16 @@ public class CrearLugarBean {
 
         l.setGeolocalizacion(g);
         g.setLugar(l);
-
+        l.setOcurren_at(new ArrayList<Evento>());
+//        l.setValoraciones_sobre(new Array);
         lugares.add(l);
         try {
             persistencia.setListaLugares(lugares);
         } catch (InterruptedException ex) {
             Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return "gestion_lugar.xhtml";
+        
+        return "index.xhtml";
     }
 
 }

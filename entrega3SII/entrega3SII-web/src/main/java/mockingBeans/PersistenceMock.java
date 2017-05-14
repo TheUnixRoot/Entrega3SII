@@ -59,31 +59,37 @@ public class PersistenceMock implements Serializable {
         Tag tag1 = new Tag();
         tag1.setId(1L);
         tag1.setTexto("Música");
+        tag1.setEventos(new ArrayList<Evento>());
         listaTags.add(tag1);
         
         Tag tag2 = new Tag();
         tag2.setId(2L);
         tag2.setTexto("Teatro");
+        tag2.setEventos(new ArrayList<Evento>());
         listaTags.add(tag2);
         
         Tag tag3 = new Tag();
         tag3.setId(3L);
         tag3.setTexto("Arte");
+        tag3.setEventos(new ArrayList<Evento>());
         listaTags.add(tag3);
         
         Tag tag4 = new Tag();
         tag4.setId(4L);
         tag4.setTexto("Ópera");
+        tag4.setEventos(new ArrayList<Evento>());
         listaTags.add(tag4);
         
         Tag tag5 = new Tag();
         tag5.setId(5L);
         tag5.setTexto("Cine");
+        tag5.setEventos(new ArrayList<Evento>());
         listaTags.add(tag5);
         
         Tag tag6 = new Tag();
         tag6.setId(6L);
         tag6.setTexto("Deportes");
+        tag6.setEventos(new ArrayList<Evento>());
         listaTags.add(tag6);
        
         
@@ -184,7 +190,12 @@ public class PersistenceMock implements Serializable {
         e.setDescripcion("Feria de malaga 2017");
         e.setPrecio(20);
         e.setDonde_comprar("www.malaga.com");
-        e.setTagged_by(listaTags);
+        List<Tag> lte = new ArrayList<>();
+        e.setTagged_by(lte);
+        for(Tag tg : listaTags) {
+            tg.getEventos().add(e);
+            lte.add(tg);
+        }
         e.setOcurre_in(lugar1);
         List<Evento> lein = new ArrayList<>();
         lein.add(e);
@@ -203,7 +214,12 @@ public class PersistenceMock implements Serializable {
         e2.setDescripcion("Concierto de alguien muy muy famoso");
         e2.setPrecio(50);
         e2.setDonde_comprar("www.antequera.com");
-        e2.setTagged_by(listaTags2);
+        List<Tag> lte2 = new ArrayList<>();
+        e2.setTagged_by(lte2);
+        for(Tag tg : listaTags2) {
+            tg.getEventos().add(e2);
+            lte2.add(tg);
+        }
         e2.setOcurre_in(lugar2);
         List<Evento> lein2 = new ArrayList<>();
         lein2.add(e2);
