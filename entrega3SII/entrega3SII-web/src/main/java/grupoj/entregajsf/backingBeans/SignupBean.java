@@ -6,6 +6,8 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Evento;
+import grupoj.prentrega1.Mensaje;
 import grupoj.prentrega1.Notificacion;
 import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
@@ -123,6 +125,8 @@ public class SignupBean {
         usuario.setBorrado(false);
         usuario.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
         usuario.setNotificaciones(new ArrayList<Notificacion>());
+        usuario.setMeInteresa(new ArrayList<Evento>());
+        usuario.setMsg_send(new ArrayList<Mensaje>());
         list.add(usuario);
         try {
             persistencia.setListaUsuarios(list);

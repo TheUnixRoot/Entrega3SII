@@ -111,6 +111,8 @@ public class PersistenceMock implements Serializable {
         usr.setPassword("usuario");
         usr.setBorrado(false);
         usr.setNombre("normalito");
+        usr.setMeInteresa(new ArrayList<Evento>());
+        usr.setMsg_send(new ArrayList<Mensaje>());
         try {
             usr.setMultimedia(
                     DropboxController.downloadFile("/usuario.jpeg"));
@@ -133,6 +135,8 @@ public class PersistenceMock implements Serializable {
         per.setPassword("periodista");
         per.setBorrado(false);
         per.setNombre("periodisto");
+        per.setMeInteresa(new ArrayList<Evento>());
+        per.setMsg_send(new ArrayList<Mensaje>());
         try {
             per.setMultimedia(
                     DropboxController.downloadFile("/peri.jpeg"));
@@ -151,6 +155,8 @@ public class PersistenceMock implements Serializable {
         adm.setPassword("administrador");
         adm.setBorrado(false);
         adm.setNombre("administradorcito");
+        adm.setMeInteresa(new ArrayList<Evento>());
+        adm.setMsg_send(new ArrayList<Mensaje>());
         try {
             adm.setMultimedia(
                     DropboxController.downloadFile("/lisa.png"));
@@ -204,7 +210,7 @@ public class PersistenceMock implements Serializable {
         e.setFecha_inicio(new Date());
 
         e.setFecha_fin(new Date());
-
+        e.setInteresados_at(new ArrayList<Usuario>());
         listaEventos.add(e);
         
         Evento e2 = new Evento();
@@ -228,7 +234,8 @@ public class PersistenceMock implements Serializable {
         e2.setFecha_inicio(new Date());
 
         e2.setFecha_fin(new Date());
-
+        e2.setInteresados_at(new ArrayList<Usuario>());
+        
         listaEventos.add(e2);
         
         Notificacion ne = new Notificacion();

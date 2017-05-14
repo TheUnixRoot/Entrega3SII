@@ -292,7 +292,7 @@ public class CrearEventoBean {
         }
         e.setTagged_by(tle);
         e.setMultimedia(foto);
-
+        e.setInteresados_at(new ArrayList<Usuario>());
         if (cr.getUsuario() != null) {
             if (cr.isAdministrador() || cr.isPeriodista()) {
                 e.setValidado(true);

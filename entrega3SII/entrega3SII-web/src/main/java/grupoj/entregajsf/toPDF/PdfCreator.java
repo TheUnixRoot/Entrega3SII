@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.toPDF;
 
+import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -17,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -45,13 +47,26 @@ public class PdfCreator {
             doc.close();
         } catch (DocumentException ex) {
             Logger.getLogger(PdfCreator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PdfCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    private static void addEvent(Document doc, Evento ev) throws DocumentException {
+    private static void addEvent(Document doc, Evento ev) throws DocumentException, BadElementException, IOException {
         doc.addTitle(ev.getNombre());
         Paragraph evento = new Paragraph();
-        evento.add(new Paragraph(ev.getNombre(), catFont));
+        Paragraph title = new Paragraph(ev.getNombre(), catFont);
+        title.add("  ");
+        Image img = Image.getInstance(ev.getMultimedia());
+        img.scaleToFit(300, 300);
+        title.add(img);
+        evento.add(title);
+        evento.add(new Paragraph(" "));
+        evento.add(new Paragraph(ev.getDescripcion(), subFont));
+        evento.add(new Paragraph(" "));
+        evento.add(new Paragraph(ev.getOcurre_in().getNombre(), subFont));
+        evento.add(new Paragraph(" "));
+        evento.add(new Paragraph("Precio " + String.valueOf(ev.getPrecio()), subFont));
         evento.add(new Paragraph(" "));
         evento.add(new Paragraph(ev.getDescripcion(), subFont));
         evento.add(new Paragraph(" "));
