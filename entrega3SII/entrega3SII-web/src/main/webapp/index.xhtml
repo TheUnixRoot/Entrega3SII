@@ -37,13 +37,17 @@
                             <p:commandLink value="Ver Evento" style="color:red" action="#{verEventosUserBean.viajarv()}">
                                 <f:param name="id" value="#{ev.id}"/>
                             </p:commandLink>
-                            
+                            <c:if test="#{controlAutorizacion.usuario != null}">
+                                <p:commandLink value="Dejar valoración!" action="#{verEventosUserBean.viajar()}">
+                                    <f:param name="id" value="#{ev.id}"/>
+                                </p:commandLink>
+                            </c:if>
                         </p:panelGrid>
                     </p:dataGrid>
                 </h:form>
             </section>
         </ui:define>
     </ui:composition>
-    
+
 </html>
 

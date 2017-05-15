@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="Layout.xhtml">
+        <ui:define name="pageName">
+            Dejar valoracion
+        </ui:define>
+        <ui:define name="navBarName">
+            <ui:param name="nombrePagina" value="Dejar valoracion" />
+        </ui:define>
+        <ui:define name="cuerpo">
+            <section id="cuerpo">
+                <h:form enctype="multipart/form-data" id="añadirAEvento">                
+
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:inputTextarea placeholder="Añade tu comentario sobre el evento..." 
+                                         value="#{valorarBean.comEvento}" cols="100" rows="6" />
+
+                        <h:outputText value=" " />
+                        <h:outputText value="Valoración del evento: " />
+                        <p:rating value="#{valorarBean.valEvento}">
+                            <f:param name="id" value="#{valorarBean.evento.id}"/>
+                        </p:rating>
+
+                        <h:outputText value="Seleccionar imagen del evento para subir: " />
+                        <p:growl id="imgEvento" showDetail="true" />
+
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:fileUpload skinSimple="true" mode="simple" 
+                                              value="#{valorarBean.fotoValEvento}">
+                                    <f:param name="id" value="#{valorarBean.evento.id}"/>
+                                </p:fileUpload>
+                            </p:column>
+                        </p:row>
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+                        <p:commandButton value="Comentar y valorar evento"
+                                         action="#{valorarBean.añadirComentarioEvento()}" 
+                                         ajax="false"
+                                         update="imgEvento">
+                            <f:param name="id" value="#{valorarBean.evento.id}"/>
+                        </p:commandButton>
+
+                    </p:panelGrid>
+                </h:form>
+
+                <h:form enctype="multipart/form-data" id="añadirALugar">                
+
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:inputTextarea placeholder="Añade tu comentario sobre el lugar..." 
+                                         value="#{valorarBean.comLugar}" autoResize="true" 
+                                         cols="100" rows="6" />
+                        <h:outputText value=" " />
+                        <h:outputText value="Valoración del lugar: " />
+                        <p:rating value="#{valorarBean.valLugar}">
+                            <f:param name="id" value="#{verEvento.evento.id}"/>
+                        </p:rating>
+
+                        <h:outputText value="Seleccionar imagen del lugar para subir: " />
+                        <p:growl id="imgLugar" showDetail="true" />
+
+                        <p:row>
+                            <p:column colspan="2">
+                                <p:fileUpload skinSimple="true" mode="simple" 
+                                              value="#{valorarBean.fotoValLugar}">
+                                    <f:param name="id" value="#{valorarBean.evento.id}"/>
+                                </p:fileUpload>
+                            </p:column>
+                        </p:row>
+
+                        <h:outputText value=" " />
+                        <h:outputText value=" " />
+
+                        <p:commandButton value="Comentar y valorar lugar"
+                                         action="#{valorarBean.añadirComentarioLugar()}" 
+                                         ajax="false"
+                                         update="imgLugar">
+                            <f:param name="id" value="#{valorarBean.evento.id}"/>
+                        </p:commandButton>
+
+                    </p:panelGrid>
+                </h:form>
+            </section>
+        </ui:define>
+    </ui:composition>
+</html>
+

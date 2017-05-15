@@ -50,17 +50,6 @@ public class verEvento implements Serializable {
     private Map<String, String> req;
     private PdfCreator pdf;
 
-    // En las clases ya los tengo
-    private Integer valEvento;
-    private String comEvento;
-    private UploadedFile fotoValEvento;
-    private List<Valoracion_eve> listEve;
-
-    private Integer valLugar;
-    private String comLugar;
-    private UploadedFile fotoValLugar;
-    private List<Valoracion_lug> listLug;
-
     @PostConstruct
     public void init() {
         usu = control.getUsuario();
@@ -68,7 +57,7 @@ public class verEvento implements Serializable {
         this.setId(Long.parseLong(req.get("id")));
         Evento ev = new Evento();
         ev.setId(id);
-        System.out.println(id);
+//        System.out.println(id);
         if (this.persistencia.getListaEventos().contains(ev)) {
             this.evento = this.persistencia.getListaEventos()
                     .get(
@@ -81,7 +70,7 @@ public class verEvento implements Serializable {
         if (usu != null) {
 
             Formulario formu = this.usu.getForm();
-            if(formu == null) {
+            if (formu == null) {
                 formu = new Formulario();
                 formu.setId(System.currentTimeMillis());
                 formu.setHistorialEventos(new ArrayList<Evento>());
@@ -181,70 +170,6 @@ public class verEvento implements Serializable {
         this.req = req;
     }
 
-    public Integer getValEvento() {
-        return valEvento;
-    }
-
-    public void setValEvento(Integer valEvento) {
-        this.valEvento = valEvento;
-    }
-
-    public String getComEvento() {
-        return comEvento;
-    }
-
-    public void setComEvento(String comEvento) {
-        this.comEvento = comEvento;
-    }
-
-    public UploadedFile getFotoValEvento() {
-        return fotoValEvento;
-    }
-
-    public void setFotoValEvento(UploadedFile fotoValEvento) {
-        this.fotoValEvento = fotoValEvento;
-    }
-
-    public List<Valoracion_eve> getListEve() {
-        return listEve;
-    }
-
-    public void setListEve(List<Valoracion_eve> listEve) {
-        this.listEve = listEve;
-    }
-
-    public Integer getValLugar() {
-        return valLugar;
-    }
-
-    public void setValLugar(Integer valLugar) {
-        this.valLugar = valLugar;
-    }
-
-    public String getComLugar() {
-        return comLugar;
-    }
-
-    public void setComLugar(String comLugar) {
-        this.comLugar = comLugar;
-    }
-
-    public UploadedFile getFotoValLugar() {
-        return fotoValLugar;
-    }
-
-    public void setFotoValLugar(UploadedFile fotoValLugar) {
-        this.fotoValLugar = fotoValLugar;
-    }
-
-    public List<Valoracion_lug> getListLug() {
-        return listLug;
-    }
-
-    public void setListLug(List<Valoracion_lug> listLug) {
-        this.listLug = listLug;
-    }
-
     public void meInteresa() {
         usu = control.getUsuario();
         if (usu == null) {
@@ -295,78 +220,44 @@ public class verEvento implements Serializable {
                 "application/pdf", evento.getNombre() + ".pdf");
         return stc;
     }
-
-    public String añadirComentarioEvento() {
-
-        listEve = evento.getValoraciones_sobre();
-
-        if (listEve == null) {
-            listEve = new ArrayList<>();
+    
+    public StreamedContent generarEve() {
+        StreamedContent con = null;
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        try {
+            Valoracion_eve val = new Valoracion_eve();
+            val.setId(Long.parseLong(params.get("ide")));
+            byte[] mul = evento.getValoraciones_sobre()
+                    .get(
+                            evento.getValoraciones_sobre().indexOf(val)
+                    ).getFotos();
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
+            
+        } catch (ArrayIndexOutOfBoundsException ie) {
+            System.err.println(ie.getMessage() + " id valoracion recibido " + params.get("ide"));
+        } catch (NumberFormatException ne) {
+            System.err.println("Error al convertir la id del parametro " + params.get("ide") + " excep: " + ne.getMessage());
         }
-
-        if (comEvento == null) {
-            comEvento = " ";
-        }
-        if (valEvento == null) {
-            valEvento = 3;
-        }
-
-        Valoracion_eve valEve = new Valoracion_eve();
-        valEve.setId(System.currentTimeMillis());
-        valEve.setCalificacion(valEvento);
-        valEve.setComentario(comEvento);
-        if (fotoValEvento == null) {
-            valEve.setFotos(new byte[1]);
-        } else {
-            valEve.setFotos(fotoValEvento.getContents());
-        }
-        valEve.setRealizado_por(usu);
-        valEve.setValoracion_sobre(evento);
-
-        listEve.add(valEve);
-        evento.setValoraciones_sobre(listEve);
-
-        valEvento = null;
-        valEvento = null;
-        fotoValEvento = null;
-
-        return null;
+        return con;
     }
-
-    public String añadirComentarioLugar() {
-        Lugar lug = evento.getOcurre_in(); // Lo cojo de la página que ya tiene uno
-
-        listLug = lug.getValoraciones_sobre();
-
-        if (listLug == null) {
-            listLug = new ArrayList<>();
+    
+    public StreamedContent generarLug() {
+        StreamedContent con = null;
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        try {
+            Valoracion_lug val = new Valoracion_lug();
+            val.setId(Long.parseLong(params.get("idl")));
+            byte[] mul = evento.getOcurre_in().getValoraciones_sobre()
+                    .get(
+                            evento.getOcurre_in().getValoraciones_sobre().indexOf(val)
+                    ).getFotos();
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
+            
+        } catch (ArrayIndexOutOfBoundsException ie) {
+            System.err.println(ie.getMessage() + " id valoracion recibido " + params.get("idl"));
+        } catch (NumberFormatException ne) {
+            System.err.println("Error al convertir la id del parametro " + params.get("idl") + " excep: " + ne.getMessage());
         }
-        if (comLugar == null) {
-            comLugar = " ";
-        }
-        if (valLugar == null) {
-            valLugar = 3;
-        }
-
-        Valoracion_lug valLug = new Valoracion_lug();
-        valLug.setId(System.currentTimeMillis());
-        valLug.setCalificacion(valLugar);
-        valLug.setComentario(comLugar);
-        if (fotoValLugar == null) {
-            valLug.setFotos(new byte[1]);
-        } else {
-            valLug.setFotos(fotoValLugar.getContents());
-        }
-        valLug.setRealizado_por(usu);
-        valLug.setValoracion_sobre(lug);
-        listLug.add(valLug);
-        lug.setValoraciones_sobre(listLug);
-
-        valLugar = null;
-        comLugar = null;
-        fotoValLugar = null;
-
-        return null;
+        return con;
     }
-
 }
