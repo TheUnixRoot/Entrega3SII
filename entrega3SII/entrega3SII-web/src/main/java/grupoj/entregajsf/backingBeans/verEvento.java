@@ -8,6 +8,7 @@ package grupoj.entregajsf.backingBeans;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.entregajsf.toPDF.PdfCreator;
 import grupoj.prentrega1.Evento;
+import grupoj.prentrega1.Formulario;
 import grupoj.prentrega1.Lugar;
 import grupoj.prentrega1.Usuario;
 import grupoj.prentrega1.Valoracion_eve;
@@ -76,6 +77,34 @@ public class verEvento implements Serializable {
         } else {
             this.evento = null;
         }
+        // Aniadir al historial del usuario
+        if (usu != null) {
+
+            Formulario formu = this.usu.getForm();
+            if(formu == null) {
+                formu = new Formulario();
+                formu.setId(System.currentTimeMillis());
+                formu.setHistorialEventos(new ArrayList<Evento>());
+                formu.setSobre_by(null);
+                formu.setUsuario(usu);
+                this.usu.setForm(formu);
+            }
+            List<Evento> leu = formu.getHistorialEventos();
+            if (leu == null) {
+                leu = new ArrayList<>();
+                this.usu.getForm().setHistorialEventos(leu);
+            }
+            if (!leu.contains(this.evento)) {
+                leu.add(this.evento);
+                List<Formulario> lhe = this.evento.getHistoriado_by();
+
+                if (lhe == null) {
+                    lhe = new ArrayList<>();
+                    this.evento.setHistoriado_by(lhe);
+                }
+            }
+        }
+
         ev = null;
     }
 
@@ -268,7 +297,7 @@ public class verEvento implements Serializable {
     }
 
     public String añadirComentarioEvento() {
-        
+
         listEve = evento.getValoraciones_sobre();
 
         if (listEve == null) {
@@ -306,7 +335,7 @@ public class verEvento implements Serializable {
 
     public String añadirComentarioLugar() {
         Lugar lug = evento.getOcurre_in(); // Lo cojo de la página que ya tiene uno
-        
+
         listLug = lug.getValoraciones_sobre();
 
         if (listLug == null) {

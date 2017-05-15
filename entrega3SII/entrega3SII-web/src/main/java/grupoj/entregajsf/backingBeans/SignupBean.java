@@ -28,10 +28,10 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class SignupBean {
     @Inject
-    ControlAutorizacion ctrl;
+    private ControlAutorizacion ctrl;
     @Inject
-    PersistenceMock persistencia;
-    Usuario usuario;
+    private PersistenceMock persistencia;
+    private Usuario usuario;
     
     /**
      * Creates a new instance of SignupBean
