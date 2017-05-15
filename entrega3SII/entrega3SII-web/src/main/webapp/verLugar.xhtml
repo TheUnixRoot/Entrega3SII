@@ -34,9 +34,8 @@
                                     <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.direccion}" style="font-size: large" />
                                     <p:outputLabel value="Ciudad:" style="font-size: large" />
                                     <p:outputLabel value="#{mod_LugarBean.adv.geolocalizacion.ciudad}" style="font-size: large" />
-                                    <c:if test="#{mod_LugarBean.adv.borrado}" >
-                                        <p:outputLabel value="borrado" style="font-size: large" />
-                                    </c:if>
+                                    <p:outputLabel value="#{mod_LugarBean.adv.borrado?'Borrado':'Activo'}" style="font-size: large" />
+                                    <!-- df -->
                                     <p:commandButton value="Volver" action="gestion_lugar.xhtml">
                                         <f:param name="id" value="#{mod_LugarBean.adv.id}"/>
                                     </p:commandButton>

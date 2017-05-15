@@ -36,6 +36,10 @@
                             </p:panelGrid>
                         </p:dataGrid>
                     </h:form>
+                    <h:form>
+                        <p:commandButton value="Crear cuenta de periodista" action="sign_upPeriodista.xhtml"/>
+                        <p:commandButton value="Crear cuenta de administrador" action="sign_upAdmin.xhtml"/>
+                    </h:form>
                 </section>
             </c:if>
             <c:if test="${!controlAutorizacion.administrador}">

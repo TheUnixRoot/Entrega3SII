@@ -26,7 +26,7 @@ import org.primefaces.model.UploadedFile;
  *
  * @author juanp
  */
-@Named(value = "signupBean")
+@Named(value = "signupPeriodistaBean")
 @RequestScoped
 public class SignupPeriodistaBean {
     @Inject
