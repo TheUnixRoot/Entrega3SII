@@ -38,8 +38,7 @@ public class CrearLugarBean {
     private Geolocalizacion g;
     private UploadedFile file;
 
-
-    public CrearLugarBean () {
+    public CrearLugarBean() {
         l = new Lugar();
         g = new Geolocalizacion();
     }
@@ -47,11 +46,11 @@ public class CrearLugarBean {
     public long getId() {
         return l.getId();
     }
-    
+
     public void setId(long id) {
         this.l.setId(id);
     }
-    
+
     public String getNombre() {
         return l.getNombre();
     }
@@ -109,17 +108,18 @@ public class CrearLugarBean {
 
         List<Lugar> lugares = persistencia.getListaLugares();
         boolean b = false;
-        for (Lugar i : lugares) {
-            if (i.getNombre().equals(nombre)) {
+        int i = 0;
+        while (i < lugares.size() && !b) {
+            if (lugares.get(i).getNombre().equals(nombre)) {
                 b = true;
             }
         }
         return b;
     }
-    
+
     public String insertarLugar() {
-        List<Lugar> lugares = persistencia.getListaLugares();
-        
+//        List<Lugar> lugares = persistencia.getListaLugares();
+
         if (existeLugar(l.getNombre())) {
 
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Lugar ya existente en la base de datos", "Lugar ya existente en la base de datos");
@@ -127,21 +127,23 @@ public class CrearLugarBean {
 
             return null;
         }
-        g.setId(System.currentTimeMillis()-4);
-        l.setId(System.currentTimeMillis());
+//        g.setId(System.currentTimeMillis()-4);
+//        l.setId(System.currentTimeMillis());
         l.setBorrado(false);
 
         l.setGeolocalizacion(g);
         g.setLugar(l);
         l.setOcurren_at(new ArrayList<Evento>());
         l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
-        lugares.add(l);
-        try {
-            persistencia.setListaLugares(lugares);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+//        lugares.add(l);
+        persistencia.setLugar(l);
+        persistencia.setGeolocaclizacion(g);
+//        try {
+//            persistencia.setListaLugares(lugares);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+
         return "index.xhtml";
     }
 
