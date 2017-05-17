@@ -71,24 +71,27 @@ public class Crud_anunciosBean {
      */
     public String publicar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        Anuncio anun = new Anuncio();
-        anun.setId(Long.parseLong(params.get("id")));
+        Anuncio anun = persistencia.getAnuncio(Long.parseLong(params.get("id")));
+//                new Anuncio();
+//        anun.setId(Long.parseLong(params.get("id")));
         List<Anuncio> lista = persistencia.getListaAnuncios();
-        int idx = lista.indexOf(anun);
-        anun = lista.get(idx);
-        System.out.println(anun.getId());
+//        int idx = lista.indexOf(anun);
+//        anun = lista.get(idx);
+//        System.out.println(anun.getId());
         for (Anuncio a : lista) {
             if (a.getLugar().equals(anun.getLugar())) {
                 a.setOnline(false);
+                persistencia.setAnuncio(a);
             }
         }
         anun.setOnline(true);
-        lista.set(idx, anun);
-        try {
-            persistencia.setListaAnuncios(lista);
-        } catch (InterruptedException ex) {
-            System.err.println("Error al publicar el anuncio " + ex.getMessage());
-        }
+        persistencia.setAnuncio(anun);
+//        lista.set(idx, anun);
+//        try {
+//            persistencia.setListaAnuncios(lista);
+//        } catch (InterruptedException ex) {
+//            System.err.println("Error al publicar el anuncio " + ex.getMessage());
+//        }
         return null;
     }
     
