@@ -46,7 +46,6 @@ public class verEventoBean {
         
     }
     
-    
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
