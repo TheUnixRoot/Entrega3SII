@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 
 /**
@@ -399,6 +397,169 @@ public class PersistenceMock implements Serializable {
         this.listaTags = listaTags;
         mutexTags.release();
     }
+    /**
+     * Inserta o actualiza un usuario en el contexto
+     * de persistencia.
+     * @param usr Entidad Usuario en cuestion
+     */
+    public void setUsuario(Usuario usr) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el usuario pedido
+     * @param id Id del Usuario requerido
+     * @return Usuario solicitado o null si no existiese
+     */
+    public Usuario getUsuario(Long id) {
+        return ;
+    }
+    /**
+     * Inserta o actualiza un evento en el contexto
+     * de persistencia.
+     * @param eve Entidad Evento en cuestion
+     */
+    public void setEvento(Evento eve) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el evento pedido
+     * @param id Id del Evento requerido
+     * @return Evento solicitado o null si no existiese
+     */
+    public Evento getEvento(Long id) {
+        return ;
+    }
     
+    public void setLugar(Lugar lug) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el lugar pedido
+     * @param id Id del Lugar requerido
+     * @return Lugar solicitado o null si no existiese
+     */
+    public Lugar getLugar(Long id) {
+        return ;
+    }
+    
+    public void setTag(Tag tg) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el tag pedido
+     * @param id Id del Tag requerido
+     * @return Tag solicitado o null si no existiese
+     */
+    public Tag getTag(Long id) {
+        
+    }
+    
+    public void setValoracion_eve(Valoracion_eve veve) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia la Valoracion_eve pedido
+     * @param id Id de la Valoracion_eve requerido
+     * @return Valoracion_eve solicitada o null si no existiese
+     */
+    public Valoracion_eve getValoracion_eve(Long id) {
+        return ;
+    }
+    
+    public void setValoracion_lug(Valoracion_lug vlug) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia la Valoracion_lug pedido
+     * @param id Id de la Valoracion_lug requerido
+     * @return Valoracion_lug solicitada o null si no existiese
+     */
+    public Valoracion_lug getValoracion_lug(Long id) {
+        return ;
+    }
+    
+    public void setPeriodista(Periodista per) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el periodista pedido
+     * @param id Id del periodista requerido
+     * @return periodista solicitado o null si no existiese
+     */
+    public Periodista getPeriodista(Long id) {
+        return ;
+    }
+    
+    public void setAdministrador(Administrador adm) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el administrador pedido
+     * @param id Id del administrador requerido
+     * @return administrador solicitado o null si no existiese
+     */
+    public Administrador getAdministrador(Long id) {
+        return ;
+    }
+    
+    public void setMensaje(Mensaje msg) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el mensaje pedido
+     * @param id Id del mensaje requerido
+     * @return mensaje solicitado o null si no existiese
+     */
+    public Mensaje getMensaje(Long id) {
+        return ;
+    }
+    
+    public void setNotificacion(Notificacion ntf) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia la notificacion pedida
+     * @param id Id de la notificacion requerida
+     * @return notificacion solicitada o null si no existiese
+     */
+    public Notificacion getNotificacion(Long id) {
+        return ;
+    }
+    
+    public void setGeolocaclizacion(Geolocalizacion geo) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia la geolocalizacion pedida
+     * @param id Id de la geolocalizacion requerida
+     * @return geolocalizacion solicitada o null si no existiese
+     */
+    public Geolocalizacion getGeolocalizacion(Long id) {
+        return ;
+    }
+    
+    public void setFormulario(Formulario frm) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el formulario pedido
+     * @param id Id del formulario requerido
+     * @return formulario solicitado o null si no existiese
+     */
+    public Formulario getFormulario(Long id) {
+        return ;
+    }
+    
+    public void setAnuncio(Anuncio adv) {
+        
+    }
+    /**
+     * Devuelve del contexto de persistencia el anuncio pedido
+     * @param id Id del anuncio requerido
+     * @return anuncio solicitado o null si no existiese
+     */
+    public Anuncio getAnuncio(Long id) {
+        return ;
+    }
 }
 
