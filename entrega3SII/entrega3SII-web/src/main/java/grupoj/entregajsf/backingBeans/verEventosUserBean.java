@@ -36,6 +36,10 @@ public class verEventosUserBean {
         listaEventos = persistencia.getListaEventos();
     }
 
+    /**
+     * Genera una lista personalizada de eventos
+     * @return ListaEventos
+     */
     public List<Evento> getListaEventos() {
         List<Evento> lista = new ArrayList<>();
         for (Evento e : listaEventos) {
