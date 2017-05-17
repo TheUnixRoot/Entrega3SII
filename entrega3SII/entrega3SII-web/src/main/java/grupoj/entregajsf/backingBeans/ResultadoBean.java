@@ -28,8 +28,8 @@ import org.omnifaces.util.Faces;
 @Named(value = "resultadoBean")
 @SessionScoped
 public class ResultadoBean implements Serializable {
-    @Inject
-    private PersistenceMock persistencia;
+//    @Inject
+//    private PersistenceMock persistencia;
     private Semaphore mutex;
     private List<Evento> listaEventos;
     
