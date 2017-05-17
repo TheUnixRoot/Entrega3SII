@@ -54,18 +54,19 @@ public class verEvento implements Serializable {
     public void init() {
         usu = control.getUsuario();
         req = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        this.setId(Long.parseLong(req.get("id")));
-        Evento ev = new Evento();
-        ev.setId(id);
+        id = Long.parseLong(req.get("id"));
+        Evento ev = persistencia.getEvento(id);
+//        ev.setId(id);
 //        System.out.println(id);
-        if (this.persistencia.getListaEventos().contains(ev)) {
-            this.evento = this.persistencia.getListaEventos()
-                    .get(
-                            this.persistencia.getListaEventos().indexOf(ev)
-                    );
-        } else {
-            this.evento = null;
-        }
+//        if (ev != null) {
+            this.evento = ev;
+//            this.persistencia.getListaEventos()
+//                    .get(
+//                            this.persistencia.getListaEventos().indexOf(ev)
+//                    );
+//        } else {
+//            this.evento = null;
+//        }
         // Aniadir al historial del usuario
         if (usu != null) {
 
@@ -77,6 +78,7 @@ public class verEvento implements Serializable {
                 formu.setSobre_by(null);
                 formu.setUsuario(usu);
                 this.usu.setForm(formu);
+                
             }
             List<Evento> leu = formu.getHistorialEventos();
             if (leu == null) {
@@ -92,24 +94,29 @@ public class verEvento implements Serializable {
                     this.evento.setHistoriado_by(lhe);
                 }
             }
+            
+            // Actualizar cambios en usuario y eventos
+            persistencia.setUsuario(this.usu);
+            persistencia.setEvento(this.eve);
+            
         }
 
-        ev = null;
+ //       ev = null;
     }
 
     /**
      * Creates a new instance of verEvento
      */
-    public verEvento() {
-    }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//    public verEvento() {
+//    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
 
     public Evento getEvento() {
         return evento;
@@ -180,13 +187,12 @@ public class verEvento implements Serializable {
                                     "Para añadir me interesa, inicia sesión"));
         } else {
             Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            Evento ev = new Evento();
-            ev.setId(Long.parseLong(map.get("id")));
-            ev = persistencia.getListaEventos()
-                    .get(
-                            persistencia.getListaEventos()
-                                    .indexOf(ev)
-                    );
+            Evento ev = persistencia.getEvento(Long.parseLong(map.get("id")));
+//            ev = persistencia.getListaEventos()
+//                    .get(
+//                            persistencia.getListaEventos()
+//                                    .indexOf(ev)
+//                    );
             if (!usu.getMeInteresa().contains(ev)) {
                 FacesContext.getCurrentInstance()
                         .addMessage("growlmsg",
@@ -204,6 +210,8 @@ public class verEvento implements Serializable {
                 usu.getMeInteresa().remove(ev);
                 ev.getInteresados_at().remove(usu);
             }
+            persistencia.setUsuario(usu);
+            persistencia.setEvento(ev);
         }
     }
 
@@ -221,16 +229,22 @@ public class verEvento implements Serializable {
         return stc;
     }
     
+    /**
+     * Genera el StreamedContent de la valoracion de un evento
+     * @return 
+     */
     public StreamedContent generarEve() {
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            Valoracion_eve val = new Valoracion_eve();
-            val.setId(Long.parseLong(params.get("ide")));
-            byte[] mul = evento.getValoraciones_sobre()
-                    .get(
-                            evento.getValoraciones_sobre().indexOf(val)
-                    ).getFotos();
+            Valoracion_eve val = persistencia.getValoracion_eve(Long.parseLong(params.get("ide")));
+//            val.setId(Long.parseLong(params.get("ide")));
+            byte[] mul = val.getFotos():
+                    
+//                    evento.getValoraciones_sobre()
+//                    .get(
+//                            evento.getValoraciones_sobre().indexOf(val)
+//                    ).getFotos();
             con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
             
         } catch (ArrayIndexOutOfBoundsException ie) {
@@ -241,16 +255,21 @@ public class verEvento implements Serializable {
         return con;
     }
     
+    /**
+     * Genera el StreamedContent de la valoracion de un lugar
+     * @return 
+     */
     public StreamedContent generarLug() {
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            Valoracion_lug val = new Valoracion_lug();
-            val.setId(Long.parseLong(params.get("idl")));
-            byte[] mul = evento.getOcurre_in().getValoraciones_sobre()
-                    .get(
-                            evento.getOcurre_in().getValoraciones_sobre().indexOf(val)
-                    ).getFotos();
+            Valoracion_lug val = persistencia.getValoracion_lug(Long.parseLong(params.get("idl")));
+//            val.setId(Long.parseLong(params.get("idl")));
+            byte[] mul = val.getFotos();
+//                    evento.getOcurre_in().getValoraciones_sobre()
+//                    .get(
+//                            evento.getOcurre_in().getValoraciones_sobre().indexOf(val)
+//                    ).getFotos();
             con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
             
         } catch (ArrayIndexOutOfBoundsException ie) {
