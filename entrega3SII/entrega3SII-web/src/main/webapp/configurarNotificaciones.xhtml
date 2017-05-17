@@ -31,8 +31,6 @@ and open the template in the editor.
                                     <f:selectItem itemLabel="Si" itemValue="0" />
                                     <f:selectItem itemLabel="No" itemValue="1" />
                                 </p:selectOneButton>
-
-
                                 <p:outputLabel value="Como recibir notifiaciones : " />
                                 <p:selectOneMenu id="TipoNotificaciones" value="#{configurarNotificaciones.notificacion}" >
                                     <f:selectItems value="#{configurarNotificaciones.listaNotif}" var="n" itemLabel="#{ntfcn}" itemValue="#{ntfcn}"/>

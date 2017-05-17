@@ -28,18 +28,19 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "aniadirAEvento")
 @RequestScoped
 public class AniadirAEvento {
+
     @Inject
     private ControlAutorizacion ctrAut;
-    @Inject 
+    @Inject
     private PersistenceMock persistencia;
-    
+
     // En las clases ya los tengo
     private Evento eve;
     private Integer valEvento;
     private String comEvento;
-    private UploadedFile fEvento;  
+    private UploadedFile fEvento;
     private List<Valoracion_eve> listEve;
-    
+
     private Lugar lug;
     private Integer valLugar;
     private String comLugar;
@@ -50,14 +51,14 @@ public class AniadirAEvento {
     public void init() {
         eve = new Evento();
         String ide = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        if(ide != null) {
+        if (ide != null) {
             eve.setId(Long.parseLong(ide));
             eve = persistencia.getListaEventos()
                     .get(
-                    persistencia.getListaEventos().indexOf(eve));
+                            persistencia.getListaEventos().indexOf(eve));
         }
     }
-    
+
     public Integer getValEvento() {
         return valEvento;
     }
@@ -106,24 +107,28 @@ public class AniadirAEvento {
         this.fLugar = fLugar;
     }
 
-    
+    /**
+     * Añade un comentario de evento a la lista de comentarios existentes o la
+     * crea.
+     *
+     * @return null, vuelve a recargar la página y actualiza los datos.
+     */
     public String añadirComentarioEvento() {
         Usuario usu = this.ctrAut.getUsuario(); // Usuario logueado
-        
+
         listEve = eve.getValoraciones_sobre();
-        
+
         if (listEve == null) {
             listEve = new ArrayList<>();
         }
-        
+
         if (comEvento == null) {
             comEvento = " ";
         }
         if (valEvento == null) {
             valEvento = 3;
         }
-        
-        
+
         Valoracion_eve valEve = new Valoracion_eve();
         valEve.setId(System.currentTimeMillis());
         valEve.setCalificacion(valEvento);
@@ -135,23 +140,29 @@ public class AniadirAEvento {
         }
         valEve.setRealizado_por(usu);
         valEve.setValoracion_sobre(eve);
-        
+
         listEve.add(valEve);
         eve.setValoraciones_sobre(listEve);
-        
+
         valEvento = null;
         valEvento = null;
         fEvento = null;
-        
+
         return null;
     }
-    
+
+    /**
+     * Añade un comentario de lugar a la lista de comentarios existentes o la
+     * crea.
+     *
+     * @return null, vuelve a recargar la página y actualiza los datos.
+     */
     public String añadirComentarioLugar() {
         lug = eve.getOcurre_in(); // Lo cojo de la página que ya tiene uno
         Usuario usu = this.ctrAut.getUsuario(); // Usuario logueado
-        
+
         listLug = lug.getValoraciones_sobre();
-        
+
         if (listLug == null) {
             listLug = new ArrayList<>();
         }
@@ -161,9 +172,8 @@ public class AniadirAEvento {
         if (valLugar == null) {
             valLugar = 3;
         }
-        
-        
-         Valoracion_lug valLug = new Valoracion_lug();
+
+        Valoracion_lug valLug = new Valoracion_lug();
         valLug.setId(System.currentTimeMillis());
         valLug.setCalificacion(valLugar);
         valLug.setComentario(comLugar);
@@ -176,12 +186,12 @@ public class AniadirAEvento {
         valLug.setValoracion_sobre(lug);
         listLug.add(valLug);
         lug.setValoraciones_sobre(listLug);
-        
+
         valLugar = null;
         comLugar = null;
         fLugar = null;
-        
+
         return null;
     }
-    
+
 }
