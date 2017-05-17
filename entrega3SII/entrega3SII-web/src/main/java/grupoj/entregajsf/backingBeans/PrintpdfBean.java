@@ -21,6 +21,7 @@ import org.primefaces.model.StreamedContent;
  * Reedicion de PrintBean por errores de compilación derivados de netbeans
  * y de las refactorizaciones de nombres
  * @author juanp
+ * @deprecated 
  */
 @Named(value = "printpdfBean")
 @RequestScoped
