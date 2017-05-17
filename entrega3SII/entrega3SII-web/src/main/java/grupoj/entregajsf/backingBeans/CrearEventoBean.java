@@ -8,9 +8,13 @@ package grupoj.entregajsf.backingBeans;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
+import grupoj.prentrega1.Tag;
 import grupoj.prentrega1.Usuario;
+import grupoj.prentrega1.Valoracion_eve;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -29,11 +33,6 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class CrearEventoBean {
 
-    /**
-     * Creates a new instance 
-     * 
-     * 
-     */
     @Inject
     private PersistenceMock persistencia;
     @Inject
@@ -53,61 +52,15 @@ public class CrearEventoBean {
     private Usuario subido_by;
     private String borrad;
     private UIComponent enviar;
-    UploadedFile file;
-    
+    private byte[] foto;
+    private String tags;
+
     @PostConstruct
     public void init() {
-        
+
         lugares = persistencia.getListaLugares();
         eventos = persistencia.getListaEventos();
-        
-       
-    }
-    
-    public String insertarEvento() throws InterruptedException{
-      if(existeEvento(nombre)){
-          
-      
-      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Evento ya existente en la base de datos","Lugar ya existente en la base de datos");
-      FacesContext.getCurrentInstance().addMessage("mensaje", fm);
-      
-      return null;
-      }
-      else{
-      
-      Evento e=new Evento();
-      fecha_inicio.setHours(hora.getHours());
-      fecha_inicio.setMinutes(hora.getMinutes());
-      e.setNombre(nombre);
-      e.setPrecio(precio);
-      e.setDonde_comprar(donde_comprar);
-      e.setFecha_inicio(fecha_inicio);
-      e.setFecha_fin(fecha_fin);
-      e.setDescripcion(descripcion);
-      e.setOcurre_in(buscarLugar(ocurre_in));
-      e.setBorrado(false);
-      
-      if(file == null){
-      e.setMultimedia(new byte[1]);
-      }else{
-      e.setMultimedia(file.getContents());
-      }
-      
-      if(cr.isAdministrador() || cr.isPeriodista()){
-      e.setValidado(true);
-      }
-      else{
-      e.setValidado(false);
-      }
-      e.setSubido_by(cr.getUsuario());
-     
-      
-      eventos.add(e);
-      
-      persistencia.setListaEventos(eventos);
-      return "index.xhtml";
-      }
-     
+
     }
 
     public String getNombre() {
@@ -133,8 +86,6 @@ public class CrearEventoBean {
     public void setFecha_fin(Date fecha_fin) {
         this.fecha_fin = fecha_fin;
     }
-
-    
 
     public boolean isValidado() {
         return validado;
@@ -201,16 +152,16 @@ public class CrearEventoBean {
     }
 
     public UploadedFile getFile() {
-        return file;
+        return null;
     }
 
     public void setFile(UploadedFile file) {
-        this.file = file;
+        if (file.getContents().length > 0) {
+            this.foto = file.getContents();
+        } else {
+            this.foto = new byte[1];
+        }
     }
-
-    
-
-
 
     public Date getHora() {
         return hora;
@@ -252,34 +203,116 @@ public class CrearEventoBean {
         this.borrad = borrad;
     }
 
-    
-    
+    public String getTags() {
+        return tags;
+    }
 
-    private boolean existeEvento(String nombre){
-    
-    boolean b=false;
-    for(Evento i : eventos){
-        if(i.getNombre().equals(nombre)){
-        b=true;
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    private boolean existeEvento(String nombre) {
+
+        boolean b = false;
+        for (Evento i : eventos) {
+            if (i.getNombre().equals(nombre)) {
+                b = true;
+            }
         }
-    }
-    return b;
-    }
-    
-    private Lugar buscarLugar(String o){
-    
-    Lugar lg = new Lugar();
-     for(Lugar l : lugares){
-         if(l.getNombre().equals(o)){
-            lg=l;
-        } 
-     }
-     return lg;
+        return b;
     }
 
-    
+    private Lugar buscarLugar(String o) {
 
-    
-    
-    
+        Lugar lg = new Lugar();
+        for (Lugar l : lugares) {
+            if (l.getNombre().equals(o)) {
+                lg = l;
+            }
+        }
+        return lg;
+    }
+
+    public String insertarEvento() throws InterruptedException {
+        if (existeEvento(nombre)) {
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento ya existente en la base de datos", "Evento ya existente en la base de datos");
+            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+
+            return null;
+        }
+        Evento e = new Evento();
+        fecha_inicio.setHours(hora.getHours());
+        fecha_inicio.setMinutes(hora.getMinutes());
+        e.setId(System.currentTimeMillis());
+        e.setNombre(nombre);
+        e.setPrecio(precio);
+        e.setDonde_comprar(donde_comprar);
+        e.setFecha_inicio(fecha_inicio);
+        e.setFecha_fin(fecha_fin);
+        e.setDescripcion(descripcion);
+        e.setOcurre_in(buscarLugar(ocurre_in));
+
+        List<Evento> lugListEv = buscarLugar(ocurre_in).getOcurren_at();
+        lugListEv.add(e);
+        buscarLugar(ocurre_in).setOcurren_at(lugListEv);
+
+        e.setBorrado(false);
+
+        List<Tag> tle = new ArrayList<>();
+        List<Tag> tln = new ArrayList<>();
+        List<Tag> tp = persistencia.getListaTags();
+
+        try (Scanner sc = new Scanner(tags)) {
+            sc.useDelimiter("(,( )*)+");
+            while (sc.hasNext()) {
+                String st = sc.next();
+                boolean find = false;
+                for (Tag tin : tp) {
+                    if (tin.getTexto().equalsIgnoreCase(st)) {
+                        tle.add(tin);
+                        tin.getEventos().add(e);
+                        find = true;
+                    }
+                }
+                if (!find) {
+                    System.out.println(st);
+                    Tag t = new Tag();
+                    t.setId(System.currentTimeMillis());
+                    t.setTexto(st);
+                    List<Evento> let = new ArrayList();
+                    let.add(e);
+                    t.setEventos(let);
+                    tle.add(t);
+                    tln.add(t);
+                }
+            }
+            for (Tag g : tln) {
+                tp.add(g);
+            }
+        }
+        e.setTagged_by(tle);
+        e.setMultimedia(foto);
+        e.setInteresados_at(new ArrayList<Usuario>());
+        e.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
+        if (cr.getUsuario() != null) {
+            if (cr.isAdministrador() || cr.isPeriodista()) {
+                e.setValidado(true);
+            } else {
+                e.setValidado(false);
+            }
+            e.setSubido_by(cr.getUsuario());
+            List<Evento> l = cr.getUsuario().getSubidas();
+            if (l == null) {
+                l = new ArrayList<>();
+            }
+            l.add(e);
+            cr.getUsuario().setSubidas(l);
+        }
+        eventos.add(e);
+
+        persistencia.setListaEventos(eventos);
+        return "index.xhtml";
+    }
+
 }

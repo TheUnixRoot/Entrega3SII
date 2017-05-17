@@ -41,6 +41,7 @@ public class PersistenceMock implements Serializable {
     private Semaphore mutexLugares;
     private Semaphore mutexTags;
     private Semaphore mutexAnuncios;
+    private Semaphore mutexMensajes;
     
     
     /**
@@ -58,31 +59,37 @@ public class PersistenceMock implements Serializable {
         Tag tag1 = new Tag();
         tag1.setId(1L);
         tag1.setTexto("Música");
+        tag1.setEventos(new ArrayList<Evento>());
         listaTags.add(tag1);
         
         Tag tag2 = new Tag();
         tag2.setId(2L);
         tag2.setTexto("Teatro");
+        tag2.setEventos(new ArrayList<Evento>());
         listaTags.add(tag2);
         
         Tag tag3 = new Tag();
         tag3.setId(3L);
         tag3.setTexto("Arte");
+        tag3.setEventos(new ArrayList<Evento>());
         listaTags.add(tag3);
         
         Tag tag4 = new Tag();
         tag4.setId(4L);
         tag4.setTexto("Ópera");
+        tag4.setEventos(new ArrayList<Evento>());
         listaTags.add(tag4);
         
         Tag tag5 = new Tag();
         tag5.setId(5L);
         tag5.setTexto("Cine");
+        tag5.setEventos(new ArrayList<Evento>());
         listaTags.add(tag5);
         
         Tag tag6 = new Tag();
         tag6.setId(6L);
         tag6.setTexto("Deportes");
+        tag6.setEventos(new ArrayList<Evento>());
         listaTags.add(tag6);
        
         
@@ -104,6 +111,8 @@ public class PersistenceMock implements Serializable {
         usr.setPassword("usuario");
         usr.setBorrado(false);
         usr.setNombre("normalito");
+        usr.setMeInteresa(new ArrayList<Evento>());
+        usr.setMsg_send(new ArrayList<Mensaje>());
         try {
             usr.setMultimedia(
                     DropboxController.downloadFile("/usuario.jpeg"));
@@ -126,6 +135,8 @@ public class PersistenceMock implements Serializable {
         per.setPassword("periodista");
         per.setBorrado(false);
         per.setNombre("periodisto");
+        per.setMeInteresa(new ArrayList<Evento>());
+        per.setMsg_send(new ArrayList<Mensaje>());
         try {
             per.setMultimedia(
                     DropboxController.downloadFile("/peri.jpeg"));
@@ -144,6 +155,8 @@ public class PersistenceMock implements Serializable {
         adm.setPassword("administrador");
         adm.setBorrado(false);
         adm.setNombre("administradorcito");
+        adm.setMeInteresa(new ArrayList<Evento>());
+        adm.setMsg_send(new ArrayList<Mensaje>());
         try {
             adm.setMultimedia(
                     DropboxController.downloadFile("/lisa.png"));
@@ -156,6 +169,7 @@ public class PersistenceMock implements Serializable {
         lugar1.setId(1L);
         lugar1.setNombre("plazuela");
         lugar1.setDescripcion("Un sitio muy chu-chuli");
+        lugar1.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         Geolocalizacion geo2 = new Geolocalizacion();
         geo2.setId(System.currentTimeMillis()-1);
         geo2.setCiudad("Torremolinos");
@@ -168,6 +182,7 @@ public class PersistenceMock implements Serializable {
         lugar2.setId(2L);
         lugar2.setNombre("campo futbol");
         lugar2.setDescripcion("estadio grande");
+        lugar2.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         Geolocalizacion geo1 = new Geolocalizacion();
         geo1.setId(System.currentTimeMillis());
         geo1.setCiudad("Malaga");
@@ -183,13 +198,22 @@ public class PersistenceMock implements Serializable {
         e.setDescripcion("Feria de malaga 2017");
         e.setPrecio(20);
         e.setDonde_comprar("www.malaga.com");
-        e.setTagged_by(listaTags);
+        List<Tag> lte = new ArrayList<>();
+        e.setTagged_by(lte);
+        for(Tag tg : listaTags) {
+            tg.getEventos().add(e);
+            lte.add(tg);
+        }
         e.setOcurre_in(lugar1);
+        List<Evento> lein = new ArrayList<>();
+        lein.add(e);
+        lugar1.setOcurren_at(lein);
         e.setId(25L);
         e.setFecha_inicio(new Date());
 
         e.setFecha_fin(new Date());
-
+        e.setInteresados_at(new ArrayList<Usuario>());
+        e.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
         listaEventos.add(e);
         
         Evento e2 = new Evento();
@@ -199,13 +223,22 @@ public class PersistenceMock implements Serializable {
         e2.setDescripcion("Concierto de alguien muy muy famoso");
         e2.setPrecio(50);
         e2.setDonde_comprar("www.antequera.com");
-        e2.setTagged_by(listaTags2);
+        List<Tag> lte2 = new ArrayList<>();
+        e2.setTagged_by(lte2);
+        for(Tag tg : listaTags2) {
+            tg.getEventos().add(e2);
+            lte2.add(tg);
+        }
         e2.setOcurre_in(lugar2);
+        List<Evento> lein2 = new ArrayList<>();
+        lein2.add(e2);
+        lugar2.setOcurren_at(lein2);
         e2.setId(5L);
         e2.setFecha_inicio(new Date());
 
         e2.setFecha_fin(new Date());
-
+        e2.setInteresados_at(new ArrayList<Usuario>());
+        e2.setValoraciones_sobre(new ArrayList<Valoracion_eve>());
         listaEventos.add(e2);
         
         Notificacion ne = new Notificacion();
@@ -302,6 +335,7 @@ public class PersistenceMock implements Serializable {
         mutexLugares = new Semaphore(1);
         mutexTags = new Semaphore(1);
         mutexAnuncios = new Semaphore(1);
+        mutexMensajes = new Semaphore(1);
         
         System.out.println("Persistencia creada en Singleton");
     }
@@ -330,11 +364,11 @@ public class PersistenceMock implements Serializable {
         return listaMensajes;
     }
 
-    public void setListaMensajes(List<Mensaje> listaMensajes) {
+    public void setListaMensajes(List<Mensaje> listaMensajes) throws InterruptedException {
+        mutexMensajes.acquire();
         this.listaMensajes = listaMensajes;
+        mutexMensajes.release();
     }
-
-    
     
     public List<Anuncio> getListaAnuncios() {
         return listaAnuncios;

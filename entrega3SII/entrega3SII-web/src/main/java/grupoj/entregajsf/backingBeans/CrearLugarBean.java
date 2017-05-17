@@ -1,15 +1,19 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 package grupoj.entregajsf.backingBeans;
+
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Geolocalizacion;
 import grupoj.prentrega1.Lugar;
+import grupoj.prentrega1.Valoracion_lug;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -28,90 +32,48 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class CrearLugarBean {
 
-    /**
-     * Creates a new instance 
-     * 
-     * 
-     */
     @Inject
     private PersistenceMock persistencia;
-    private List<Lugar> lugares;
-    
-    private String nombre;
-    private String descripcion;
-    private boolean borrado;
-    private byte[] fotos;
-    private String direccion;
-    private String ciudad;
-    UploadedFile file;
+    private Lugar l;
+    private Geolocalizacion g;
+    private UploadedFile file;
 
-    private UIComponent enviar;
-    @PostConstruct
-    public void init() {
-      
-        lugares = persistencia.getListaLugares();
 
-       
-    }
-    
-    public String insertarLugar() throws InterruptedException{
-      if(existeLugar(nombre)){
-          
-      
-      FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Lugar ya existente en la base de datos","Lugar ya existente en la base de datos");
-      FacesContext.getCurrentInstance().addMessage("mensaje", fm);
-      
-      return null;
-      }
-      else{
-      
-      
-      Lugar l=new Lugar();
-      l.setNombre(nombre);
-      l.setDescripcion(descripcion);
-      l.setBorrado(false);
-      
-      Geolocalizacion g = new Geolocalizacion();
-      g.setDireccion(direccion);
-      g.setCiudad(ciudad);
-      l.setGeolocalizacion(g);
-      
-     /* if(file == null){
-      l.setFotos(new byte[1]);
-      }else{
-      l.setFotos(file.getContents());
-      }*/
-      lugares.add(l);
-      persistencia.setListaLugares(lugares);
-
-      return "gestion_lugar.xhtml";
-      }
-     
+    public CrearLugarBean () {
+        l = new Lugar();
+        g = new Geolocalizacion();
     }
 
+    public long getId() {
+        return l.getId();
+    }
+    
+    public void setId(long id) {
+        this.l.setId(id);
+    }
+    
     public String getNombre() {
-        return nombre;
+        return l.getNombre();
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        l.setNombre(nombre);
     }
 
     public String getDescripcion() {
-        return descripcion;
+        return l.getDescripcion();
     }
 
     public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+        l.setDescripcion(descripcion);
     }
 
-
     public boolean isBorrado() {
-        return borrado;
+        return l.isBorrado();
     }
 
     public void setBorrado(boolean borrado) {
-        this.borrado = borrado;
+        l.setBorrado(borrado);
     }
 
     public UploadedFile getFile() {
@@ -119,71 +81,68 @@ public class CrearLugarBean {
     }
 
     public void setFile(UploadedFile file) {
+        if (file.getContents() != null && file.getContents().length > 0) {
+            l.setFotos(file.getContents());
+        } else {
+            l.setFotos(new byte[1]);
+        }
         this.file = file;
     }
 
-    
-
     public String getDireccion() {
-        return direccion;
+        return g.getDireccion();
     }
 
     public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public Iterable<Lugar> getLugares() {
-        return lugares;
-    }
-
-    public byte[] getFotos() {
-        return fotos;
-    }
-
-    public void setFotos(byte[] fotos) {
-        this.fotos = fotos;
-    }
-
-
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
-
-    public UIComponent getEnviar() {
-        return enviar;
-    }
-
-    public void setEnviar(UIComponent enviar) {
-        this.enviar = enviar;
+        g.setDireccion(direccion);
     }
 
     public String getCiudad() {
-        return ciudad;
+        return g.getCiudad();
     }
 
     public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+        g.setCiudad(ciudad);
     }
 
-    private boolean existeLugar(String nombre){
-    
-    boolean b=false;
-    for(Lugar i : lugares){
-        if(i.getNombre().equals(nombre)){
-        b=true;
+    private boolean existeLugar(String nombre) {
+
+        List<Lugar> lugares = persistencia.getListaLugares();
+        boolean b = false;
+        for (Lugar i : lugares) {
+            if (i.getNombre().equals(nombre)) {
+                b = true;
+            }
         }
+        return b;
     }
-    return b;
+    
+    public String insertarLugar() {
+        List<Lugar> lugares = persistencia.getListaLugares();
+        
+        if (existeLugar(l.getNombre())) {
+
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Lugar ya existente en la base de datos", "Lugar ya existente en la base de datos");
+            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+
+            return null;
+        }
+        g.setId(System.currentTimeMillis()-4);
+        l.setId(System.currentTimeMillis());
+        l.setBorrado(false);
+
+        l.setGeolocalizacion(g);
+        g.setLugar(l);
+        l.setOcurren_at(new ArrayList<Evento>());
+        l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
+        lugares.add(l);
+        try {
+            persistencia.setListaLugares(lugares);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return "index.xhtml";
     }
-    
 
-
-    
-    
-    
 }

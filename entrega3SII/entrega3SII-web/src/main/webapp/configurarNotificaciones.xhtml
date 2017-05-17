@@ -10,7 +10,8 @@ and open the template in the editor.
       xmlns:p="http://primefaces.org/ui"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
             Configurar notificaciones
@@ -19,30 +20,36 @@ and open the template in the editor.
             <ui:param name="nombrePagina" value="Configurar notificaciones" />
         </ui:define>
         <ui:define name="cuerpo">
-        <section id="cuerpo">
-            <article>
-                <h:form id="confNotificaciones">
-                    <p:growl id="mensaje" autoUpdate="true" />
-                    <p:panelGrid columns="2" layout="grid">
-                        <p:outputLabel value="Activar notifiaciones : " />
-                        <p:selectBooleanButton id="ActiNotificaciones" value="#{configurarNotificaciones.notificacionesActivas}" onLabel="Yes" offLabel="No" />
+            <c:if test="#{controlAutorizacion.usuario != null}" >
+                <section id="cuerpo">
+                    <article>
+                        <h:form id="confNotificaciones">
+                            <p:growl id="mensaje" autoUpdate="true" />
+                            <p:panelGrid columns="2" layout="grid">
+                                <p:outputLabel value="Activar notifiaciones : " />
+                                <p:selectOneButton id="Notificaciones" value="#{configurarNotificaciones.notificacionesActivas}">
+                                    <f:selectItem itemLabel="Si" itemValue="0" />
+                                    <f:selectItem itemLabel="No" itemValue="1" />
+                                </p:selectOneButton>
+                                <p:outputLabel value="Como recibir notifiaciones : " />
+                                <p:selectOneMenu id="TipoNotificaciones" value="#{configurarNotificaciones.notificacion}" >
+                                    <f:selectItems value="#{configurarNotificaciones.listaNotif}" var="n" itemLabel="#{ntfcn}" itemValue="#{ntfcn}"/>
+                                </p:selectOneMenu>
 
-                        
-                        <p:outputLabel value="Como recibir notifiaciones : " />
-                        <p:selectOneMenu id="TipoNotificaciones" value="#{configurarNotificaciones.notificacion}" >
-                            <f:selectItems value="#{configurarNotificaciones.listaNotifMostrar}" var="n" itemLabel="#{ntfcn}" itemValue="#{configurarNotificaciones.notificacion}"/>
-                        </p:selectOneMenu>
-                       
-                        <p:commandButton value="Guardar configuración" process="@form" update="confNotificaciones" actionListener="#{configurarNotificaciones.tratarInformacion()}"/>
-                        <!-- Para que salga el boton debajo pongo esta línea -->
-                        <p:button outcome="index.xhtml" value="Cancelar"/>
-                    </p:panelGrid>
+                                <p:commandButton value="Guardar configuración" process="@form" update="confNotificaciones" actionListener="#{configurarNotificaciones.tratarInformacion()}"/>
+                                <!-- Para que salga el boton debajo pongo esta línea -->
+                                <p:button outcome="index.xhtml" value="Cancelar"/>
+                            </p:panelGrid>
 
-                </h:form>
-                
-            </article>
-        </section>
+                        </h:form>
+
+                    </article>
+                </section>
+            </c:if>
+            <c:if test="#{controlAutorizacion.usuario == null}" >
+                <p:outputLabel value="Inicie sesion para configurar sus notificaciones"/>
+            </c:if>
         </ui:define>
     </ui:composition>
-    
+
 </html>

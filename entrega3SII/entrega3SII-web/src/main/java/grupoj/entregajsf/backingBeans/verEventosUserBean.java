@@ -39,7 +39,7 @@ public class verEventosUserBean {
     public List<Evento> getListaEventos() {
         List<Evento> lista = new ArrayList<>();
         for (Evento e : listaEventos) {
-            if(e.isValidado())
+            if(e.isValidado() && !e.isBorrado())
                 lista.add(e);
         }
         
@@ -56,7 +56,7 @@ public class verEventosUserBean {
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         
-        return "edit_evento.xhtml?id=" + params.get("id");
+        return "dejar_valoracion.xhtml?id=" + params.get("id");
     }
     
     

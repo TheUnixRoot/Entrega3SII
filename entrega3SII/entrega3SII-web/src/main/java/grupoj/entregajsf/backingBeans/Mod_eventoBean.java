@@ -6,17 +6,23 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.prentrega1.Evento;
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 import org.omnifaces.cdi.ViewScoped;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 
 /**
@@ -24,7 +30,7 @@ import org.omnifaces.cdi.ViewScoped;
  * @author migue
  */
 @Named(value = "mod_eventoBean")
-@ViewScoped
+@Dependent
 public class Mod_eventoBean implements Serializable {
 
     @Inject
@@ -39,8 +45,37 @@ public class Mod_eventoBean implements Serializable {
     public void setIds(Long ids) {
         this.ids = ids;
     }
+
+    public UploadedFile getFoto() {
+        return null;
+    }
+
+    public void setFoto(UploadedFile foto) {
+        if(foto.getContents().length > 0)
+            this.adv.setMultimedia(foto.getContents());
+    }
     
+    public StreamedContent getFoto2() {
+        if(adv.getMultimedia() == null) 
+            adv.setMultimedia(new byte[1]);
+        return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+    }
+
+    public void setFoto2(StreamedContent foto) {
+        
+    }
     
+    public void setHora(Date hora) {
+        this.adv.getFecha_inicio().setHours(hora.getHours());
+        this.adv.getFecha_inicio().setMinutes(hora.getMinutes());  
+    }
+    
+    public Date getHora() {
+        Date h = new Date();
+        h.setHours(adv.getFecha_inicio().getHours());
+        h.setMinutes(adv.getFecha_inicio().getMinutes());
+        return h;
+    }
     
     @PostConstruct
     public void init() {

@@ -8,13 +8,16 @@ package grupoj.entregajsf.backingBeans;
 
 
 import grupoj.prentrega1.Evento;
-import grupoj.prentrega1.Lugar;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
+import org.omnifaces.util.Faces;
 
 
 /**
@@ -27,50 +30,56 @@ public class EliminarEvento {
 
     @Inject
     private PersistenceMock persistencia;
-    private String valor;
     private List<Evento> listaEventos;
-    private Evento adv;
-    private Evento a;
+    private Evento ev;
     
     @PostConstruct
     public void init() {
-       
+       Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+       listaEventos = persistencia.getListaEventos();
+       ev = new Evento();
+       ev.setId(Long.parseLong(params.get("id")));
+       ev = listaEventos.get(
+                persistencia.getListaEventos().indexOf(ev)
+                );
+    }
+
+    public PersistenceMock getPersistencia() {
+        return persistencia;
+    }
+
+    public void setPersistencia(PersistenceMock persistencia) {
+        this.persistencia = persistencia;
+    }
+
+    public String getValor() {
+        return ev.isBorrado()?"si":"no";
+    }
+
+    public void setValor(String valor) {
+        ev.setBorrado(valor.equalsIgnoreCase("si"));
     }
 
     public List<Evento> getListaEventos() {
         return listaEventos;
     }
 
-    public void setListaLugares(List<Evento> listaEventos) throws InterruptedException{
-        //this.listaLugares = listaLugares;
-        persistencia.setListaEventos(listaEventos);
+    public void setListaEventos(List<Evento> listaEventos) {
+        this.listaEventos = listaEventos;
     }
 
-    public String getValor() {
-        return valor;
+    public Evento getEv() {
+        return ev;
     }
 
-    public void setValor(String valor) {
-        this.valor = valor;
+    public void setEv(Evento ev) {
+        this.ev = ev;
     }
 
-    public Evento getAdv() {
-        return adv;
-    }
-
-    public void setAdv(Evento adv) {
-        this.adv = adv;
-    }
-    
-    
-    public String eliminarEvento() throws InterruptedException{
-    
-     if(valor.equals("si")){
-     
-     }else{
-     
-     }
-    return "gestionar_Evento.xhtml";
+    public String eliminarEvento() {
+        FacesContext.getCurrentInstance()
+                .addMessage("formu:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento actualizado", "Evento actualizado"));
+        return null;
     }
     
     

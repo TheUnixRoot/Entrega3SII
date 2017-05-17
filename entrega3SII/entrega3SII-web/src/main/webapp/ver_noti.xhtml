@@ -27,8 +27,8 @@
                     </h:form>
                 </section>
             </c:if>
-            <c:if test="${!controlAutorizacion.administrador}">
-                <p:outputLabel value="403 Forbidden"/>
+            <c:if test="#{controlAutorizacion.usuario == null}" >
+                <p:outputLabel value="Inicie sesion para ver sus notificaciones"/>
             </c:if>
 
         </ui:define>

@@ -7,103 +7,81 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
+        <ui:define name="pageName">
+            Información del evento
+        </ui:define>
         <ui:define name="navBarName">
             <ui:param name="nombrePagina" value="Información del evento" />
         </ui:define>
         <ui:define name="cuerpo">
-            
-                    <section id="cuerpo">
-                    <article id="#{verEvento.evento.nombre}">
-                        <p:layout fullPage="false">
-                            <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
-                            </p:layoutUnit>
-                            <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
-                                <p:panelGrid columns="1">
-                                    <p:graphicImage width="150" value="#{verEvento.multimedia}">
-                                        <f:param name="id" value="#{verEvento.id}"/>
-                                    </p:graphicImage>
-                                    <p:outputLabel value="Nombre" style="font-size: large" />
-                                    <p:outputLabel value="#{verEvento.evento.nombre}" style="font-size: small" />
-                                    <p:outputLabel value="Fecha" style="font-size: large" />
+            <section id="cuerpo">
+                <article id="#{verEvento.evento.nombre}">
+                    <p:layout fullPage="false">
+                        <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
 
-                                    <p:outputLabel value="#{verEvento.evento.fecha_inicio}" style="font-size: small" />
-                                    <!--<p:outputLabel value="{verEvento.evento.fecha1.toString - verEvento.evento.fecha2.toString}" style="font-size: small" />-->
-                                    <p:outputLabel value="Lugar" style="font-size: large" />
-                                    <p:outputLabel value="#{verEvento.evento.ocurre_in.nombre}" style="font-size: small" />
-                                    <p:outputLabel value="Descripcion" style="font-size: large" />
-                                    <p:outputLabel value="#{verEvento.evento.descripcion}" style="font-size: small" />
-                                    <p:outputLabel value="Precio" style="font-size: large" />
-                                    <p:outputLabel value="#{verEvento.evento.precio}€" style="font-size: small" />
-                                    <p:outputLabel value="Comprar entradas" style="font-size: large" />
-                                    <h:form>
-                                    <p:outputLabel value="#{verEvento.evento.donde_comprar}" style="font-size: small"/>
-                                    <p:commandButton value="#{verEvento.evento.interesados_at.size}" actionListener="#{verEvento.meInteresa()}" ajax="false" />
-                                    
-                                    </h:form>
-                                    <h:form>
-                                        <p:commandButton value="Generar pdf">
-                                            <p:fileDownload  value="#{printpdf.file}" >
-                                                <f:param name="id" value="#{verEvento.id}"/>
-                                    
-                                            </p:fileDownload>
-                                        </p:commandButton>
-                                    </h:form>
-                                </p:panelGrid>
-                                <h:form id="añadirAEvento">                
-
-                                    <p:panelGrid columns="2" layout="grid">
-                                        <p:inputTextarea id="Comentario" placeholder="Añade tu comentario sobre el evento..." value="#{aniadirAEvento.comEvento}" cols="100" rows="6" />
-
-                                        <h:outputText value=" " />
-                                        <h:outputText value="Valoración del evento: " />
-                                        <p:rating id="Valoracion" value="#{aniadirAEvento.valEvento}"/>
-
-                                        <h:outputText value="Seleccionar imagen del evento para subir: " />
-                                        <p:growl id="imgEvento" showDetail="true" />
-
-                                        <p:row>
-                                            <p:column colspan="2">
-                                                <p:fileUpload skinSimple="true" mode="simple" value="#{aniadirAEvento.fEvento}"/>
-                                            </p:column>
-                                        </p:row>
-
-                                        <h:outputText value=" " />
-                                        <h:outputText value=" " />
-
-                                        <p:commandButton value="Comentar y valorar evento"  update="añadirAEvento" action="#{aniadirAEvento.añadirComentarioEvento()}" ajax="false" onclick="this.Valoracion.value = ''" />
-
-                                    </p:panelGrid>
+                            <p:growl id="growlmsg" showDetail="true" />
+                            <p:panelGrid columns="1">
+                                <p:graphicImage width="150" value="#{verEvento.multimedia}">
+                                    <f:param name="id" value="#{verEvento.evento.id}"/>
+                                </p:graphicImage>
+                                <p:outputLabel value="Nombre" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.nombre}" style="font-size: large" />
+                                <p:outputLabel value="Fecha comienzo" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.fecha_inicio}" style="font-weight: large" />
+                                <p:outputLabel value="Fecha finalización" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.fecha_fin}" style="font-weight: large" />
+                                <p:outputLabel value="Lugar" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.ocurre_in.nombre}" style="font-size: large" />
+                                <p:outputLabel value="Descripcion" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.descripcion}" style="font-size: large" />
+                                <p:outputLabel value="Precio" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.precio}€" style="font-size: large" />
+                                <p:outputLabel value="Donde comprar entradas" style="font-weight: bold" />
+                                <p:outputLabel value="#{verEvento.evento.donde_comprar}" style="font-size: large"/>
+                                <h:form>
+                                    <p:commandButton id="botonlike" value="Me interesa! #{verEvento.evento.interesados_at.size()}" 
+                                                     action="#{verEvento.meInteresa()}" 
+                                                     update="botonlike growlmsg">
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:commandButton>
                                 </h:form>
-
-                                <h:form id="añadirALugar">                
-
-                                    <p:panelGrid columns="2" layout="grid">
-                                        <p:inputTextarea id="Comentario" placeholder="Añade tu comentario sobre el lugar..." value="#{aniadirAEvento.comLugar}" autoResize="true" cols="100" rows="6" />
-                                        <h:outputText value=" " />
-                                        <h:outputText value="Valoración del lugar: " />
-                                        <p:rating id="Valoracion" value="#{aniadirAEvento.valLugar}"/>
-
-                                        <h:outputText value="Seleccionar imagen del lugar para subir: " />
-                                        <p:growl id="imgLugar" showDetail="true" />
-
-                                        <p:row>
-                                            <p:column colspan="2">
-                                                <p:fileUpload skinSimple="true" mode="simple" value="#{aniadirAEvento.fLugar}"/>
-                                            </p:column>
-                                        </p:row>
-
-                                        <h:outputText value=" " />
-                                        <h:outputText value=" " />
-
-                                        <p:commandButton value="Comentar y valorar lugar"  update="añadirALugar" action="#{aniadirAEvento.añadirComentarioLugar()}" ajax="false" />
-
-                                    </p:panelGrid>
+                                <h:form>
+                                    <p:commandButton ajax="false" value="Generar pdf">
+                                        <p:fileDownload  value="#{verEvento.file}" >
+                                        </p:fileDownload>
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:commandButton>
                                 </h:form>
+                            </p:panelGrid>
 
-                            </p:layoutUnit>
-                        </p:layout>
-                    </article>
-                </section>
+                            <h:form>
+                                <p:dataGrid columns="1" emptyMessage="Nadie ha valorado el evento aún" 
+                                            value="#{verEvento.evento.valoraciones_sobre}" var="valoracion" >
+                                    <p:panelGrid columns="2" layout="grid">
+                                        <p:outputLabel value="#{valoracion.realizado_por.nombre}" style="font-size: large" />
+                                        <p:rating value="#{valoracion.calificacion}" readonly="true" />
+                                        <p:outputLabel value="#{valoracion.comentario}" />
+                                        <p:graphicImage width="150" value="#{verEvento.generarEve()}">
+                                            <f:param name="ide" value="#{valoracion.id}"/>
+                                        </p:graphicImage>
+                                    </p:panelGrid>
+                                </p:dataGrid>
+                                <p:dataGrid columns="1" emptyMessage="Nadie ha valorado el lugar aún" 
+                                            value="#{verEvento.evento.ocurre_in.valoraciones_sobre}" var="valoracion" >
+                                    <p:panelGrid columns="2" layout="grid">
+                                        <p:outputLabel value="#{valoracion.realizado_por.nombre}" style="font-size: large" />
+                                        <p:rating value="#{valoracion.calificacion}" readonly="true" />
+                                        <p:outputLabel value="#{valoracion.comentario}" />
+                                        <p:graphicImage width="150" value="#{verEvento.generarLug()}">
+                                            <f:param name="idl" value="#{valoracion.id}"/>
+                                        </p:graphicImage>
+                                    </p:panelGrid>
+                                </p:dataGrid>
+                            </h:form>
+                        </p:layoutUnit>
+                    </p:layout>
+                </article>
+            </section>
         </ui:define>
     </ui:composition>
 </html>

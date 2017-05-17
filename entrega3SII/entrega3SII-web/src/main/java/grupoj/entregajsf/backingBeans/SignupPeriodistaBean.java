@@ -7,8 +7,10 @@ package grupoj.entregajsf.backingBeans;
 
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
+import grupoj.prentrega1.Lugar;
 import grupoj.prentrega1.Mensaje;
 import grupoj.prentrega1.Notificacion;
+import grupoj.prentrega1.Periodista;
 import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
@@ -24,20 +26,21 @@ import org.primefaces.model.UploadedFile;
  *
  * @author juanp
  */
-@Named(value = "signupBean")
+@Named(value = "signupPeriodistaBean")
 @RequestScoped
-public class SignupBean {
+public class SignupPeriodistaBean {
     @Inject
     private ControlAutorizacion ctrl;
     @Inject
     private PersistenceMock persistencia;
-    private Usuario usuario;
+    private Periodista periodista;
+
     
     /**
      * Creates a new instance of SignupBean
      */
-    public SignupBean() {
-        usuario = new Usuario();
+    public SignupPeriodistaBean() {
+        periodista = new Periodista();
     }
 
     public PersistenceMock getPersistencia() {
@@ -48,68 +51,86 @@ public class SignupBean {
         this.persistencia = persistencia;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Periodista getPeriodista() {
+        return periodista;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setPeriodista(Periodista periodista) {
+        this.periodista = periodista;
     }
 
     public String getPass() {
-        return usuario.getPassword();
+        return periodista.getPassword();
     }
 
     public void setPass(String pass) {
-        this.usuario.setPassword(pass);
+        this.periodista.setPassword(pass);
     }
 
     public String getNombre() {
-        return usuario.getNombre();
+        return periodista.getNombre();
     }
 
     public void setNombre(String nombre) {
-        this.usuario.setNombre(nombre);
+        this.periodista.setNombre(nombre);
     }
     
     public String getApellidos() {
-        return usuario.getApellidos();
+        return periodista.getApellidos();
     }
 
     public void setApellidos(String apellidos) {
-        this.usuario.setApellidos(apellidos);
+        this.periodista.setApellidos(apellidos);
     }
     
     public String getEmail() {
-        return usuario.getEmail();
+        return periodista.getEmail();
     }
 
     public void setEmail(String email) {
-        this.usuario.setEmail(email);
+        this.periodista.setEmail(email);
     }
     
     public String getTelefono() {
-        return usuario.getTelefono();
+        return periodista.getTelefono();
     }
 
     public void setTelefono(String telefono) {
-        this.usuario.setTelefono(telefono);
+        this.periodista.setTelefono(telefono);
     }
     
     public Date getFechaNacimiento() {
-        return usuario.getFechaNacimiento();
+        return periodista.getFechaNacimiento();
     }
 
     public void setFechaNacimiento(Date fechaNacimiento) {
-        this.usuario.setFechaNacimiento(fechaNacimiento);
+        this.periodista.setFechaNacimiento(fechaNacimiento);
     }
     
     public void setFoto(UploadedFile foto) {
         if(foto.getContents().length > 0)
-            this.usuario.setMultimedia(foto.getContents());
+            this.periodista.setMultimedia(foto.getContents());
         else 
-            this.usuario.setMultimedia(new byte[1]);
+            this.periodista.setMultimedia(new byte[1]);
     }
+
+    public String getSeccion() {
+        return periodista.getSeccion();
+    }
+
+    public void setSeccion(String seccion) {
+        this.periodista.setSeccion(seccion);
+    }
+
+    public String getPuesto() {
+        return periodista.getPuesto();
+    }
+
+    public void setPuesto(String puesto) {
+        this.periodista.setPuesto(puesto);
+    }
+    
+    
     
     public UploadedFile getFoto() {
         return null;
@@ -121,20 +142,23 @@ public class SignupBean {
      */
     public String submit() {
         List<Usuario> list = persistencia.getListaUsuarios();
-        usuario.setId(System.currentTimeMillis());
-        usuario.setBorrado(false);
-        usuario.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
-        usuario.setNotificaciones(new ArrayList<Notificacion>());
-        usuario.setMeInteresa(new ArrayList<Evento>());
-        usuario.setMsg_send(new ArrayList<Mensaje>());
-        list.add(usuario);
+        periodista.setId(System.currentTimeMillis());
+        periodista.setBorrado(false);
+        periodista.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
+        periodista.setNotificaciones(new ArrayList<Notificacion>());
+        periodista.setMeInteresa(new ArrayList<Evento>());
+        periodista.setMsg_send(new ArrayList<Mensaje>());
+        periodista.setGestionarNotificacion(new ArrayList<Notificacion>());
+        periodista.setGestionarLugar(new ArrayList<Lugar>());
+        periodista.setGestionarEvento(new ArrayList<Evento>());
+        list.add(periodista);
         try {
             persistencia.setListaUsuarios(list);
-            ctrl.setUsuario(usuario);
+            
         } catch (InterruptedException ex) {
             System.err.println("Error al insertar usuario en persistencia");
         }
-        return "index.xhtml";
+        return "gestion_usuarios.xhtml";
     }
 }
 
