@@ -70,18 +70,17 @@ public class Mod_LugarBean implements Serializable {
     
     @PostConstruct
     public void init() {
-        Lugar add = new Lugar();
-        add.setId(Long.parseLong(
+//        Lugar add = new Lugar();
+//        add.setId(Long.parseLong(
+//                FacesContext.getCurrentInstance()
+//                        .getExternalContext()
+//                .getRequestParameterMap().get("id")
+//        ));
+        adv = persistencia
+                .getLugar(Long.parseLong(
                 FacesContext.getCurrentInstance()
                         .getExternalContext()
-                .getRequestParameterMap().get("id")
-        ));
-        adv = persistencia
-                .getListaLugares()
-                .get(
-                persistencia
-                .getListaLugares()
-                .indexOf(add)
+                .getRequestParameterMap().get("id"))
                 );
         
     }
@@ -105,19 +104,20 @@ public class Mod_LugarBean implements Serializable {
     
     public String modificarLugar(){
 
-        List<Lugar> lista =persistencia.getListaLugares();
-        
-        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
-        
-        try{
-        
-            persistencia.setListaLugares(lista);
-        } catch (InterruptedException ex){
-        
-            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE,null,ex);
-        }
-        
-        
+//        List<Lugar> lista =persistencia.getListaLugares();
+//        
+//        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
+//        
+        persistencia.setLugar(adv);
+//        try{
+//        
+//            persistencia.setListaLugares(lista);
+//        } catch (InterruptedException ex){
+//        
+//            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE,null,ex);
+//        }
+//        
+//        
         return "gestion_lugar.xhtml";
 
     }

@@ -79,19 +79,18 @@ public class Mod_eventoBean implements Serializable {
     
     @PostConstruct
     public void init() {
-        Evento add = new Evento();
-        add.setId(Long.parseLong(
+        adv = persistencia.getEvento(Long.parseLong(
                 FacesContext.getCurrentInstance()
                         .getExternalContext()
                 .getRequestParameterMap().get("id")
         ));
-        adv = persistencia
-                .getListaEventos()
-                .get(
-                persistencia
-                .getListaEventos()
-                .indexOf(add)
-                );
+//        adv = persistencia
+//                .getListaEventos()
+//                .get(
+//                persistencia
+//                .getListaEventos()
+//                .indexOf(add)
+//                );
         
     }
     
@@ -114,16 +113,17 @@ public class Mod_eventoBean implements Serializable {
     
     
     public String modificarEvento(){
-        
-       List<Evento> lista = persistencia.getListaEventos();
-       lista.set(
-               persistencia.getListaEventos().indexOf(adv),
-               adv);
-        try {
-            persistencia.setListaEventos(lista);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        persistencia.setEvento(adv);
+//        
+//       List<Evento> lista = persistencia.getListaEventos();
+//       lista.set(
+//               persistencia.getListaEventos().indexOf(adv),
+//               adv);
+//        try {
+//            persistencia.setListaEventos(lista);
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         
         return "gestion_evento.xhtml";
     

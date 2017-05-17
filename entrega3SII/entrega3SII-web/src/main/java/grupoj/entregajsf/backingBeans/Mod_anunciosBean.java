@@ -43,12 +43,11 @@ public class Mod_anunciosBean implements Serializable{
     @PostConstruct
     public void init() {
         Map<String, String> mapa = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        adv = new Anuncio();
-        adv.setId(Long.parseLong(mapa.get("id")));
-        adv = persistencia.getListaAnuncios()
-                .get(
-                    persistencia.getListaAnuncios()
-                            .indexOf(adv));
+        adv = persistencia.getAnuncio(Long.parseLong(mapa.get("id")));
+//        adv = persistencia.getListaAnuncios()
+//                .get(
+//                    persistencia.getListaAnuncios()
+//                            .indexOf(adv));
     }
 
     public PersistenceMock getPersistencia() {
@@ -126,6 +125,7 @@ public class Mod_anunciosBean implements Serializable{
             for(Anuncio a: lista) {
                 if(a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
+                    persistencia.setAnuncio(a);
                 }
             }
         } else {
@@ -142,13 +142,14 @@ public class Mod_anunciosBean implements Serializable{
                         "No se puede desactivar el anuncio, pruebe activando otro del mismo lugar"));
             }
         }
-        lista.set((lista.indexOf(adv)), adv);
-        try {
-            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
-            persistencia.setListaAnuncios(lista);
-        } catch (InterruptedException ex) {
-            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
-        }
+        persistencia.setAnuncio(adv);
+//        lista.set((lista.indexOf(adv)), adv);
+//        try {
+//            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
+//            persistencia.setListaAnuncios(lista);
+//        } catch (InterruptedException ex) {
+//            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
+//        }
         
         return "gestion_anuncios.xhtml";
     }
