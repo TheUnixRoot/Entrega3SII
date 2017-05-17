@@ -58,8 +58,8 @@ public class CrearEventoBean {
     @PostConstruct
     public void init() {
 
-        lugares = persistencia.getListaLugares();
-        eventos = persistencia.getListaEventos();
+//        lugares = persistencia.getListaLugares();
+//        eventos = persistencia.getListaEventos();
 
     }
 
@@ -142,14 +142,14 @@ public class CrearEventoBean {
     public void setSubido_by(Usuario subido_by) {
         this.subido_by = subido_by;
     }
-
-    public List<Lugar> getLugares() {
-        return lugares;
-    }
-
-    public void setLugares(List<Lugar> lugares) {
-        this.lugares = lugares;
-    }
+//
+//    public List<Lugar> getLugares() {
+//        return lugares;
+//    }
+//
+//    public void setLugares(List<Lugar> lugares) {
+//        this.lugares = lugares;
+//    }
 
     public UploadedFile getFile() {
         return null;
@@ -170,14 +170,14 @@ public class CrearEventoBean {
     public void setHora(Date hora) {
         this.hora = hora;
     }
-
-    public List<Evento> getEventos() {
-        return eventos;
-    }
-
-    public void setEventos(List<Evento> eventos) {
-        this.eventos = eventos;
-    }
+//
+//    public List<Evento> getEventos() {
+//        return eventos;
+//    }
+//
+//    public void setEventos(List<Evento> eventos) {
+//        this.eventos = eventos;
+//    }
 
     public PersistenceMock getPersistencia() {
         return persistencia;
@@ -214,8 +214,9 @@ public class CrearEventoBean {
     private boolean existeEvento(String nombre) {
 
         boolean b = false;
-        for (Evento i : eventos) {
-            if (i.getNombre().equals(nombre)) {
+        int i = 0;
+        while (i < persistencia.getListaEventos().size() && !b) {
+            if (persistencia.getListaEventos().get(i).getNombre().equals(nombre)) {
                 b = true;
             }
         }
@@ -224,10 +225,13 @@ public class CrearEventoBean {
 
     private Lugar buscarLugar(String o) {
 
-        Lugar lg = new Lugar();
-        for (Lugar l : lugares) {
-            if (l.getNombre().equals(o)) {
-                lg = l;
+        boolean b = false;
+        int i = 0;
+        Lugar lg = null;
+        while (i < persistencia.getListaLugares().size() && !b) {
+            if (persistencia.getListaLugares().get(i).getNombre().equals(o)) {
+                b = true;
+                lg = persistencia.getListaLugares().get(i);
             }
         }
         return lg;
@@ -244,7 +248,7 @@ public class CrearEventoBean {
         Evento e = new Evento();
         fecha_inicio.setHours(hora.getHours());
         fecha_inicio.setMinutes(hora.getMinutes());
-        e.setId(System.currentTimeMillis());
+//        e.setId(System.currentTimeMillis());
         e.setNombre(nombre);
         e.setPrecio(precio);
         e.setDonde_comprar(donde_comprar);
@@ -253,9 +257,12 @@ public class CrearEventoBean {
         e.setDescripcion(descripcion);
         e.setOcurre_in(buscarLugar(ocurre_in));
 
-        List<Evento> lugListEv = buscarLugar(ocurre_in).getOcurren_at();
+        Lugar lugarEnCuestion = buscarLugar(ocurre_in);
+        List<Evento> lugListEv = lugarEnCuestion.getOcurren_at();
         lugListEv.add(e);
-        buscarLugar(ocurre_in).setOcurren_at(lugListEv);
+        lugarEnCuestion.setOcurren_at(lugListEv);
+        
+        persistencia.setLugar(lugarEnCuestion);
 
         e.setBorrado(false);
 
@@ -272,13 +279,14 @@ public class CrearEventoBean {
                     if (tin.getTexto().equalsIgnoreCase(st)) {
                         tle.add(tin);
                         tin.getEventos().add(e);
+                        persistencia.setTag(tin);
                         find = true;
                     }
                 }
                 if (!find) {
-                    System.out.println(st);
+//                    System.out.println(st);
                     Tag t = new Tag();
-                    t.setId(System.currentTimeMillis());
+//                    t.setId(System.currentTimeMillis());
                     t.setTexto(st);
                     List<Evento> let = new ArrayList();
                     let.add(e);
@@ -288,7 +296,8 @@ public class CrearEventoBean {
                 }
             }
             for (Tag g : tln) {
-                tp.add(g);
+                persistencia.setTag(g);
+//                tp.add(g);
             }
         }
         e.setTagged_by(tle);
@@ -309,9 +318,11 @@ public class CrearEventoBean {
             l.add(e);
             cr.getUsuario().setSubidas(l);
         }
-        eventos.add(e);
+        persistencia.setEvento(e);
+        persistencia.setUsuario(cr.getUsuario());
+//        eventos.add(e);
 
-        persistencia.setListaEventos(eventos);
+//        persistencia.setListaEventos(eventos);
         return "index.xhtml";
     }
 
