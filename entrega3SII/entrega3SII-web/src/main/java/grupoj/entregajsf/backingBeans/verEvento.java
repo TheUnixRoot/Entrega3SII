@@ -97,7 +97,7 @@ public class verEvento implements Serializable {
             
             // Actualizar cambios en usuario y eventos
             persistencia.setUsuario(this.usu);
-            persistencia.setEvento(this.eve);
+            persistencia.setEvento(this.evento);
             
         }
 
@@ -239,7 +239,7 @@ public class verEvento implements Serializable {
         try {
             Valoracion_eve val = persistencia.getValoracion_eve(Long.parseLong(params.get("ide")));
 //            val.setId(Long.parseLong(params.get("ide")));
-            byte[] mul = val.getFotos():
+            byte[] mul = val.getFotos();
                     
 //                    evento.getValoraciones_sobre()
 //                    .get(
