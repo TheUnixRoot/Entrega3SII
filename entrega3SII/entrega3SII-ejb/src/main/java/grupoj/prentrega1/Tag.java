@@ -33,9 +33,8 @@ public class Tag implements Serializable {
     @ManyToMany(mappedBy ="tagged_by")
     private List<Evento> eventos;
     
-    @ManyToOne
-    @JoinColumn(name = "formulario_fk" , nullable = false)
-    private Formulario form;
+    @ManyToMany
+    private List<Formulario> form;
 
     public List<Evento> getEventos() {
         return eventos;
@@ -61,11 +60,11 @@ public class Tag implements Serializable {
         this.texto = texto;
     }
 
-    public Formulario getForm() {
+    public List<Formulario> getForm() {
         return form;
     }
 
-    public void setForm(Formulario form) {
+    public void setForm(List<Formulario> form) {
         this.form = form;
     }
 

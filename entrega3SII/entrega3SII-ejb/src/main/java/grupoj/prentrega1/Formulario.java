@@ -43,7 +43,7 @@ public class Formulario implements Serializable {
     private List<Evento> historialEventos;
     
     // Relacion "incluye" de la entidad Formulario con la entidad Tag
-    @OneToMany(mappedBy = "form")
+    @ManyToMany(mappedBy = "form")
     private List<Tag> form_tags;
     
     // Relacion "sobre" de la entidad Formulario con la entidad Notificacion
