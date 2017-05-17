@@ -30,18 +30,17 @@ public class EliminarEvento {
 
     @Inject
     private PersistenceMock persistencia;
-    private List<Evento> listaEventos;
+//    private List<Evento> listaEventos;
     private Evento ev;
     
     @PostConstruct
     public void init() {
        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-       listaEventos = persistencia.getListaEventos();
-       ev = new Evento();
-       ev.setId(Long.parseLong(params.get("id")));
-       ev = listaEventos.get(
-                persistencia.getListaEventos().indexOf(ev)
-                );
+//       listaEventos = persistencia.getListaEventos();
+       ev = persistencia.getEvento(Long.parseLong(params.get("id")));
+//       ev = listaEventos.get(
+//                persistencia.getListaEventos().indexOf(ev)
+//                );
     }
 
     public PersistenceMock getPersistencia() {
@@ -59,14 +58,14 @@ public class EliminarEvento {
     public void setValor(String valor) {
         ev.setBorrado(valor.equalsIgnoreCase("si"));
     }
-
-    public List<Evento> getListaEventos() {
-        return listaEventos;
-    }
-
-    public void setListaEventos(List<Evento> listaEventos) {
-        this.listaEventos = listaEventos;
-    }
+//
+//    public List<Evento> getListaEventos() {
+//        return listaEventos;
+//    }
+//
+//    public void setListaEventos(List<Evento> listaEventos) {
+//        this.listaEventos = listaEventos;
+//    }
 
     public Evento getEv() {
         return ev;

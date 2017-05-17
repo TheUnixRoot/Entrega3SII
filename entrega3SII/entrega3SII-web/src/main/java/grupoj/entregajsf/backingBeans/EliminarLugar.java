@@ -26,30 +26,29 @@ public class EliminarLugar {
 
     @Inject
     private PersistenceMock persistencia;
-    private String valor;
-    private List<Lugar> listaLugares;
+//    private String valor;
+//    private List<Lugar> listaLugares;
     private Lugar adv;
-    private Lugar a;
+//    private Lugar a;
 
     @PostConstruct
     public void init() {
 
         Map<String, String> p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        listaLugares = persistencia.getListaLugares();
-        adv = new Lugar();
-        adv.setId(Long.parseLong(p.get("id")));
-        adv = listaLugares.get(persistencia.getListaLugares().indexOf(adv));
+//        listaLugares = persistencia.getListaLugares();
+        adv = persistencia.getLugar(Long.parseLong(p.get("id")));
+//        adv = listaLugares.get(persistencia.getListaLugares().indexOf(adv));
 
     }
-
-    public List<Lugar> getListaLugares() {
-        return listaLugares;
-    }
-
-    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
-        //this.listaLugares = listaLugares;
-        persistencia.setListaLugares(listaLugares);
-    }
+//
+//    public List<Lugar> getListaLugares() {
+//        return listaLugares;
+//    }
+//
+//    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
+//        //this.listaLugares = listaLugares;
+//        persistencia.setListaLugares(listaLugares);
+//    }
 
     public String getValor() {
         return adv.isBorrado() ? "si" : "no";
@@ -57,7 +56,7 @@ public class EliminarLugar {
 
     public void setValor(String valor) {
         adv.setBorrado(valor.equalsIgnoreCase("si"));
-        this.valor = valor;
+//        this.valor = valor;
     }
 
     public Lugar getAdv() {
