@@ -63,15 +63,17 @@ public class Crud_usuariosBean implements Serializable{
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            Usuario uu = new Usuario();
-            uu.setId(Long.parseLong(params.get("id")));
-            byte[] mul = persistencia
-                    .getListaUsuarios()
-                    .get(persistencia
-                            .getListaUsuarios()
-                            .indexOf(uu)
-                    )
-                    .getMultimedia();
+            Usuario uu = persistencia.getUsuario(Long.parseLong(params.get("id")));
+//                    new Usuario();
+//            uu.setId(Long.parseLong(params.get("id")));
+            byte[] mul = uu.getMultimedia();
+//                    persistencia
+//                    .getListaUsuarios()
+//                    .get(persistencia
+//                            .getListaUsuarios()
+//                            .indexOf(uu)
+//                    )
+//                    .getMultimedia();
             con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
             
         } catch (ArrayIndexOutOfBoundsException ie) {
