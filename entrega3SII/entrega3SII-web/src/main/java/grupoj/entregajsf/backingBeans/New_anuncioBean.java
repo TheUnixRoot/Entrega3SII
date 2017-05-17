@@ -109,18 +109,20 @@ public class New_anuncioBean {
             for(Anuncio a:lista) {
                 if(a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
+                    persistencia.setAnuncio(a);
                 }
             }
         }
-        adv.setId(System.currentTimeMillis());
-        lista.add(adv);
-        try {
-            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
-            persistencia.setListaAnuncios(lista);
-        } catch (InterruptedException ex) {
-            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
-        }
-        
+        persistencia.setAnuncio(adv);
+//        adv.setId(System.currentTimeMillis());
+//        lista.add(adv);
+//        try {
+//            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
+//            persistencia.setListaAnuncios(lista);
+//        } catch (InterruptedException ex) {
+//            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
+//        }
+//        
         return "gestion_anuncios.xhtml";
     }
     
