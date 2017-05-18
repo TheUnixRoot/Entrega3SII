@@ -21,7 +21,7 @@ import mockingBeans.PersistenceMock;
 /**
  *
  * @author David Ahora mismo falta de todo.... Mirar la configuración que tiene
- * el usuario, cargarla y despues enviar en el caso de que haya cambios
+ * el usuario, cargarla y despues enviar en el caso de que haya cambios (¿Eso es para mi?)
  */
 @Named(value = "configurarNotificaciones")
 @Dependent
@@ -84,7 +84,7 @@ public class configurarNotificaciones {
             tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
 
             listaNotifMostrar = new ArrayList<>();
-            // Activa notificaciones?
+            // Activa y comprueba si estan o no, más normal que esten activas
             notificacionesActivas = true;
             if (tipoNotUsuario == TipoNotificacion.Desactivado) {
                 notificacionesActivas = false;
@@ -106,7 +106,9 @@ public class configurarNotificaciones {
             case Ambos:
                 listaNotifMostrar.add("Ambos");
                 break;
-
+            
+            default:
+                break;
         }
     }
 
@@ -115,8 +117,9 @@ public class configurarNotificaciones {
      * que tinene configurada el usuario.
      */
     private void rellenaLista() {
-        
+        // Inserta la primera en la lista que va a mostrar
         insertaLista(tipoNotUsuario);
+        // Despues relleno con las que quedan.
         if (tipoNotUsuario != TipoNotificacion.Email) {
             insertaLista(TipoNotificacion.Email);
         }
@@ -156,6 +159,7 @@ public class configurarNotificaciones {
                 break;
         }
 
+        // Si se han desactivado las notificiaciones.
         if (!notificacionesActivas) {
             this.tipoNotUsuario = TipoNotificacion.Desactivado;
         }
@@ -168,7 +172,9 @@ public class configurarNotificaciones {
 //        listaUsu.add(usuPrima);
 //        this.persistencia.setListaUsuarios(listaUsu);
 //        ctrAut.setUsuario(usuPrima);
-//        
+
+//      Actualizar usuario en persistencia
+        persistencia.setUsuario(usuLogueado);
 
         FacesContext.getCurrentInstance()
             .addMessage("confNotificaciones:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
