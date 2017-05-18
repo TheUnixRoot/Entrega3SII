@@ -39,14 +39,14 @@ public class SignupBean {
     public SignupBean() {
         usuario = new Usuario();
     }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -120,16 +120,17 @@ public class SignupBean {
      * @return Vuelve a index.xhtml siempre
      */
     public String submit() {
-        List<Usuario> list = persistencia.getListaUsuarios();
-        usuario.setId(System.currentTimeMillis());
+//        List<Usuario> list = persistencia.getListaUsuarios();
+//        usuario.setId(System.currentTimeMillis());
         usuario.setBorrado(false);
         usuario.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
         usuario.setNotificaciones(new ArrayList<Notificacion>());
         usuario.setMeInteresa(new ArrayList<Evento>());
         usuario.setMsg_send(new ArrayList<Mensaje>());
-        list.add(usuario);
+        persistencia.setUsuario(usuario);
+//        list.add(usuario);
         try {
-            persistencia.setListaUsuarios(list);
+//            persistencia.setListaUsuarios(list);
             ctrl.setUsuario(usuario);
         } catch (InterruptedException ex) {
             System.err.println("Error al insertar usuario en persistencia");
