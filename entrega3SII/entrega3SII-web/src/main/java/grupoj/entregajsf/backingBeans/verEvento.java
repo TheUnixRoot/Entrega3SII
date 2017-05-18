@@ -18,6 +18,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
@@ -59,7 +61,7 @@ public class verEvento implements Serializable {
 //        ev.setId(id);
 //        System.out.println(id);
 //        if (ev != null) {
-            this.evento = ev;
+        this.evento = ev;
 //            this.persistencia.getListaEventos()
 //                    .get(
 //                            this.persistencia.getListaEventos().indexOf(ev)
@@ -78,7 +80,7 @@ public class verEvento implements Serializable {
                 formu.setSobre_by(null);
                 formu.setUsuario(usu);
                 this.usu.setForm(formu);
-                
+
             }
             List<Evento> leu = formu.getHistorialEventos();
             if (leu == null) {
@@ -94,14 +96,18 @@ public class verEvento implements Serializable {
                     this.evento.setHistoriado_by(lhe);
                 }
             }
-            
-            // Actualizar cambios en usuario y eventos
-            persistencia.setUsuario(this.usu);
-            persistencia.setEvento(this.evento);
-            
+
+            try {
+                // Actualizar cambios en usuario y eventos
+                persistencia.setUsuario(this.usu);
+                persistencia.setEvento(this.evento);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
- //       ev = null;
+        //       ev = null;
     }
 
     /**
@@ -117,7 +123,6 @@ public class verEvento implements Serializable {
 //    public void setPersistencia(PersistenceMock persistencia) {
 //        this.persistencia = persistencia;
 //    }
-
     public Evento getEvento() {
         return evento;
     }
@@ -210,8 +215,12 @@ public class verEvento implements Serializable {
                 usu.getMeInteresa().remove(ev);
                 ev.getInteresados_at().remove(usu);
             }
-            persistencia.setUsuario(usu);
-            persistencia.setEvento(ev);
+            try {
+                persistencia.setUsuario(usu);
+                persistencia.setEvento(ev);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -228,10 +237,11 @@ public class verEvento implements Serializable {
                 "application/pdf", evento.getNombre() + ".pdf");
         return stc;
     }
-    
+
     /**
      * Genera el StreamedContent de la valoracion de un evento
-     * @return 
+     *
+     * @return
      */
     public StreamedContent generarEve() {
         StreamedContent con = null;
@@ -240,13 +250,13 @@ public class verEvento implements Serializable {
             Valoracion_eve val = persistencia.getValoracion_eve(Long.parseLong(params.get("ide")));
 //            val.setId(Long.parseLong(params.get("ide")));
             byte[] mul = val.getFotos();
-                    
+
 //                    evento.getValoraciones_sobre()
 //                    .get(
 //                            evento.getValoraciones_sobre().indexOf(val)
 //                    ).getFotos();
-            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
-            
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul));
+
         } catch (ArrayIndexOutOfBoundsException ie) {
             System.err.println(ie.getMessage() + " id valoracion recibido " + params.get("ide"));
         } catch (NumberFormatException ne) {
@@ -254,10 +264,11 @@ public class verEvento implements Serializable {
         }
         return con;
     }
-    
+
     /**
      * Genera el StreamedContent de la valoracion de un lugar
-     * @return 
+     *
+     * @return
      */
     public StreamedContent generarLug() {
         StreamedContent con = null;
@@ -270,8 +281,8 @@ public class verEvento implements Serializable {
 //                    .get(
 //                            evento.getOcurre_in().getValoraciones_sobre().indexOf(val)
 //                    ).getFotos();
-            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
-            
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul));
+
         } catch (ArrayIndexOutOfBoundsException ie) {
             System.err.println(ie.getMessage() + " id valoracion recibido " + params.get("idl"));
         } catch (NumberFormatException ne) {

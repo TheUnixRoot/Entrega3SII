@@ -135,9 +135,13 @@ public class CrearLugarBean {
         g.setLugar(l);
         l.setOcurren_at(new ArrayList<Evento>());
         l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
-//        lugares.add(l);
-        persistencia.setLugar(l);
-        persistencia.setGeolocaclizacion(g);
+        //        lugares.add(l);
+        try {
+            persistencia.setLugar(l);
+            persistencia.setGeolocaclizacion(g);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        try {
 //            persistencia.setListaLugares(lugares);
 //        } catch (InterruptedException ex) {

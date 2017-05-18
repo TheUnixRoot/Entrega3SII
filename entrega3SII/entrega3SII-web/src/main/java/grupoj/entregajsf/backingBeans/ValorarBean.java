@@ -14,6 +14,8 @@ import grupoj.prentrega1.Valoracion_lug;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
@@ -30,15 +32,15 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "valorarBean")
 @RequestScoped
 public class ValorarBean {
-    
+
     @Inject
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion control;
-    
+
     private Evento evento;
     private Usuario usu;
- // En las clases ya los tengo
+    // En las clases ya los tengo
     private Integer valEvento;
     private String comEvento;
     private UploadedFile fotoValEvento;
@@ -48,6 +50,7 @@ public class ValorarBean {
     private String comLugar;
     private UploadedFile fotoValLugar;
     private List<Valoracion_lug> listLug;
+
     /**
      * Creates a new instance of ValorarBean
      */
@@ -58,7 +61,7 @@ public class ValorarBean {
 //        Evento ev = new Evento();
 //        ev.setId((Long.parseLong(req.get("id"))));
 //        if (this.persistencia.getListaEventos().contains(ev)) {
-            this.evento = persistencia.getEvento(Long.parseLong(req.get("id")));
+        this.evento = persistencia.getEvento(Long.parseLong(req.get("id")));
 //                    this.persistencia.getListaEventos()
 //                    .get(
 //                            this.persistencia.getListaEventos().indexOf(ev)
@@ -75,7 +78,7 @@ public class ValorarBean {
     public void setEvento(Evento evento) {
         this.evento = evento;
     }
-    
+
     public Integer getValEvento() {
         return valEvento;
     }
@@ -172,21 +175,24 @@ public class ValorarBean {
             usu.setVal_eve(lveu);
         }
         valEve.setValoracion_sobre(evento);
-        
+
         listEve.add(valEve);
         evento.setValoraciones_sobre(listEve);
-        persistencia.setUsuario(usu);
-        persistencia.setEvento(evento);
-        persistencia.setValoracion_eve(valEve);
-        
+        try {
+            persistencia.setUsuario(usu);
+            persistencia.setEvento(evento);
+            persistencia.setValoracion_eve(valEve);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //
 //        valEvento = null;
 //        valEvento = null;
 //        fotoValEvento = null;
 //        
         FacesContext.getCurrentInstance()
-                .addMessage("imgEvento"
-                , new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del evento subida"));
+                .addMessage("imgEvento",
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del evento subida"));
         return null;
     }
 
@@ -224,16 +230,20 @@ public class ValorarBean {
         valLug.setValoracion_sobre(lug);
         listLug.add(valLug);
         lug.setValoraciones_sobre(listLug);
-        persistencia.setUsuario(usu);
-        persistencia.setLugar(lug);
-        persistencia.setValoracion_lug(valLug);
-        
+
+        try {
+            persistencia.setUsuario(usu);
+            persistencia.setLugar(lug);
+            persistencia.setValoracion_lug(valLug);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        valLugar = null;
 //        comLugar = null;
 //        fotoValLugar = null;
         FacesContext.getCurrentInstance()
-                .addMessage("imgLugar"
-                , new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del lugar subida"));
+                .addMessage("imgLugar",
+                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del lugar subida"));
         return null;
     }
 

@@ -16,6 +16,8 @@ import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -29,13 +31,13 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "signupPeriodistaBean")
 @RequestScoped
 public class SignupPeriodistaBean {
+
     @Inject
     private ControlAutorizacion ctrl;
     @Inject
     private PersistenceMock persistencia;
     private Periodista periodista;
 
-    
     /**
      * Creates a new instance of SignupBean
      */
@@ -74,7 +76,7 @@ public class SignupPeriodistaBean {
     public void setNombre(String nombre) {
         this.periodista.setNombre(nombre);
     }
-    
+
     public String getApellidos() {
         return periodista.getApellidos();
     }
@@ -82,7 +84,7 @@ public class SignupPeriodistaBean {
     public void setApellidos(String apellidos) {
         this.periodista.setApellidos(apellidos);
     }
-    
+
     public String getEmail() {
         return periodista.getEmail();
     }
@@ -90,7 +92,7 @@ public class SignupPeriodistaBean {
     public void setEmail(String email) {
         this.periodista.setEmail(email);
     }
-    
+
     public String getTelefono() {
         return periodista.getTelefono();
     }
@@ -98,7 +100,7 @@ public class SignupPeriodistaBean {
     public void setTelefono(String telefono) {
         this.periodista.setTelefono(telefono);
     }
-    
+
     public Date getFechaNacimiento() {
         return periodista.getFechaNacimiento();
     }
@@ -106,12 +108,13 @@ public class SignupPeriodistaBean {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.periodista.setFechaNacimiento(fechaNacimiento);
     }
-    
+
     public void setFoto(UploadedFile foto) {
-        if(foto.getContents().length > 0)
+        if (foto.getContents().length > 0) {
             this.periodista.setMultimedia(foto.getContents());
-        else 
+        } else {
             this.periodista.setMultimedia(new byte[1]);
+        }
     }
 
     public String getSeccion() {
@@ -129,13 +132,15 @@ public class SignupPeriodistaBean {
     public void setPuesto(String puesto) {
         this.periodista.setPuesto(puesto);
     }
-    
+
     public UploadedFile getFoto() {
         return null;
     }
-    
+
     /**
-     * Da de alta un usuario con los campos previamente rellenados como atributos
+     * Da de alta un usuario con los campos previamente rellenados como
+     * atributos
+     *
      * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String submit() {
@@ -149,7 +154,12 @@ public class SignupPeriodistaBean {
         periodista.setGestionarNotificacion(new ArrayList<Notificacion>());
         periodista.setGestionarLugar(new ArrayList<Lugar>());
         periodista.setGestionarEvento(new ArrayList<Evento>());
-        persistencia.setPeriodista(periodista);
+        try {
+            persistencia.setPeriodista(periodista);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SignupPeriodistaBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 //        list.add(periodista);
 //        try {
 //            persistencia.setListaUsuarios(list);
@@ -160,4 +170,3 @@ public class SignupPeriodistaBean {
         return "gestion_usuarios.xhtml";
     }
 }
-

@@ -24,7 +24,6 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-
 /**
  *
  * @author migue
@@ -51,38 +50,40 @@ public class Mod_eventoBean implements Serializable {
     }
 
     public void setFoto(UploadedFile foto) {
-        if(foto.getContents().length > 0)
+        if (foto.getContents().length > 0) {
             this.adv.setMultimedia(foto.getContents());
+        }
     }
-    
+
     public StreamedContent getFoto2() {
-        if(adv.getMultimedia() == null) 
+        if (adv.getMultimedia() == null) {
             adv.setMultimedia(new byte[1]);
+        }
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
 
     public void setFoto2(StreamedContent foto) {
-        
+
     }
-    
+
     public void setHora(Date hora) {
         this.adv.getFecha_inicio().setHours(hora.getHours());
-        this.adv.getFecha_inicio().setMinutes(hora.getMinutes());  
+        this.adv.getFecha_inicio().setMinutes(hora.getMinutes());
     }
-    
+
     public Date getHora() {
         Date h = new Date();
         h.setHours(adv.getFecha_inicio().getHours());
         h.setMinutes(adv.getFecha_inicio().getMinutes());
         return h;
     }
-    
+
     @PostConstruct
     public void init() {
         adv = persistencia.getEvento(Long.parseLong(
                 FacesContext.getCurrentInstance()
                         .getExternalContext()
-                .getRequestParameterMap().get("id")
+                        .getRequestParameterMap().get("id")
         ));
 //        adv = persistencia
 //                .getListaEventos()
@@ -91,9 +92,8 @@ public class Mod_eventoBean implements Serializable {
 //                .getListaEventos()
 //                .indexOf(add)
 //                );
-        
+
     }
-    
 
     public PersistenceMock getPersistencia() {
         return persistencia;
@@ -110,11 +110,14 @@ public class Mod_eventoBean implements Serializable {
     public void setAdv(Evento adv) {
         this.adv = adv;
     }
-    
-    
-    public String modificarEvento(){
-        persistencia.setEvento(adv);
-//        
+
+    public String modificarEvento() {
+        try {
+            persistencia.setEvento(adv);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//
 //       List<Evento> lista = persistencia.getListaEventos();
 //       lista.set(
 //               persistencia.getListaEventos().indexOf(adv),
@@ -124,8 +127,8 @@ public class Mod_eventoBean implements Serializable {
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        
+
         return "gestion_evento.xhtml";
-    
+
     }
 }

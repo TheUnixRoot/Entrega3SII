@@ -29,7 +29,7 @@ public class Crud_anunciosBean {
 
     @Inject
     private PersistenceMock persistencia;
-    
+
     public List<Anuncio> getAnuncios() {
         return persistencia.getListaAnuncios();
     }
@@ -41,31 +41,34 @@ public class Crud_anunciosBean {
             Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
-     * Obtiene la url destino tras comprobar los parametros del contexto,
-     * segun la id del anuncio.
-     * @return Devuelve una url de vista y escritura para el anuncio solicitado. 
+     * Obtiene la url destino tras comprobar los parametros del contexto, segun
+     * la id del anuncio.
+     *
+     * @return Devuelve una url de vista y escritura para el anuncio solicitado.
      */
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        
+
         return "edit_anuncio.xhtml?id=" + params.get("id");
     }
-    
+
     /**
-     * Dado un anuncio correcto, se extrae su byte[] multimedia y 
-     * se genera la imagen para ser mostrada.
+     * Dado un anuncio correcto, se extrae su byte[] multimedia y se genera la
+     * imagen para ser mostrada.
+     *
      * @param adv Anuncio del que generar la imagen
-     * @return Imagen del anuncio 
+     * @return Imagen del anuncio
      */
     public StreamedContent generar(Anuncio adv) {
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
     }
-    
+
     /**
      * Publica en la web el anuncio proporcionado por el parametro de contexto
      * id, si hubiera uno, lo pone offline y el clickeado en online
+     *
      * @throws NumberFormatException si el id de los parametros no es un numero
      * @return null, para permanecer en la pagina actual
      */
@@ -81,11 +84,20 @@ public class Crud_anunciosBean {
         for (Anuncio a : lista) {
             if (a.getLugar().equals(anun.getLugar())) {
                 a.setOnline(false);
-                persistencia.setAnuncio(a);
+                try {
+                    persistencia.setAnuncio(a);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
         anun.setOnline(true);
-        persistencia.setAnuncio(anun);
+        try {
+            persistencia.setAnuncio(anun);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        lista.set(idx, anun);
 //        try {
 //            persistencia.setListaAnuncios(lista);
@@ -94,5 +106,5 @@ public class Crud_anunciosBean {
 //        }
         return null;
     }
-    
+
 }

@@ -15,6 +15,8 @@ import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -27,16 +29,18 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 @Named(value = "contactoAdminBean")
 public class contactoAdminBean {
+
     @Inject
     private PersistenceMock persistencia;
     private Mensaje message;
     private String texto;
     private String asunto;
-    private Usuario user ;
+    private Usuario user;
     private List<Usuario> listUsers;
     private List<Administrador> admins;
     @Inject
     private ControlAutorizacion control;
+
     /**
      * Creates a new instance of contactoAdminBean
      */
@@ -44,18 +48,18 @@ public class contactoAdminBean {
     public void init() {
 //        persistencia = new PersistenceMock();
         listUsers = persistencia.getListaUsuarios();
-        user = control.getUsuario();        
+        user = control.getUsuario();
         message = new Mensaje();
         admins = new ArrayList();
-        
-        for(Usuario u : listUsers){
-            if(u instanceof Administrador){
+
+        for (Usuario u : listUsers) {
+            if (u instanceof Administrador) {
                 admins.add((Administrador) u);
             }
         }
-       
+
     }
-  
+
     public Mensaje getMessage() {
         return message;
     }
@@ -79,36 +83,48 @@ public class contactoAdminBean {
     public void setAsunto(String asunto) {
         this.asunto = asunto;
     }
-    
-    
-     public String crearMensaje() {       
+
+    public String crearMensaje() {
         message.setTexto(this.texto);
         message.setAsunto(this.asunto);
         message.setEnviadoPor(user);
         message.setRecibidoPor(admins);
-        for(Administrador admin : admins){
-            if(admin.getRecibirMensaje()==null){
+        for (Administrador admin : admins) {
+            if (admin.getRecibirMensaje() == null) {
                 List<Mensaje> listaMensajes = new ArrayList<>();
                 admin.setRecibirMensaje(listaMensajes);
-             }
+            }
             admin.getRecibirMensaje().add(message);
-            // Actualizamos los administradores, que esten enlazados con el msg
-            persistencia.setAdministrador(admin);
+            try {
+                // Actualizamos los administradores, que esten enlazados con el msg
+                persistencia.setAdministrador(admin);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        if(user != null) {
-        if(user.getMsg_send() == null){
-            List<Mensaje> listaMensajes = new ArrayList<>();
-            user.setMsg_send(listaMensajes);
+        if (user != null) {
+            if (user.getMsg_send() == null) {
+                List<Mensaje> listaMensajes = new ArrayList<>();
+                user.setMsg_send(listaMensajes);
+            }
+            user.getMsg_send().add(message);
+            try {
+                //Actualizamos usuario que envia el mensaje
+                persistencia.setUsuario(user);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        user.getMsg_send().add(message);
-        //Actualizamos usuario que envia el mensaje
-        persistencia.setUsuario(user);
+        try {
+            // Metemos el mensaje en la persistencia
+            persistencia.setMensaje(message);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        // Metemos el mensaje en la persistencia
-        persistencia.setMensaje(message);
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.addMessage("formulario:panel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje enviado correctamente", "Mensaje enviado correctamente"));
         return null;
-     }
+    }
 
 }

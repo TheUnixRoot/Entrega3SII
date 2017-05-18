@@ -14,6 +14,8 @@ import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -27,12 +29,13 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "signupBean")
 @RequestScoped
 public class SignupBean {
+
     @Inject
     private ControlAutorizacion ctrl;
     @Inject
     private PersistenceMock persistencia;
     private Usuario usuario;
-    
+
     /**
      * Creates a new instance of SignupBean
      */
@@ -71,7 +74,7 @@ public class SignupBean {
     public void setNombre(String nombre) {
         this.usuario.setNombre(nombre);
     }
-    
+
     public String getApellidos() {
         return usuario.getApellidos();
     }
@@ -79,7 +82,7 @@ public class SignupBean {
     public void setApellidos(String apellidos) {
         this.usuario.setApellidos(apellidos);
     }
-    
+
     public String getEmail() {
         return usuario.getEmail();
     }
@@ -87,7 +90,7 @@ public class SignupBean {
     public void setEmail(String email) {
         this.usuario.setEmail(email);
     }
-    
+
     public String getTelefono() {
         return usuario.getTelefono();
     }
@@ -95,7 +98,7 @@ public class SignupBean {
     public void setTelefono(String telefono) {
         this.usuario.setTelefono(telefono);
     }
-    
+
     public Date getFechaNacimiento() {
         return usuario.getFechaNacimiento();
     }
@@ -103,20 +106,23 @@ public class SignupBean {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.usuario.setFechaNacimiento(fechaNacimiento);
     }
-    
+
     public void setFoto(UploadedFile foto) {
-        if(foto.getContents().length > 0)
+        if (foto.getContents().length > 0) {
             this.usuario.setMultimedia(foto.getContents());
-        else 
+        } else {
             this.usuario.setMultimedia(new byte[1]);
+        }
     }
-    
+
     public UploadedFile getFoto() {
         return null;
     }
-    
+
     /**
-     * Da de alta un usuario con los campos previamente rellenados como atributos
+     * Da de alta un usuario con los campos previamente rellenados como
+     * atributos
+     *
      * @return Vuelve a index.xhtml siempre
      */
     public String submit() {
@@ -127,7 +133,12 @@ public class SignupBean {
         usuario.setNotificaciones(new ArrayList<Notificacion>());
         usuario.setMeInteresa(new ArrayList<Evento>());
         usuario.setMsg_send(new ArrayList<Mensaje>());
-        persistencia.setUsuario(usuario);
+        try {
+            persistencia.setUsuario(usuario);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SignupBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 //        list.add(usuario);
         try {
 //            persistencia.setListaUsuarios(list);
@@ -138,4 +149,3 @@ public class SignupBean {
         return "index.xhtml";
     }
 }
-

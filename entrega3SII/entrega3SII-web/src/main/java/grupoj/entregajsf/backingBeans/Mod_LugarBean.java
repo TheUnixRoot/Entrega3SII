@@ -21,8 +21,6 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
-
-
 /**
  *
  * @author migue
@@ -43,31 +41,30 @@ public class Mod_LugarBean implements Serializable {
     public void setIds(Long ids) {
         this.ids = ids;
     }
-    
-    public UploadedFile getFoto(){
+
+    public UploadedFile getFoto() {
         return null;
     }
-    
-    public void setFoto(UploadedFile foto){
-    
-        if(foto.getContents().length > 0){
+
+    public void setFoto(UploadedFile foto) {
+
+        if (foto.getContents().length > 0) {
             this.adv.setFotos(foto.getContents());
         }
     }
-    
-    public StreamedContent getFoto2(){
-    
-        if(adv.getFotos() == null){
-        adv.setFotos(new byte[1]);
+
+    public StreamedContent getFoto2() {
+
+        if (adv.getFotos() == null) {
+            adv.setFotos(new byte[1]);
         }
         return new DefaultStreamedContent(new ByteArrayInputStream(adv.getFotos()));
     }
-    
-    public void setFoto2(StreamedContent foto){
-    
+
+    public void setFoto2(StreamedContent foto) {
+
     }
-    
-    
+
     @PostConstruct
     public void init() {
 //        Lugar add = new Lugar();
@@ -78,11 +75,11 @@ public class Mod_LugarBean implements Serializable {
 //        ));
         adv = persistencia
                 .getLugar(Long.parseLong(
-                FacesContext.getCurrentInstance()
-                        .getExternalContext()
-                .getRequestParameterMap().get("id"))
+                        FacesContext.getCurrentInstance()
+                                .getExternalContext()
+                                .getRequestParameterMap().get("id"))
                 );
-        
+
     }
 
     public PersistenceMock getPersistencia() {
@@ -100,15 +97,18 @@ public class Mod_LugarBean implements Serializable {
     public void setAdv(Lugar adv) {
         this.adv = adv;
     }
-    
-    
-    public String modificarLugar(){
 
-//        List<Lugar> lista =persistencia.getListaLugares();
-//        
+    public String modificarLugar() {
+
+        try {
+            //        List<Lugar> lista =persistencia.getListaLugares();
+//
 //        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
-//        
-        persistencia.setLugar(adv);
+//
+            persistencia.setLugar(adv);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
 //        try{
 //        
 //            persistencia.setListaLugares(lista);

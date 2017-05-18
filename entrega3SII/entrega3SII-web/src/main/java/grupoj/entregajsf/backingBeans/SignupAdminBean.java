@@ -18,6 +18,8 @@ import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -31,12 +33,13 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "signupAdminBean")
 @RequestScoped
 public class SignupAdminBean {
+
     @Inject
     private ControlAutorizacion ctrl;
     @Inject
     private PersistenceMock persistencia;
     private Administrador admin;
-    
+
     /**
      * Creates a new instance of SignupBean
      */
@@ -75,7 +78,7 @@ public class SignupAdminBean {
     public void setNombre(String nombre) {
         this.admin.setNombre(nombre);
     }
-    
+
     public String getApellidos() {
         return admin.getApellidos();
     }
@@ -83,7 +86,7 @@ public class SignupAdminBean {
     public void setApellidos(String apellidos) {
         this.admin.setApellidos(apellidos);
     }
-    
+
     public String getEmail() {
         return admin.getEmail();
     }
@@ -91,7 +94,7 @@ public class SignupAdminBean {
     public void setEmail(String email) {
         this.admin.setEmail(email);
     }
-    
+
     public String getTelefono() {
         return admin.getTelefono();
     }
@@ -99,7 +102,7 @@ public class SignupAdminBean {
     public void setTelefono(String telefono) {
         this.admin.setTelefono(telefono);
     }
-    
+
     public Date getFechaNacimiento() {
         return admin.getFechaNacimiento();
     }
@@ -107,12 +110,13 @@ public class SignupAdminBean {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.admin.setFechaNacimiento(fechaNacimiento);
     }
-    
+
     public void setFoto(UploadedFile foto) {
-        if(foto.getContents().length > 0)
+        if (foto.getContents().length > 0) {
             this.admin.setMultimedia(foto.getContents());
-        else 
+        } else {
             this.admin.setMultimedia(new byte[1]);
+        }
     }
 
     public String getSeccion() {
@@ -130,21 +134,23 @@ public class SignupAdminBean {
     public void setPuesto(String puesto) {
         this.admin.setPuesto(puesto);
     }
-    
-    public void setIdentificador(Long id){
+
+    public void setIdentificador(Long id) {
         admin.setIdentificador(id);
     }
-    
-    public Long getIdentificador(){
+
+    public Long getIdentificador() {
         return admin.getIdentificador();
     }
-    
+
     public UploadedFile getFoto() {
         return null;
     }
-    
+
     /**
-     * Da de alta un usuario con los campos previamente rellenados como atributos
+     * Da de alta un usuario con los campos previamente rellenados como
+     * atributos
+     *
      * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String submit() {
@@ -161,7 +167,12 @@ public class SignupAdminBean {
         admin.setRecibirMensaje(new ArrayList<Mensaje>());
         admin.setEsGestionado(new ArrayList<Usuario>());
         admin.setAnuncios_by(new ArrayList<Anuncio>());
-        persistencia.setAdministrador(admin);
+        try {
+            persistencia.setAdministrador(admin);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(SignupAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 //        list.add(admin);
 //        try {
 //            persistencia.setListaUsuarios(list);
@@ -172,4 +183,3 @@ public class SignupAdminBean {
         return "gestion_usuarios.xhtml";
     }
 }
-

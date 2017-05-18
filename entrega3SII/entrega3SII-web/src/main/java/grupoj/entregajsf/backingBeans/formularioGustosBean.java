@@ -12,6 +12,8 @@ import grupoj.prentrega1.Tag;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 //import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -21,7 +23,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import mockingBeans.PersistenceMock;
-
 
 /**
  *
@@ -36,18 +37,17 @@ public class formularioGustosBean {
     private Usuario user;
     private List<Tag> tags;
     private Formulario formulario;
-    
+
     @Inject
     private ControlAutorizacion control;
     @Inject
     private PersistenceMock persistencia;
-    
+
     public formularioGustosBean() {
-        
-       // this.persistencia = new PersistenceMock();
-        
+
+        // this.persistencia = new PersistenceMock();
     }
- 
+
     @PostConstruct
     public void init() {
         this.user = control.getUsuario();
@@ -62,24 +62,28 @@ public class formularioGustosBean {
         }
         this.formulario = this.user.getForm();
         this.tags = formulario.getForm_tags();
-        if(tags == null) {
+        if (tags == null) {
             tags = new ArrayList<>();
             this.formulario.setForm_tags(tags);
         }
-        
-        // Actualizar formulario y usuario
-        persistencia.setFormulario(this.formulario);
-        persistencia.setUsuario(this.user);
-        
+
+        try {
+            // Actualizar formulario y usuario
+            persistencia.setFormulario(this.formulario);
+            persistencia.setUsuario(this.user);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         this.selectedGustos = new String[10];
         int i = 0;
-        for(Tag g : tags) {
+        for (Tag g : tags) {
             this.selectedGustos[i] = g.getTexto();
             i++;
         }
         gustos = new ArrayList<>();
         List<Tag> lgustos = persistencia.getListaTags();
-        for(Tag g : lgustos) {
+        for (Tag g : lgustos) {
             gustos.add(g.getTexto());
         }
     }
@@ -87,20 +91,20 @@ public class formularioGustosBean {
     public String[] getSelectedGustos() {
         return selectedGustos;
     }
- 
+
     public void setSelectedGustos(String[] selectedGustos) {
         this.selectedGustos = selectedGustos;
     }
- 
+
     public List<String> getGustos() {
         return gustos;
     }
-    
-    public String saveGustos(){       
-        
+
+    public String saveGustos() {
+
 //        long i = 0;
         tags = new ArrayList<>();
-        for(String gusto : this.selectedGustos){
+        for (String gusto : this.selectedGustos) {
             // buscas el tag con el mismo text que gusto
             // todo 
             List<Tag> lts = persistencia.getListaTags();
@@ -108,7 +112,7 @@ public class formularioGustosBean {
             int j = 0;
             while (tg.getTexto().equals(gusto)) {
                 tg = lts.get(j);
-                j ++;
+                j++;
             }
             Tag tag = persistencia.getTag(tg.getId()); // where tg es ek tag buscado con el mismo texto
 //            Tag tag= new Tag();
@@ -116,7 +120,7 @@ public class formularioGustosBean {
 //            tag.setTexto(gusto);
 //            tag.setForm(this.formulario);
             List<Formulario> fl = tag.getForm();
-            if(fl == null) {
+            if (fl == null) {
                 //todo
                 // la creas nueva y la metes en el tag
                 fl = new ArrayList();
@@ -124,16 +128,24 @@ public class formularioGustosBean {
             }
             fl.add(formulario);
             tags.add(tag);
-            persistencia.setTag(tag);
+            try {
+                persistencia.setTag(tag);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
 //            i++;
         }
         this.formulario.setForm_tags(tags);
         formulario.setUsuario(this.user);
         this.user.setForm(this.formulario);
-        persistencia.setFormulario(this.formulario);
-        persistencia.setUsuario(user);
+        try {
+            persistencia.setFormulario(this.formulario);
+            persistencia.setUsuario(user);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
         FacesContext.getCurrentInstance()
-            .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
-         return null;
+                .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
+        return null;
     }
 }
