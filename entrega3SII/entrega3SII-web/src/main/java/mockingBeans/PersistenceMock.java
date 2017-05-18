@@ -499,6 +499,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaUsuarios.indexOf(usr), usr);
             mutexUsuarios.release();
         } else {
+            usr.setId(System.currentTimeMillis());
             mutexUsuarios.acquire();
             this.listaUsuarios.add(usr);
             mutexUsuarios.release();
@@ -541,6 +542,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaPeriodistas.indexOf(per), per);
             mutexPeriodistas.release();
         } else {
+            per.setId(System.currentTimeMillis());
             mutexUsuarios.acquire();
             this.listaUsuarios.add(per);
             mutexUsuarios.release();
@@ -590,6 +592,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaAdministradores.indexOf(adm), adm);
             mutexAdministradores.release();
         } else {
+            adm.setId(System.currentTimeMillis());
             mutexUsuarios.acquire();
             this.listaUsuarios.add(adm);
             mutexUsuarios.release();
@@ -634,6 +637,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaEventos.indexOf(eve), eve);
             mutexEventos.release();
         } else {
+            eve.setId(System.currentTimeMillis());
             mutexEventos.acquire();
             this.listaEventos.add(eve);
             mutexEventos.release();
@@ -672,6 +676,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaLugares.indexOf(lug), lug);
             mutexLugares.release();
         } else {
+            lug.setId(System.currentTimeMillis());
             mutexLugares.acquire();
             this.listaLugares.add(lug);
             mutexLugares.release();
@@ -710,6 +715,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaTags.indexOf(tg), tg);
             mutexTags.release();
         } else {
+            tg.setId(System.currentTimeMillis());
             mutexTags.acquire();
             this.listaTags.add(tg);
             mutexTags.release();
@@ -748,6 +754,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaValoracion_eves.indexOf(veve), veve);
             mutexValoracion_eves.release();
         } else {
+            veve.setId(System.currentTimeMillis());
             mutexValoracion_eves.acquire();
             this.listaValoracion_eves.add(veve);
             mutexValoracion_eves.release();
@@ -786,6 +793,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaValoracion_lugs.indexOf(vlug), vlug);
             mutexValoracion_lugs.release();
         } else {
+            vlug.setId(System.currentTimeMillis());
             mutexValoracion_lugs.acquire();
             this.listaValoracion_lugs.add(vlug);
             mutexValoracion_lugs.release();
@@ -824,6 +832,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaMensajes.indexOf(msg), msg);
             mutexMensajes.release();
         } else {
+            msg.setId(System.currentTimeMillis());
             mutexMensajes.acquire();
             this.listaMensajes.add(msg);
             mutexMensajes.release();
@@ -862,6 +871,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaNotificaciones.indexOf(ntf), ntf);
             mutexNotificaciones.release();
         } else {
+            ntf.setId(System.currentTimeMillis());
             mutexNotificaciones.acquire();
             this.listaNotificaciones.add(ntf);
             mutexNotificaciones.release();
@@ -900,6 +910,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaGeolocalizaciones.indexOf(geo), geo);
             mutexGeolocalizaciones.release();
         } else {
+            geo.setId(System.currentTimeMillis());
             mutexGeolocalizaciones.acquire();
             this.listaGeolocalizaciones.add(geo);
             mutexGeolocalizaciones.release();
@@ -938,6 +949,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaFormularios.indexOf(frm), frm);
             mutexFormularios.release();
         } else {
+            frm.setId(System.currentTimeMillis());
             mutexFormularios.acquire();
             this.listaFormularios.add(frm);
             mutexFormularios.release();
@@ -976,6 +988,7 @@ public class PersistenceMock implements Serializable {
                     .set(this.listaAnuncios.indexOf(adv), adv);
             mutexAnuncios.release();
         } else {
+            adv.setId(System.currentTimeMillis());
             mutexAnuncios.acquire();
             this.listaAnuncios.add(adv);
             mutexAnuncios.release();
