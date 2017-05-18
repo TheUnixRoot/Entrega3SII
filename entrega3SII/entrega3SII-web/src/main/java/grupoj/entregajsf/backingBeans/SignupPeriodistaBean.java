@@ -42,14 +42,14 @@ public class SignupPeriodistaBean {
     public SignupPeriodistaBean() {
         periodista = new Periodista();
     }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
 
     public Periodista getPeriodista() {
         return periodista;
@@ -130,19 +130,17 @@ public class SignupPeriodistaBean {
         this.periodista.setPuesto(puesto);
     }
     
-    
-    
     public UploadedFile getFoto() {
         return null;
     }
     
     /**
      * Da de alta un usuario con los campos previamente rellenados como atributos
-     * @return Vuelve a index.xhtml siempre
+     * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String submit() {
-        List<Usuario> list = persistencia.getListaUsuarios();
-        periodista.setId(System.currentTimeMillis());
+//        List<Usuario> list = persistencia.getListaUsuarios();
+//        periodista.setId(System.currentTimeMillis());
         periodista.setBorrado(false);
         periodista.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
         periodista.setNotificaciones(new ArrayList<Notificacion>());
@@ -151,13 +149,14 @@ public class SignupPeriodistaBean {
         periodista.setGestionarNotificacion(new ArrayList<Notificacion>());
         periodista.setGestionarLugar(new ArrayList<Lugar>());
         periodista.setGestionarEvento(new ArrayList<Evento>());
-        list.add(periodista);
-        try {
-            persistencia.setListaUsuarios(list);
-            
-        } catch (InterruptedException ex) {
-            System.err.println("Error al insertar usuario en persistencia");
-        }
+        persistencia.setPeriodista(periodista);
+//        list.add(periodista);
+//        try {
+//            persistencia.setListaUsuarios(list);
+//            
+//        } catch (InterruptedException ex) {
+//            System.err.println("Error al insertar usuario en persistencia");
+//        }
         return "gestion_usuarios.xhtml";
     }
 }

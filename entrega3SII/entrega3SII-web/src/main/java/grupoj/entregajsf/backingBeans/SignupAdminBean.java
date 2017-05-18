@@ -43,14 +43,14 @@ public class SignupAdminBean {
     public SignupAdminBean() {
         admin = new Administrador();
     }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
 
     public Periodista getAdministrador() {
         return admin;
@@ -145,11 +145,11 @@ public class SignupAdminBean {
     
     /**
      * Da de alta un usuario con los campos previamente rellenados como atributos
-     * @return Vuelve a index.xhtml siempre
+     * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String submit() {
-        List<Usuario> list = persistencia.getListaUsuarios();
-        admin.setId(System.currentTimeMillis());
+//        List<Usuario> list = persistencia.getListaUsuarios();
+//        admin.setId(System.currentTimeMillis());
         admin.setBorrado(false);
         admin.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
         admin.setNotificaciones(new ArrayList<Notificacion>());
@@ -161,13 +161,14 @@ public class SignupAdminBean {
         admin.setRecibirMensaje(new ArrayList<Mensaje>());
         admin.setEsGestionado(new ArrayList<Usuario>());
         admin.setAnuncios_by(new ArrayList<Anuncio>());
-        list.add(admin);
-        try {
-            persistencia.setListaUsuarios(list);
-            
-        } catch (InterruptedException ex) {
-            System.err.println("Error al insertar administrador en persistencia");
-        }
+        persistencia.setAdministrador(admin);
+//        list.add(admin);
+//        try {
+//            persistencia.setListaUsuarios(list);
+//            
+//        } catch (InterruptedException ex) {
+//            System.err.println("Error al insertar administrador en persistencia");
+//        }
         return "gestion_usuarios.xhtml";
     }
 }

@@ -40,19 +40,21 @@ public class Ver_notificacionesBean {
     public void setControlAutorizacion(ControlAutorizacion controlAutorizacion) {
         this.controlAutorizacion = controlAutorizacion;
     }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
     
     public List<Notificacion> getNotificaciones() {
-        List<Notificacion> list = persistencia.getListaUsuarios()
-                .get(persistencia.getListaUsuarios().indexOf(controlAutorizacion.getUsuario())
-).getNotificaciones();
+        List<Notificacion> list = persistencia
+                                    .getUsuario(
+                                            controlAutorizacion
+                                                .getUsuario().getId()
+                                    ).getNotificaciones();
         return list;
     }
     

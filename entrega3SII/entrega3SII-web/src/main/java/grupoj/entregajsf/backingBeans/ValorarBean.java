@@ -55,16 +55,17 @@ public class ValorarBean {
     public void init() {
         Map<String, String> req = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         usu = control.getUsuario();
-        Evento ev = new Evento();
-        ev.setId((Long.parseLong(req.get("id"))));
-        if (this.persistencia.getListaEventos().contains(ev)) {
-            this.evento = this.persistencia.getListaEventos()
-                    .get(
-                            this.persistencia.getListaEventos().indexOf(ev)
-                    );
-        } else {
-            this.evento = null;
-        }
+//        Evento ev = new Evento();
+//        ev.setId((Long.parseLong(req.get("id"))));
+//        if (this.persistencia.getListaEventos().contains(ev)) {
+            this.evento = persistencia.getEvento(Long.parseLong(req.get("id")));
+//                    this.persistencia.getListaEventos()
+//                    .get(
+//                            this.persistencia.getListaEventos().indexOf(ev)
+//                    );
+//        } else {
+//            this.evento = null;
+//        }
     }
 
     public Evento getEvento() {
@@ -155,7 +156,7 @@ public class ValorarBean {
         }
 
         Valoracion_eve valEve = new Valoracion_eve();
-        valEve.setId(System.currentTimeMillis());
+//        valEve.setId(System.currentTimeMillis());
         valEve.setCalificacion(valEvento);
         valEve.setComentario(comEvento);
         if (fotoValEvento == null) {
@@ -174,11 +175,15 @@ public class ValorarBean {
         
         listEve.add(valEve);
         evento.setValoraciones_sobre(listEve);
-
-        valEvento = null;
-        valEvento = null;
-        fotoValEvento = null;
+        persistencia.setUsuario(usu);
+        persistencia.setEvento(evento);
+        persistencia.setValoracion_eve(valEve);
         
+//
+//        valEvento = null;
+//        valEvento = null;
+//        fotoValEvento = null;
+//        
         FacesContext.getCurrentInstance()
                 .addMessage("imgEvento"
                 , new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del evento subida"));
@@ -201,7 +206,7 @@ public class ValorarBean {
         }
 
         Valoracion_lug valLug = new Valoracion_lug();
-        valLug.setId(System.currentTimeMillis());
+//        valLug.setId(System.currentTimeMillis());
         valLug.setCalificacion(valLugar);
         valLug.setComentario(comLugar);
         if (fotoValLugar == null) {
@@ -219,10 +224,13 @@ public class ValorarBean {
         valLug.setValoracion_sobre(lug);
         listLug.add(valLug);
         lug.setValoraciones_sobre(listLug);
-
-        valLugar = null;
-        comLugar = null;
-        fotoValLugar = null;
+        persistencia.setUsuario(usu);
+        persistencia.setLugar(lug);
+        persistencia.setValoracion_lug(valLug);
+        
+//        valLugar = null;
+//        comLugar = null;
+//        fotoValLugar = null;
         FacesContext.getCurrentInstance()
                 .addMessage("imgLugar"
                 , new FacesMessage(FacesMessage.SEVERITY_INFO, "Valoracion añadida", "Valoracion del lugar subida"));
