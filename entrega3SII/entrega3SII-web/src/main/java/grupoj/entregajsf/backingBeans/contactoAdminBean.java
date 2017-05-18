@@ -27,7 +27,7 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 @Named(value = "contactoAdminBean")
 public class contactoAdminBean {
-    
+    @Inject
     private PersistenceMock persistencia;
     private Mensaje message;
     private String texto;
@@ -42,7 +42,7 @@ public class contactoAdminBean {
      */
     @PostConstruct
     public void init() {
-        persistencia = new PersistenceMock();
+//        persistencia = new PersistenceMock();
         listUsers = persistencia.getListaUsuarios();
         user = control.getUsuario();        
         message = new Mensaje();
@@ -82,7 +82,6 @@ public class contactoAdminBean {
     
     
      public String crearMensaje() {       
-        
         message.setTexto(this.texto);
         message.setAsunto(this.asunto);
         message.setEnviadoPor(user);
@@ -93,6 +92,8 @@ public class contactoAdminBean {
                 admin.setRecibirMensaje(listaMensajes);
              }
             admin.getRecibirMensaje().add(message);
+            // Actualizamos los administradores, que esten enlazados con el msg
+            persistencia.setAdministrador(admin);
         }
         if(user != null) {
         if(user.getMsg_send() == null){
@@ -100,7 +101,11 @@ public class contactoAdminBean {
             user.setMsg_send(listaMensajes);
         }
         user.getMsg_send().add(message);
+        //Actualizamos usuario que envia el mensaje
+        persistencia.setUsuario(user);
         }
+        // Metemos el mensaje en la persistencia
+        persistencia.setMensaje(message);
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.addMessage("formulario:panel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje enviado correctamente", "Mensaje enviado correctamente"));
         return null;
