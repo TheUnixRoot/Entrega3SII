@@ -5,16 +5,14 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import grupoj.prentrega1.Lugar;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
-import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -30,12 +28,11 @@ public class verLugarBean implements Serializable {
     @Inject
     private PersistenceMock persistencia;
 
-//    No hace falta  
+//    No hace falta
 //    private List<Lugar> listaLugares;
-
     @PostConstruct
     public void init() {
-        // Se borra 
+        // Se borra
 //        listaLugares = persistencia.getListaLugares();
     }
 
@@ -43,15 +40,14 @@ public class verLugarBean implements Serializable {
 //    public List<Lugar> getListaLugares() {
 //        return listaLugares;
 //    }
-
 //    Se borran (Quitando subcontrataciones)
 //    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
 //        //this.listaLugares = listaLugares;
 //        persistencia.setListaLugares(listaLugares);
 //    }
-
     /**
      * Develve la imagen del lugar.
+     *
      * @return imagen en formato StreamedContent
      */
     public StreamedContent generar() {

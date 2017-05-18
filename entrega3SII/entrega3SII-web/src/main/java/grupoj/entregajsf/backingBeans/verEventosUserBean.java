@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 
 /**
@@ -25,12 +24,11 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 public class verEventosUserBean {
 
-    
     @Inject
     private PersistenceMock persistencia;
-    
+
     private List<Evento> listaEventos;
-    
+
     @PostConstruct
     public void init() {
         listaEventos = persistencia.getListaEventos();
@@ -38,43 +36,42 @@ public class verEventosUserBean {
 
     /**
      * Genera una lista personalizada de eventos
+     *
      * @return ListaEventos
      */
     public List<Evento> getListaEventos() {
         List<Evento> lista = new ArrayList<>();
         for (Evento e : listaEventos) {
-            if(e.isValidado() && !e.isBorrado())
+            if (e.isValidado() && !e.isBorrado()) {
                 lista.add(e);
+            }
         }
-        
+
         return lista;
     }
 
-    public void setListaEventos(List<Evento> listaEventos) throws InterruptedException{
-        
+    public void setListaEventos(List<Evento> listaEventos) throws InterruptedException {
+
         persistencia.setListaEventos(listaEventos);
-        
+
     }
-    
-    
+
     public String viajar() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        
+
         return "dejar_valoracion.xhtml?id=" + params.get("id");
     }
-    
-    
+
     public String viajarv() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        
+
         return "ver_Evento.xhtml?id=" + params.get("id");
     }
-    
+
     public String viajarE() {
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        
+
         return "eliminarEvento.xhtml?id=" + params.get("id");
     }
-    
-    
+
 }

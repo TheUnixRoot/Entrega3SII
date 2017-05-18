@@ -5,19 +5,17 @@ package grupoj.entregajsf.backingBeans;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import java.util.Date;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import grupoj.prentrega1.*;
-import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import mockingBeans.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.*;
 import java.io.ByteArrayInputStream;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -28,17 +26,19 @@ import org.primefaces.model.UploadedFile;
  */
 @Named(value = "configurarPerfil")
 @RequestScoped
-public class configurarPerfil{
+public class configurarPerfil {
+
     @Inject
     private ControlAutorizacion control;
-    
+
     @Inject
     private PersistenceMock persistencia;
     /*
     private List<Usuario> listaUsuario;
     private byte[] foto;
-    */
+     */
     private Usuario usuario;
+
     /*
     private String nombre;
     private String apellidos;
@@ -46,7 +46,7 @@ public class configurarPerfil{
     private String contrasenia;
     private String telefono;
     private Date fechaNacimiento;
-    */
+     */
     /**
      * Creates a new instance of configurarPerfil
      */
@@ -54,7 +54,7 @@ public class configurarPerfil{
     public void init() {
         /*
         listaUsuario = persistencia.getListaUsuarios();
-        */
+         */
         usuario = control.getUsuario();
         /*
         listaUsuario.remove(usuario);
@@ -65,7 +65,7 @@ public class configurarPerfil{
         contrasenia = usuario.getPassword();
         telefono = usuario.getTelefono();
         fechaNacimiento = usuario.getFechaNacimiento();
-          */      
+         */
     }
 
     public StreamedContent getFoto() {
@@ -73,16 +73,18 @@ public class configurarPerfil{
     }
 
     public void setFoto(StreamedContent foto) {
-        
+
     }
+
     public UploadedFile getFoto2() {
         return null;
     }
 
     public void setFoto2(UploadedFile foto) {
         //System.out.println("jummm");
-        if(foto.getContents().length > 0)
+        if (foto.getContents().length > 0) {
             this.usuario.setMultimedia(foto.getContents());
+        }
     }
 
     public ControlAutorizacion getControl() {
@@ -108,10 +110,8 @@ public class configurarPerfil{
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
-    
-    public String configurar(){
+
+    public String configurar() {
         /*
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);
@@ -120,7 +120,7 @@ public class configurarPerfil{
         usuario.setTelefono(telefono);
         usuario.setFechaNacimiento(fechaNacimiento);
         usuario.setMultimedia(foto);
-        */
+         */
         List<Usuario> listaUsuario = persistencia.getListaUsuarios();
         listaUsuario.set(
                 listaUsuario.indexOf(usuario), usuario);
@@ -129,10 +129,9 @@ public class configurarPerfil{
         } catch (InterruptedException ex) {
             Logger.getLogger(configurarPerfil.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return "index.xhtml";
 
     }
-    
-    
+
 }

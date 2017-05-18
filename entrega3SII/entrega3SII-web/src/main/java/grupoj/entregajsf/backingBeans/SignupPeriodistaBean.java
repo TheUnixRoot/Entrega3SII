@@ -12,15 +12,13 @@ import grupoj.prentrega1.Mensaje;
 import grupoj.prentrega1.Notificacion;
 import grupoj.prentrega1.Periodista;
 import grupoj.prentrega1.TipoNotificacion;
-import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 

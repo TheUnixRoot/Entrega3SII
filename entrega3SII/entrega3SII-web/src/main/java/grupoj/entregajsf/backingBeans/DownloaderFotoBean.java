@@ -24,35 +24,35 @@ import org.primefaces.model.StreamedContent;
  */
 @Named(value = "downloaderFotoBean")
 @ViewScoped
-public class DownloaderFotoBean implements Serializable{
+public class DownloaderFotoBean implements Serializable {
 
     @Inject
     PersistenceMock persistencia;
     private Iterator<Usuario> it;
-    
-    public DownloaderFotoBean()  {
+
+    public DownloaderFotoBean() {
     }
-    
+
     /**
-     * Itera por la lista de usuarios obtenidas desde la persistencia
-     * para generar las diversas imagenes, el iterador es propio del
-     * bean, por lo que debe ser llamada siempre la misma instancia 
-     * del mismo para avanzar
+     * Itera por la lista de usuarios obtenidas desde la persistencia para
+     * generar las diversas imagenes, el iterador es propio del bean, por lo que
+     * debe ser llamada siempre la misma instancia del mismo para avanzar
+     *
      * @return Imagen de un usuario o null si no hubiera
      */
     public StreamedContent generar() {
         StreamedContent con = null;
         try {
-            if(it == null) {
+            if (it == null) {
                 it = persistencia.getListaUsuarios().iterator();
             } else if (it.hasNext()) {
                 byte[] mul = it.next().getMultimedia();
-                con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
+                con = new DefaultStreamedContent(new ByteArrayInputStream(mul));
             }
         } catch (IndexOutOfBoundsException ie) {
             Logger.getLogger(Crud_usuariosBean.class.getName()).log(Level.SEVERE, null, ie);
         }
         return con;
     }
-    
+
 }

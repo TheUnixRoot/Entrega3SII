@@ -5,20 +5,15 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-
-
 import grupoj.prentrega1.Evento;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
-import org.omnifaces.util.Faces;
-
 
 /**
  *
@@ -32,12 +27,12 @@ public class EliminarEvento {
     private PersistenceMock persistencia;
 //    private List<Evento> listaEventos;
     private Evento ev;
-    
+
     @PostConstruct
     public void init() {
-       Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 //       listaEventos = persistencia.getListaEventos();
-       ev = persistencia.getEvento(Long.parseLong(params.get("id")));
+        ev = persistencia.getEvento(Long.parseLong(params.get("id")));
 //       ev = listaEventos.get(
 //                persistencia.getListaEventos().indexOf(ev)
 //                );
@@ -52,7 +47,7 @@ public class EliminarEvento {
     }
 
     public String getValor() {
-        return ev.isBorrado()?"si":"no";
+        return ev.isBorrado() ? "si" : "no";
     }
 
     public void setValor(String valor) {
@@ -80,6 +75,5 @@ public class EliminarEvento {
                 .addMessage("formu:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento actualizado", "Evento actualizado"));
         return null;
     }
-    
-    
+
 }

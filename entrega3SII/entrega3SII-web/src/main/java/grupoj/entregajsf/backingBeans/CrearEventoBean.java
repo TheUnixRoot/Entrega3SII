@@ -16,12 +16,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
@@ -60,7 +60,6 @@ public class CrearEventoBean {
 
 //        lugares = persistencia.getListaLugares();
 //        eventos = persistencia.getListaEventos();
-
     }
 
     public String getNombre() {
@@ -261,7 +260,7 @@ public class CrearEventoBean {
         List<Evento> lugListEv = lugarEnCuestion.getOcurren_at();
         lugListEv.add(e);
         lugarEnCuestion.setOcurren_at(lugListEv);
-        
+
         persistencia.setLugar(lugarEnCuestion);
 
         e.setBorrado(false);

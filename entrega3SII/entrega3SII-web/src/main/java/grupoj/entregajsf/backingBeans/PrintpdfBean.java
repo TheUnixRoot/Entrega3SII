@@ -9,19 +9,20 @@ import grupoj.entregajsf.toPDF.PdfCreator;
 import grupoj.prentrega1.Evento;
 import java.io.ByteArrayInputStream;
 import java.util.Map;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 /**
- * Reedicion de PrintBean por errores de compilación derivados de netbeans
- * y de las refactorizaciones de nombres
+ * Reedicion de PrintBean por errores de compilación derivados de netbeans y de
+ * las refactorizaciones de nombres
+ *
  * @author juanp
- * @deprecated 
+ * @deprecated
  */
 @Named(value = "printpdfBean")
 @RequestScoped
@@ -31,7 +32,7 @@ public class PrintpdfBean {
     private PersistenceMock persistencia;
     private PdfCreator pdf;
     private Evento ev;
-  
+
     public Evento getEv() {
         return ev;
     }
@@ -39,7 +40,7 @@ public class PrintpdfBean {
     public void setEv(Evento ev) {
         this.ev = ev;
     }
-    
+
     public PersistenceMock getPersistencia() {
         return persistencia;
     }
@@ -55,10 +56,11 @@ public class PrintpdfBean {
     public void setPdf(PdfCreator pdf) {
         this.pdf = pdf;
     }
-    
+
     /**
-     * Dado el evento pasado como parametro de la web, se obtiene un pdf
-     * con los datos relevantes del mismo
+     * Dado el evento pasado como parametro de la web, se obtiene un pdf con los
+     * datos relevantes del mismo
+     *
      * @return Archivo pdf generado
      */
     public StreamedContent getFile() {
@@ -66,13 +68,13 @@ public class PrintpdfBean {
         Evento evprima = new Evento();
         evprima.setId(Long.parseLong(params.get("id")));
         setEv(persistencia.getListaEventos().get(
-            persistencia.getListaEventos().indexOf(evprima)));
+                persistencia.getListaEventos().indexOf(evprima)));
         pdf = new PdfCreator(this.ev);
-        
+
         StreamedContent stc = new DefaultStreamedContent(
-                new ByteArrayInputStream(pdf.getStream()), 
+                new ByteArrayInputStream(pdf.getStream()),
                 "application/pdf", ev.getNombre() + ".pdf");
         return stc;
     }
-    
+
 }

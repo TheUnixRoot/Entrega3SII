@@ -8,9 +8,9 @@ package grupoj.entregajsf.backingBeans;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Notificacion;
 import java.util.List;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 
 /**
@@ -25,10 +25,10 @@ public class Ver_notificacionesBean {
     ControlAutorizacion controlAutorizacion;
     @Inject
     PersistenceMock persistencia;
-    
+
     /**
-     * Creates a new instance of Ver_notificacionesBean
-     * contains a list of notificaciones for current user
+     * Creates a new instance of Ver_notificacionesBean contains a list of
+     * notificaciones for current user
      */
     public Ver_notificacionesBean() {
     }
@@ -48,14 +48,14 @@ public class Ver_notificacionesBean {
 //    public void setPersistencia(PersistenceMock persistencia) {
 //        this.persistencia = persistencia;
 //    }
-    
+
     public List<Notificacion> getNotificaciones() {
         List<Notificacion> list = persistencia
-                                    .getUsuario(
-                                            controlAutorizacion
-                                                .getUsuario().getId()
-                                    ).getNotificaciones();
+                .getUsuario(
+                        controlAutorizacion
+                                .getUsuario().getId()
+                ).getNotificaciones();
         return list;
     }
-    
+
 }

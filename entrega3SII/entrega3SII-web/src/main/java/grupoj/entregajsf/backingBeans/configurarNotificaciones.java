@@ -11,17 +11,18 @@ import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 
 /**
  *
  * @author David Ahora mismo falta de todo.... Mirar la configuración que tiene
- * el usuario, cargarla y despues enviar en el caso de que haya cambios (¿Eso es para mi?)
+ * el usuario, cargarla y despues enviar en el caso de que haya cambios (¿Eso es
+ * para mi?)
  */
 @Named(value = "configurarNotificaciones")
 @Dependent
@@ -106,7 +107,7 @@ public class configurarNotificaciones {
             case Ambos:
                 listaNotifMostrar.add("Ambos");
                 break;
-            
+
             default:
                 break;
         }
@@ -164,7 +165,6 @@ public class configurarNotificaciones {
             this.tipoNotUsuario = TipoNotificacion.Desactivado;
         }
 
-        
         usuLogueado.setTipoNotificacionesRecibir(tipoNotUsuario);
 //        usuPrima.setTipoNotificacionesRecibir(tipoNotUsuario);
 //        List<Usuario> listaUsu = this.persistencia.getListaUsuarios();
@@ -177,8 +177,8 @@ public class configurarNotificaciones {
         persistencia.setUsuario(usuLogueado);
 
         FacesContext.getCurrentInstance()
-            .addMessage("confNotificaciones:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
-        
+                .addMessage("confNotificaciones:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Actualizado", "Actualizado"));
+
         return null;
     }
 

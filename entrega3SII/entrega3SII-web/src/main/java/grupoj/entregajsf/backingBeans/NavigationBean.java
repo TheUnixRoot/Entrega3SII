@@ -5,8 +5,8 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 /**
  *
@@ -21,12 +21,13 @@ public class NavigationBean {
      */
     public NavigationBean() {
     }
-    
+
     /**
-     * Metodo que completa la navegabilidad del menu lateral para 
-     * optimizar la vista
+     * Metodo que completa la navegabilidad del menu lateral para optimizar la
+     * vista
+     *
      * @param str
-     * @return 
+     * @return
      */
     public String goTo(String str) {
         return str;

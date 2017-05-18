@@ -5,16 +5,15 @@ package grupoj.entregajsf.backingBeans;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Usuario;
 import java.util.List;
-import javax.inject.Named;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import grupoj.prentrega1.Usuario;
-import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 
 /**
@@ -30,7 +29,7 @@ public class login {
     private List<Usuario> usuarios;
     @Inject
     private PersistenceMock persistencia;
-    
+
     @Inject
     private ControlAutorizacion ctrl;
 
@@ -44,6 +43,7 @@ public class login {
 //        usuarios.add(new Usuario("pepe", "asdf", Rol.NORMAL));
 //        usuarios.add(new Usuario("manolo", "qwer", Rol.ADMINISTRADOR));*/
     }
+
     public String getEmail() {
         return email;
     }
@@ -53,7 +53,7 @@ public class login {
     }
 
     public void setEmail(String email) {
-        this.email= email;
+        this.email = email;
     }
 
     public void setContrasenia(String contrasenia) {
@@ -66,23 +66,20 @@ public class login {
         usu.setPassword(contrasenia);
         usuarios = persistencia.getListaUsuarios();
         boolean encontrado = false;
-        for(Usuario u : usuarios){
-            if(u.getEmail().equalsIgnoreCase(usu.getEmail()) && u.getPassword().equals(usu.getPassword())){
+        for (Usuario u : usuarios) {
+            if (u.getEmail().equalsIgnoreCase(usu.getEmail()) && u.getPassword().equals(usu.getPassword())) {
                 encontrado = true;
                 ctrl.setUsuario(u);
             }
         }
-        
-        if(encontrado){
+
+        if (encontrado) {
             return "index.xhtml";
         }
         FacesContext.getCurrentInstance()
-            .addMessage("login:mensaje", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario/contraseña incorrectos", "Usuario/contraseña incorrectos"));
+                .addMessage("login:mensaje", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario/contraseña incorrectos", "Usuario/contraseña incorrectos"));
         this.setContrasenia(null);
         return "login.xhtml";
     }
-    
-    
-    
-}
 
+}

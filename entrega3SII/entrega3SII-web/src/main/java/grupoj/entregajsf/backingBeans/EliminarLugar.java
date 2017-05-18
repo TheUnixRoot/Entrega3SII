@@ -6,14 +6,13 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.prentrega1.Lugar;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import mockingBeans.PersistenceMock;
 
 /**

@@ -5,20 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import grupoj.prentrega1.Usuario;
-import javax.inject.Named;
-import javax.inject.Inject;
-import mockingBeans.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Usuario;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import org.omnifaces.cdi.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -36,9 +33,10 @@ public class Mod_usuariosBean implements Serializable {
     private ControlAutorizacion controlAutorizacion;
     private Usuario usr;
     long id;
+
     /**
-     * Crea un nuevo bean que contine al usuario pasado por parámetros
-     * o null si no existiera
+     * Crea un nuevo bean que contine al usuario pasado por parámetros o null si
+     * no existiera
      */
     @PostConstruct
     public void init() {
@@ -81,7 +79,6 @@ public class Mod_usuariosBean implements Serializable {
 //    public void setControlAutorizacion(ControlAutorizacion controlAutorizacion) {
 //        this.controlAutorizacion = controlAutorizacion;
 //    }
-
     public long getId() {
         return id;
     }
@@ -89,10 +86,11 @@ public class Mod_usuariosBean implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
+
     /**
-     * Cuando la instancia posee un usuario correcto, se extrae su byte[] 
+     * Cuando la instancia posee un usuario correcto, se extrae su byte[]
      * multimedia y se genera la imagen para ser mostrada.
+     *
      * @return Imagen del usuario o null en su defecto.
      */
     public StreamedContent generar() {
@@ -102,15 +100,15 @@ public class Mod_usuariosBean implements Serializable {
 //            Usuario uu = new Usuario();
 //            uu.setId(Long.parseLong(params.get("id")));
             byte[] mul = persistencia.getUsuario(Long.parseLong(params.get("id")))
-//                    persistencia
-//                    .getListaUsuarios()
-//                    .get(persistencia
-//                            .getListaUsuarios()
-//                            .indexOf(uu)
-//                    )
+                    //                    persistencia
+                    //                    .getListaUsuarios()
+                    //                    .get(persistencia
+                    //                            .getListaUsuarios()
+                    //                            .indexOf(uu)
+                    //                    )
                     .getMultimedia();
-            con = new DefaultStreamedContent(new ByteArrayInputStream(mul)); 
-            
+            con = new DefaultStreamedContent(new ByteArrayInputStream(mul));
+
         } catch (ArrayIndexOutOfBoundsException ie) {
             System.err.println(ie.getMessage() + " id usuario recibido " + params.get("id"));
         } catch (NumberFormatException ne) {
@@ -118,10 +116,11 @@ public class Mod_usuariosBean implements Serializable {
         }
         return con;
     }
-    
+
     /**
-     * Método que modifica al usuario de persistencia contenido en el bean
-     * por los atributos nuevos.
+     * Método que modifica al usuario de persistencia contenido en el bean por
+     * los atributos nuevos.
+     *
      * @return Vuelve a gestion_usuarios.xhtml siempre
      */
 //    public String change() {

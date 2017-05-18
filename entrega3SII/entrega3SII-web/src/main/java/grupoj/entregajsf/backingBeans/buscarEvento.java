@@ -5,17 +5,16 @@
  */
 package grupoj.entregajsf.backingBeans;
 
-import java.util.*;
-import javax.annotation.PostConstruct;
-import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
-import mockingBeans.PersistenceMock;
 import grupoj.prentrega1.*;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import org.omnifaces.util.Faces;
+import javax.inject.Named;
+import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -136,8 +135,9 @@ public class buscarEvento {
 
     /**
      * Realiza una busqueda de los eventos que cumplen alguna de las
-     * condiciones, funciona estilo OR, incluyendo todos, en lugar de
-     * realizar la interseccion de los requisitos
+     * condiciones, funciona estilo OR, incluyendo todos, en lugar de realizar
+     * la interseccion de los requisitos
+     *
      * @return Devuelve la pagina resultadoBuscarEvento.xhtml siempre
      */
     public String buscar() {
@@ -212,10 +212,12 @@ public class buscarEvento {
             }
         }
         List<Evento> l = new ArrayList<>();
-        for(Evento e : listaCoincidencias)
-            if(!e.isBorrado() && e.isValidado())
+        for (Evento e : listaCoincidencias) {
+            if (!e.isBorrado() && e.isValidado()) {
                 l.add(e);
-        
+            }
+        }
+
         try {
             res.setListaEventos(l);
         } catch (InterruptedException ex) {
