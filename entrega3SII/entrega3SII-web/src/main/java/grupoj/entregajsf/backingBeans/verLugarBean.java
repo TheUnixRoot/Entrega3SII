@@ -30,38 +30,46 @@ public class verLugarBean implements Serializable {
     @Inject
     private PersistenceMock persistencia;
 
-    private List<Lugar> listaLugares;
+//    No hace falta  
+//    private List<Lugar> listaLugares;
 
     @PostConstruct
     public void init() {
-        listaLugares = persistencia.getListaLugares();
+        // Se borra 
+//        listaLugares = persistencia.getListaLugares();
     }
 
-    public List<Lugar> getListaLugares() {
-        return listaLugares;
-    }
+//    Se borran
+//    public List<Lugar> getListaLugares() {
+//        return listaLugares;
+//    }
 
-    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
-        //this.listaLugares = listaLugares;
-        persistencia.setListaLugares(listaLugares);
-    }
+//    Se borran (Quitando subcontrataciones)
+//    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
+//        //this.listaLugares = listaLugares;
+//        persistencia.setListaLugares(listaLugares);
+//    }
 
+    /**
+     * Develve la imagen del lugar.
+     * @return imagen en formato StreamedContent
+     */
     public StreamedContent generar() {
 
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
         try {
-            Lugar lu = new Lugar();
-            lu.setId(Long.parseLong(params.get("id")));
-            byte[] fo = persistencia.getListaLugares().get(persistencia.getListaLugares().indexOf(lu)).getFotos();
+//            Lugar lu = new Lugar();
+//            lu.setId();
+            byte[] fo = persistencia.getLugar(Long.parseLong(params.get("id"))).getFotos();
+//          byte[] fo = persistencia.getListaLugares().get(persistencia.getListaLugares().indexOf(lu)).getFotos();
             con = new DefaultStreamedContent(new ByteArrayInputStream(fo));
 
         } catch (ArrayIndexOutOfBoundsException ie) {
             System.err.println("error en generar foto lugar");
         } catch (NumberFormatException ne) {
             System.err.println("error en generar foto lugar");
-
         }
 
         return con;

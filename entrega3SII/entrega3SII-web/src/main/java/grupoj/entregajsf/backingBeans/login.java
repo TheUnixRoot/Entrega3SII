@@ -39,10 +39,10 @@ public class login {
      */
     @PostConstruct
     public void init() {
-        usuarios = persistencia.getListaUsuarios();
-       /* usuarios = new ArrayList<Usuario>();
-        usuarios.add(new Usuario("pepe", "asdf", Rol.NORMAL));
-        usuarios.add(new Usuario("manolo", "qwer", Rol.ADMINISTRADOR));*/
+//        usuarios = persistencia.getListaUsuarios();
+//       /* usuarios = new ArrayList<Usuario>();
+//        usuarios.add(new Usuario("pepe", "asdf", Rol.NORMAL));
+//        usuarios.add(new Usuario("manolo", "qwer", Rol.ADMINISTRADOR));*/
     }
     public String getEmail() {
         return email;

@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 
 
@@ -34,7 +35,7 @@ import mockingBeans.PersistenceMock;
 public class enviarNotificacionesBean {
 
  
-    
+    @Inject
     private PersistenceMock persistencia;
     
     private List<String> selectedGustos;
@@ -58,29 +59,35 @@ public class enviarNotificacionesBean {
        /**
      * Creates a new instance of enviarNotificacionesBean
      */
-    public enviarNotificacionesBean() {
-        this.vacio = true;
-        
-        this.listaCoincidencias = new ArrayList();
-        this.selectedUsuarios = new ArrayList();
-        this.persistencia = new PersistenceMock();
-        this.listaEventos = persistencia.getListaEventos();
-    }
+//    public enviarNotificacionesBean() {
+//        this.vacio = true;
+//        
+//        this.listaCoincidencias = new ArrayList();
+//        this.selectedUsuarios = new ArrayList();
+//        this.persistencia = new PersistenceMock();
+//        this.listaEventos = persistencia.getListaEventos();
+//    }
     
     @PostConstruct
     public void init() {
-       gustos = new ArrayList<>();
-       gustos.add("Música");
-       gustos.add("Teatro");
-       gustos.add("Opera");
-       gustos.add("Cine");
-       gustos.add("Arte");
-       gustos.add("Deportes");
+        gustos = new ArrayList<>();
+        gustos.add("Música");
+        gustos.add("Teatro");
+        gustos.add("Opera");
+        gustos.add("Cine");
+        gustos.add("Arte");
+        gustos.add("Deportes");
+
+        fechas = new ArrayList<>();
+        fechas.add("Hoy");
+        fechas.add("Mañana");
+        fechas.add("Proximos 7 dias");
        
-       fechas = new ArrayList<>();
-       fechas.add("Hoy");
-       fechas.add("Mañana");
-       fechas.add("Proximos 7 dias");
+        // Estaban en el constructor
+        this.vacio = true;
+        this.listaCoincidencias = new ArrayList();
+        this.selectedUsuarios = new ArrayList();
+        this.listaEventos = persistencia.getListaEventos();
       
     }
 
