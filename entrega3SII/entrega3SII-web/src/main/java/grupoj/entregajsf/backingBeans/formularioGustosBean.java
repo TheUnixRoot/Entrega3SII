@@ -67,6 +67,10 @@ public class formularioGustosBean {
             this.formulario.setForm_tags(tags);
         }
         
+        // Actualizar formulario y usuario
+        persistencia.setFormulario(this.formulario);
+        persistencia.setUsuario(this.user);
+        
         this.selectedGustos = new String[10];
         int i = 0;
         for(Tag g : tags) {
@@ -94,19 +98,40 @@ public class formularioGustosBean {
     
     public String saveGustos(){       
         
-        long i = 0;
+//        long i = 0;
         tags = new ArrayList<>();
         for(String gusto : this.selectedGustos){
-            Tag tag= new Tag();
-            tag.setId(System.currentTimeMillis());
-            tag.setTexto(gusto);
-            tag.setForm(this.formulario);
+            // buscas el tag con el mismo text que gusto
+            // todo 
+            List<Tag> lts = persistencia.getListaTags();
+            Tag tg = new Tag();
+            int j = 0;
+            while (tg.getTexto().equals(gusto)) {
+                tg = lts.get(j);
+                j ++;
+            }
+            Tag tag = persistencia.getTag(tg.getId()); // where tg es ek tag buscado con el mismo texto
+//            Tag tag= new Tag();
+//            tag.setId(System.currentTimeMillis());
+//            tag.setTexto(gusto);
+//            tag.setForm(this.formulario);
+            List<Formulario> fl = tag.getForm();
+            if(fl == null) {
+                //todo
+                // la creas nueva y la metes en el tag
+                fl = new ArrayList();
+                tag.setForm(fl);
+            }
+            fl.add(formulario);
             tags.add(tag);
-            i++;
+            persistencia.setTag(tag);
+//            i++;
         }
         this.formulario.setForm_tags(tags);
         formulario.setUsuario(this.user);
         this.user.setForm(this.formulario);
+        persistencia.setFormulario(this.formulario);
+        persistencia.setUsuario(user);
         FacesContext.getCurrentInstance()
             .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
          return null;
