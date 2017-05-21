@@ -101,36 +101,46 @@ public class formularioGustosBean {
 
 //        long i = 0;
         tags = new ArrayList<>();
+        // borro el formulario de los tags que contiene y los tags del formulario
+        for (Tag tagg : formulario.getForm_tags()) {
+            tagg.getForm().remove(formulario);
+        }
+        formulario.setForm_tags(null);
+        
+        // relleno el formulario con los nuevos tags
         for (String gusto : this.selectedGustos) {
             // buscas el tag con el mismo text que gusto
             // todo 
             List<Tag> lts = persistencia.getListaTags();
-            Tag tg = new Tag();
-            int j = 0;
-            while (tg.getTexto().equals(gusto)) {
+            Tag tg = lts.get(0);
+            int j = 1;
+            while (!tg.getTexto().equals(gusto)) {
                 tg = lts.get(j);
                 j++;
             }
-            Tag tag = persistencia.getTag(tg.getId()); // where tg es ek tag buscado con el mismo texto
+            tg = persistencia.getTag(tg.getId()); // where tg es ek tag buscado con el mismo texto
 //            Tag tag= new Tag();
 //            tag.setId(System.currentTimeMillis());
 //            tag.setTexto(gusto);
 //            tag.setForm(this.formulario);
-            List<Formulario> fl = tag.getForm();
+            List<Formulario> fl = tg.getForm();
             if (fl == null) {
                 //todo
                 // la creas nueva y la metes en el tag
                 fl = new ArrayList();
-                tag.setForm(fl);
             }
-            fl.add(formulario);
-            tags.add(tag);
+            if(fl.contains(formulario)) {
+                
+            } else 
+                fl.add(formulario);
+            tg.setForm(fl);
             try {
-                persistencia.setTag(tag);
+                persistencia.setTag(tg);
             } catch (InterruptedException ex) {
                 Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
             }
 //            i++;
+            tags.add(tg);
         }
         this.formulario.setForm_tags(tags);
         formulario.setUsuario(this.user);
