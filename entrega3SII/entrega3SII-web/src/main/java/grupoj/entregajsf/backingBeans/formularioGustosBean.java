@@ -103,7 +103,11 @@ public class formularioGustosBean {
         tags = new ArrayList<>();
         // borro el formulario de los tags que contiene y los tags del formulario
         for (Tag tagg : formulario.getForm_tags()) {
-            tagg.getForm().remove(formulario);
+            List<Formulario> formlst = tagg.getForm();
+            if(formlst != null) 
+                formlst.remove(formulario);
+            else
+                tagg.setForm(new ArrayList<Formulario>());
         }
         formulario.setForm_tags(null);
         
