@@ -117,6 +117,12 @@ public class PersistenceMock implements Serializable {
         formulario.setForm_tags(listaTags);
         formulario.setId(System.currentTimeMillis());
         formulario.setHistorialEventos(new ArrayList<Evento>());
+        for(Tag tagg : listaTags){
+            if(tagg.getForm()==null){
+                tagg.setForm(listaFormularios);
+            }
+            //tagg.getForm().add(formulario);
+        }
         listaFormularios.add(formulario);
 
         Usuario usr = new Usuario();
