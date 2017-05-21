@@ -86,7 +86,10 @@
                                 
                                 <p:menuitem value="Ver notificaciones" 
                                 action="#{navigationBean.goTo('ver_noti.xhtml')}" 
-                                rendered="#{controlAutorizacion.usuario != null}" />                               
+                                rendered="#{controlAutorizacion.usuario != null}" />      
+                                <p:menuitem value="Ver mensajes" 
+                                action="#{navigationBean.goTo('verMensajes.xhtml')}" 
+                                rendered="#{controlAutorizacion.administrador}" />      
                             </p:submenu>
                         </p:menu>
                     </h:form>

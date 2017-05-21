@@ -188,6 +188,17 @@ public class PersistenceMock implements Serializable {
         listaUsuarios.add(adm);
         listaPeriodistas.add(adm);
         listaAdministradores.add(adm);
+        
+        //mensaje para admin de prueba
+        
+        Mensaje msg = new Mensaje();
+        msg.setAsunto("papas");
+        msg.setTexto("quiero patatas");
+        msg.setEnviadoPor(usr);
+        msg.setRecibidoPor(listaAdministradores);
+        msg.setId(Long.MIN_VALUE);
+        adm.setRecibirMensaje(new ArrayList<Mensaje>());
+        adm.getRecibirMensaje().add(msg);
 
         Lugar lugar1 = new Lugar();
         lugar1.setId(1L);
