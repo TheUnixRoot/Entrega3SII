@@ -181,7 +181,7 @@ public class PersistenceMock implements Serializable {
         }
         listaUsuarios.add(adm);
         listaPeriodistas.add(adm);
-        listaPeriodistas.add(adm);
+        listaAdministradores.add(adm);
 
         Lugar lugar1 = new Lugar();
         lugar1.setId(1L);
