@@ -58,7 +58,7 @@ public class CrearEventoBean {
     @PostConstruct
     public void init() {
 
-//        lugares = persistencia.getListaLugares();
+        lugares = persistencia.getListaLugares();
 //        eventos = persistencia.getListaEventos();
     }
 
@@ -141,14 +141,14 @@ public class CrearEventoBean {
     public void setSubido_by(Usuario subido_by) {
         this.subido_by = subido_by;
     }
-//
-//    public List<Lugar> getLugares() {
-//        return lugares;
-//    }
-//
-//    public void setLugares(List<Lugar> lugares) {
-//        this.lugares = lugares;
-//    }
+
+    public List<Lugar> getLugares() {
+        return lugares;
+    }
+
+    public void setLugares(List<Lugar> lugares) {
+        this.lugares = lugares;
+    }
 
     public UploadedFile getFile() {
         return null;
@@ -211,13 +211,13 @@ public class CrearEventoBean {
     }
 
     private boolean existeEvento(String nombre) {
-
         boolean b = false;
         int i = 0;
         while (i < persistencia.getListaEventos().size() && !b) {
             if (persistencia.getListaEventos().get(i).getNombre().equals(nombre)) {
                 b = true;
             }
+            i++;
         }
         return b;
     }
@@ -238,7 +238,6 @@ public class CrearEventoBean {
 
     public String insertarEvento() throws InterruptedException {
         if (existeEvento(nombre)) {
-
             FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento ya existente en la base de datos", "Evento ya existente en la base de datos");
             FacesContext.getCurrentInstance().addMessage("mensaje", fm);
 
@@ -255,12 +254,10 @@ public class CrearEventoBean {
         e.setFecha_fin(fecha_fin);
         e.setDescripcion(descripcion);
         e.setOcurre_in(buscarLugar(ocurre_in));
-
         Lugar lugarEnCuestion = buscarLugar(ocurre_in);
         List<Evento> lugListEv = lugarEnCuestion.getOcurren_at();
         lugListEv.add(e);
         lugarEnCuestion.setOcurren_at(lugListEv);
-
         persistencia.setLugar(lugarEnCuestion);
 
         e.setBorrado(false);
@@ -268,7 +265,7 @@ public class CrearEventoBean {
         List<Tag> tle = new ArrayList<>();
         List<Tag> tln = new ArrayList<>();
         List<Tag> tp = persistencia.getListaTags();
-
+        
         try (Scanner sc = new Scanner(tags)) {
             sc.useDelimiter("(,( )*)+");
             while (sc.hasNext()) {
@@ -294,11 +291,13 @@ public class CrearEventoBean {
                     tln.add(t);
                 }
             }
+
             for (Tag g : tln) {
                 persistencia.setTag(g);
 //                tp.add(g);
             }
         }
+
         e.setTagged_by(tle);
         e.setMultimedia(foto);
         e.setInteresados_at(new ArrayList<Usuario>());
@@ -317,6 +316,7 @@ public class CrearEventoBean {
             l.add(e);
             cr.getUsuario().setSubidas(l);
         }
+
         persistencia.setEvento(e);
         persistencia.setUsuario(cr.getUsuario());
 //        eventos.add(e);
