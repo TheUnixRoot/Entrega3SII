@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
@@ -17,12 +18,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -33,7 +35,7 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class ValorarBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion control;
@@ -178,13 +180,13 @@ public class ValorarBean {
 
         listEve.add(valEve);
         evento.setValoraciones_sobre(listEve);
-        try {
+//        try {
             persistencia.setUsuario(usu);
             persistencia.setEvento(evento);
             persistencia.setValoracion_eve(valEve);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //
 //        valEvento = null;
 //        valEvento = null;
@@ -231,13 +233,13 @@ public class ValorarBean {
         listLug.add(valLug);
         lug.setValoraciones_sobre(listLug);
 
-        try {
+//        try {
             persistencia.setUsuario(usu);
             persistencia.setLugar(lug);
             persistencia.setValoracion_lug(valLug);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(ValorarBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        valLugar = null;
 //        comLugar = null;
 //        fotoValLugar = null;

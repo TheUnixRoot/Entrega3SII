@@ -5,18 +5,20 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -28,7 +30,7 @@ import mockingBeans.PersistenceMock;
 @Dependent
 public class configurarNotificaciones {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion ctrAut;

@@ -5,15 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -25,7 +27,7 @@ import org.primefaces.model.StreamedContent;
 @Dependent
 public class verLugarBean implements Serializable {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
 //    No hace falta

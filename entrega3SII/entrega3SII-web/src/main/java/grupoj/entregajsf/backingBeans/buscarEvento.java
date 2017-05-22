@@ -5,16 +5,18 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -32,7 +34,7 @@ public class buscarEvento {
     private Date fecha2;
     private int precio1;
     private int precio2;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     @Inject
     private ResultadoBean res;

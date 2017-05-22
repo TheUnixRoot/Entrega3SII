@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
@@ -14,11 +15,12 @@ import grupoj.prentrega1.Valoracion_lug;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.inject.Inject;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -31,7 +33,7 @@ public class AniadirAEvento {
 
     @Inject
     private ControlAutorizacion ctrAut;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     // En las clases ya los tengo

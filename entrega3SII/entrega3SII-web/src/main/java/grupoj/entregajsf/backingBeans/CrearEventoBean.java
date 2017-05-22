@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
@@ -16,13 +17,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -33,7 +35,7 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class CrearEventoBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion cr;

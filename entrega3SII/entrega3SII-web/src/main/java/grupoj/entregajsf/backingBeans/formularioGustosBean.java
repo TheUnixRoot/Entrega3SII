@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Formulario;
@@ -15,11 +16,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -37,7 +39,7 @@ public class formularioGustosBean {
 
     @Inject
     private ControlAutorizacion control;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     public formularioGustosBean() {
@@ -64,13 +66,13 @@ public class formularioGustosBean {
             this.formulario.setForm_tags(tags);
         }
 
-        try {
-            // Actualizar formulario y usuario
+//        try {
+//            // Actualizar formulario y usuario
             persistencia.setFormulario(this.formulario);
             persistencia.setUsuario(this.user);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         this.selectedGustos = new String[10];
         int i = 0;
@@ -138,23 +140,23 @@ public class formularioGustosBean {
             } else 
                 fl.add(formulario);
             tg.setForm(fl);
-            try {
+//            try {
                 persistencia.setTag(tg);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 //            i++;
             tags.add(tg);
         }
         this.formulario.setForm_tags(tags);
         formulario.setUsuario(this.user);
         this.user.setForm(this.formulario);
-        try {
+//        try {
             persistencia.setFormulario(this.formulario);
             persistencia.setUsuario(user);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         FacesContext.getCurrentInstance()
                 .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
         return null;

@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Mensaje;
@@ -14,12 +15,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -29,7 +31,7 @@ import mockingBeans.PersistenceMock;
 @Named(value = "contactoAdminBean")
 public class contactoAdminBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Mensaje message;
     private String texto;
@@ -94,12 +96,12 @@ public class contactoAdminBean {
                 admin.setRecibirMensaje(listaMensajes);
             }
             admin.getRecibirMensaje().add(message);
-            try {
-                // Actualizamos los administradores, que esten enlazados con el msg
+//            try {
+//                // Actualizamos los administradores, que esten enlazados con el msg
                 persistencia.setAdministrador(admin);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
         if (user != null) {
             if (user.getMsg_send() == null) {
@@ -107,20 +109,20 @@ public class contactoAdminBean {
                 user.setMsg_send(listaMensajes);
             }
             user.getMsg_send().add(message);
-            try {
-                //Actualizamos usuario que envia el mensaje
+//            try {
+//                //Actualizamos usuario que envia el mensaje
                 persistencia.setUsuario(user);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
-        try {
-            // Metemos el mensaje en la persistencia
+//        try {
+//            // Metemos el mensaje en la persistencia
             persistencia.setMensaje(message);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         FacesContext ctx = FacesContext.getCurrentInstance();
         ctx.addMessage("formulario:panel:growl", new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje enviado correctamente", "Mensaje enviado correctamente"));
         return null;

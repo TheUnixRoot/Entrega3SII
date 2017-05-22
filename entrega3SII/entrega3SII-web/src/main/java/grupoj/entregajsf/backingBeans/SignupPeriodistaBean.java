@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Lugar;
@@ -16,10 +17,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -32,7 +34,7 @@ public class SignupPeriodistaBean {
 
     @Inject
     private ControlAutorizacion ctrl;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Periodista periodista;
 
@@ -152,11 +154,11 @@ public class SignupPeriodistaBean {
         periodista.setGestionarNotificacion(new ArrayList<Notificacion>());
         periodista.setGestionarLugar(new ArrayList<Lugar>());
         periodista.setGestionarEvento(new ArrayList<Evento>());
-        try {
+//        try {
             persistencia.setPeriodista(periodista);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SignupPeriodistaBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SignupPeriodistaBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
 //        list.add(periodista);
 //        try {

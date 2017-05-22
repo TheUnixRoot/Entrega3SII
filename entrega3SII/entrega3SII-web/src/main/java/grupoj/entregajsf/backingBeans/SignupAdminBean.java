@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
@@ -17,12 +18,13 @@ import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -35,7 +37,7 @@ public class SignupAdminBean {
 
     @Inject
     private ControlAutorizacion ctrl;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Administrador admin;
 
@@ -166,11 +168,11 @@ public class SignupAdminBean {
         admin.setRecibirMensaje(new ArrayList<Mensaje>());
         admin.setEsGestionado(new ArrayList<Usuario>());
         admin.setAnuncios_by(new ArrayList<Anuncio>());
-        try {
+//        try {
             persistencia.setAdministrador(admin);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SignupAdminBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SignupAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
 //        list.add(admin);
 //        try {

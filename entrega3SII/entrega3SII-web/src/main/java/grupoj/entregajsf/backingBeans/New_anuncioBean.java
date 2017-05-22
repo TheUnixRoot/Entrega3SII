@@ -5,15 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Anuncio;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -24,7 +26,7 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class New_anuncioBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Anuncio adv;
     private UploadedFile file;
@@ -114,19 +116,19 @@ public class New_anuncioBean {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
-                    try {
+//                    try {
                         persistencia.setAnuncio(a);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
             }
         }
-        try {
+//        try {
             persistencia.setAnuncio(adv);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
 //        adv.setId(System.currentTimeMillis());
 //        lista.add(adv);

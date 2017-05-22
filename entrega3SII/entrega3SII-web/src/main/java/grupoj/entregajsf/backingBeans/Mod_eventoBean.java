@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -12,11 +13,12 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -29,8 +31,8 @@ import org.primefaces.model.UploadedFile;
 @Dependent
 public class Mod_eventoBean implements Serializable {
 
-    @Inject
-    PersistenceMock persistencia;
+    @EJB
+    private PersistenceMock persistencia;
     private Evento adv;
     private Long ids;
 
@@ -109,11 +111,11 @@ public class Mod_eventoBean implements Serializable {
     }
 
     public String modificarEvento() {
-        try {
+//        try {
             persistencia.setEvento(adv);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Mod_eventoBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //
 //       List<Evento> lista = persistencia.getListaEventos();
 //       lista.set(

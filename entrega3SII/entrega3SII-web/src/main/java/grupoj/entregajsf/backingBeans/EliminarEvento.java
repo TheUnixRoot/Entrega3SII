@@ -5,15 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -23,7 +25,7 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 public class EliminarEvento {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 //    private List<Evento> listaEventos;
     private Evento ev;
@@ -71,6 +73,7 @@ public class EliminarEvento {
     }
 
     public String eliminarEvento() {
+        persistencia.setEvento(ev);
         FacesContext.getCurrentInstance()
                 .addMessage("formu:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento actualizado", "Evento actualizado"));
         return null;

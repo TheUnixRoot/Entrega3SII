@@ -5,15 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Lugar;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -23,7 +25,7 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 public class EliminarLugar {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 //    private String valor;
 //    private List<Lugar> listaLugares;
@@ -67,7 +69,7 @@ public class EliminarLugar {
     }
 
     public String eliminarLugar() {
-
+        persistencia.setLugar(adv);
         FacesContext.getCurrentInstance().addMessage("formula:mensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Lugar borrado", "Lugar borrado"));
         return null;
     }

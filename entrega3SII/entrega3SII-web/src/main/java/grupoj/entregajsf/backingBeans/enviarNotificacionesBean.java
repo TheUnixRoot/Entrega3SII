@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Formulario;
 import grupoj.prentrega1.Notificacion;
@@ -18,9 +19,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
-import mockingBeans.PersistenceMock;
+//import javax.inject.Inject;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -29,7 +31,7 @@ import mockingBeans.PersistenceMock;
 @ManagedBean
 public class enviarNotificacionesBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     private List<String> selectedGustos;

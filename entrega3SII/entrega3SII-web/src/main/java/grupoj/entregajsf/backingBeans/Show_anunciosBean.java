@@ -5,13 +5,15 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Anuncio;
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -23,8 +25,8 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 public class Show_anunciosBean {
 
-    @Inject
-    PersistenceMock persistencia;
+    @EJB
+    private PersistenceMock persistencia;
 
     /**
      * Create a new instance of Show_anunciosBean

@@ -5,17 +5,19 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Lugar;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -28,8 +30,8 @@ import org.primefaces.model.UploadedFile;
 @Dependent
 public class Mod_LugarBean implements Serializable {
 
-    @Inject
-    PersistenceMock persistencia;
+    @EJB
+    private PersistenceMock persistencia;
     private Lugar adv;
     private Long ids;
 
@@ -99,15 +101,15 @@ public class Mod_LugarBean implements Serializable {
 
     public String modificarLugar() {
 
-        try {
+//        try {
             //        List<Lugar> lista =persistencia.getListaLugares();
 //
 //        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
 //
             persistencia.setLugar(adv);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        try{
 //        
 //            persistencia.setListaLugares(lista);

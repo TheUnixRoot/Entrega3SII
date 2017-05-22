@@ -5,17 +5,19 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Anuncio;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -27,7 +29,7 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 public class Crud_anunciosBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     public List<Anuncio> getAnuncios() {
@@ -35,11 +37,11 @@ public class Crud_anunciosBean {
     }
 
     public void setAnuncios(List<Anuncio> anuncios) {
-        try {
+//        try {
             this.persistencia.setListaAnuncios(anuncios);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**
@@ -84,20 +86,20 @@ public class Crud_anunciosBean {
         for (Anuncio a : lista) {
             if (a.getLugar().equals(anun.getLugar())) {
                 a.setOnline(false);
-                try {
+//                try {
                     persistencia.setAnuncio(a);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
         }
 
         anun.setOnline(true);
-        try {
+//        try {
             persistencia.setAnuncio(anun);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Crud_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        lista.set(idx, anun);
 //        try {
 //            persistencia.setListaAnuncios(lista);

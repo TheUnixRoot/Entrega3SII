@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Mensaje;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -31,7 +33,7 @@ public class SignupBean {
 
     @Inject
     private ControlAutorizacion ctrl;
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Usuario usuario;
 
@@ -132,11 +134,11 @@ public class SignupBean {
         usuario.setNotificaciones(new ArrayList<Notificacion>());
         usuario.setMeInteresa(new ArrayList<Evento>());
         usuario.setMsg_send(new ArrayList<Mensaje>());
-        try {
+//        try {
             persistencia.setUsuario(usuario);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SignupBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(SignupBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
 //        list.add(usuario);
         try {

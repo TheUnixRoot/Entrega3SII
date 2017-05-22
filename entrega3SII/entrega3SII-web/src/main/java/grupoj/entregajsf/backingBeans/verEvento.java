@@ -5,6 +5,7 @@ package grupoj.entregajsf.backingBeans;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.entregajsf.toPDF.PdfCreator;
 import grupoj.prentrega1.Evento;
@@ -20,12 +21,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -37,7 +39,7 @@ import org.primefaces.model.StreamedContent;
 @Dependent
 public class verEvento implements Serializable {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion control;
@@ -92,20 +94,20 @@ public class verEvento implements Serializable {
                 }
             }
 
-            try {
-                // Actualizar cambios en usuario y eventos
+//            try {
+//                // Actualizar cambios en usuario y eventos
                 persistencia.setUsuario(this.usu);
                 persistencia.setEvento(this.evento);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
 
         //       ev = null;
     }
 
-    /**
+    /*
      * Creates a new instance of verEvento
      */
 //    public verEvento() {
@@ -210,12 +212,12 @@ public class verEvento implements Serializable {
                 usu.getMeInteresa().remove(ev);
                 ev.getInteresados_at().remove(usu);
             }
-            try {
+//            try {
                 persistencia.setUsuario(usu);
                 persistencia.setEvento(ev);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }
 

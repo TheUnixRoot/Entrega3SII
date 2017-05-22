@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Anuncio;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -13,12 +14,13 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -31,11 +33,11 @@ import org.primefaces.model.UploadedFile;
 @Dependent
 public class Mod_anunciosBean implements Serializable {
 
-    @Inject
-    PersistenceMock persistencia;
-    Anuncio adv;
-    UploadedFile file;
-    StreamedContent mul;
+    @EJB
+    private PersistenceMock persistencia;
+    private Anuncio adv;
+    private UploadedFile file;
+    private StreamedContent mul;
 
     /**
      * Crea un bean que contiene un anuncio valido, pasado como parametro
@@ -130,11 +132,11 @@ public class Mod_anunciosBean implements Serializable {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
-                    try {
+//                    try {
                         persistencia.setAnuncio(a);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+//                    } catch (InterruptedException ex) {
+//                        Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
                 }
             }
         } else {
@@ -158,11 +160,11 @@ public class Mod_anunciosBean implements Serializable {
 //        } catch (InterruptedException ex) {
 //            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
 //        }
-        try {
+//        try {
             persistencia.setAnuncio(adv);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         return "gestion_anuncios.xhtml";
     }

@@ -5,15 +5,17 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -23,7 +25,7 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 public class verEventoBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     private List<Evento> listaEventos;
@@ -37,7 +39,7 @@ public class verEventoBean {
         return listaEventos;
     }
 
-    public void setListaEventos(List<Evento> listaEventos) throws InterruptedException {
+    public void setListaEventos(List<Evento> listaEventos) { // throws InterruptedException {
 
         persistencia.setListaEventos(listaEventos);
 

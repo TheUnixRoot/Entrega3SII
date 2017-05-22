@@ -5,13 +5,15 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.Notificacion;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 
 /**
  *
@@ -22,9 +24,9 @@ import mockingBeans.PersistenceMock;
 public class Ver_notificacionesBean {
 
     @Inject
-    ControlAutorizacion controlAutorizacion;
-    @Inject
-    PersistenceMock persistencia;
+    private ControlAutorizacion controlAutorizacion;
+    @EJB
+    private PersistenceMock persistencia;
 
     /**
      * Creates a new instance of Ver_notificacionesBean contains a list of

@@ -5,6 +5,7 @@ package grupoj.entregajsf.backingBeans;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
 import grupoj.prentrega1.*;
 import java.io.ByteArrayInputStream;
@@ -12,10 +13,11 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -31,7 +33,7 @@ public class configurarPerfil {
     @Inject
     private ControlAutorizacion control;
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     /*
     private List<Usuario> listaUsuario;
@@ -124,11 +126,11 @@ public class configurarPerfil {
         List<Usuario> listaUsuario = persistencia.getListaUsuarios();
         listaUsuario.set(
                 listaUsuario.indexOf(usuario), usuario);
-        try {
+//        try {
             persistencia.setListaUsuarios(listaUsuario);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(configurarPerfil.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(configurarPerfil.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
         return "index.xhtml";
 

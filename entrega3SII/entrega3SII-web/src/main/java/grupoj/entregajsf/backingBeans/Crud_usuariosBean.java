@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Usuario;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
@@ -12,11 +13,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -28,7 +30,7 @@ import org.primefaces.model.StreamedContent;
 @Dependent
 public class Crud_usuariosBean implements Serializable {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
 
     public List<Usuario> getUsuarios() {
@@ -36,11 +38,11 @@ public class Crud_usuariosBean implements Serializable {
     }
 
     public void setUsuarios(List<Usuario> usuarios) {
-        try {
+//        try {
             this.persistencia.setListaUsuarios(usuarios);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Crud_usuariosBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(Crud_usuariosBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
 
     /**

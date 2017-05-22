@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Geolocalizacion;
 import grupoj.prentrega1.Lugar;
@@ -13,12 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -29,7 +31,7 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class CrearLugarBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private Lugar l;
     private Geolocalizacion g;
@@ -134,12 +136,12 @@ public class CrearLugarBean {
         l.setOcurren_at(new ArrayList<Evento>());
         l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
         //        lugares.add(l);
-        try {
+//        try {
             persistencia.setLugar(l);
             persistencia.setGeolocaclizacion(g);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (InterruptedException ex) {
+//            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 //        try {
 //            persistencia.setListaLugares(lugares);
 //        } catch (InterruptedException ex) {
