@@ -52,7 +52,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaUsuarios.forEach(em::merge);
+        listaUsuarios.forEach((u) -> {
+            if(em.find(Usuario.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -65,7 +71,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaPeriodistas(List<Periodista> listaPeriodistas) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaPeriodistas.forEach(em::merge);
+        listaPeriodistas.forEach((u) -> {
+            if(em.find(Periodista.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -78,7 +90,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaAdministradores(List<Administrador> listaAdministradores) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaAdministradores.forEach(em::merge);
+        listaAdministradores.forEach((u) -> {
+            if(em.find(Administrador.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -91,7 +109,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaEventos(List<Evento> listaEventos) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaEventos.forEach(em::merge);
+        listaEventos.forEach((u) -> {
+            if(em.find(Evento.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -104,7 +128,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaLugares(List<Lugar> listaLugares) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaLugares.forEach(em::merge);
+        listaLugares.forEach((u) -> {
+            if(em.find(Lugar.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -117,7 +147,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaTags(List<Tag> listaTags) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaTags.forEach(em::merge);
+        listaTags.forEach((u) -> {
+            if(em.find(Tag.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -130,7 +166,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaAnuncios(List<Anuncio> listaAnuncios) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaAnuncios.forEach(em::merge);
+        listaAnuncios.forEach((u) -> {
+            if(em.find(Anuncio.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -143,7 +185,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaMensajes(List<Mensaje> listaMensajes) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaMensajes.forEach(em::merge);
+        listaMensajes.forEach((u) -> {
+            if(em.find(Mensaje.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -156,7 +204,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaValoracion_eves(List<Valoracion_eve> listaValoracion_eves) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaValoracion_eves.forEach(em::merge);
+        listaValoracion_eves.forEach((u) -> {
+            if(em.find(Valoracion_eve.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -169,7 +223,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaValoracion_lugs(List<Valoracion_lug> listaValoracion_lugs) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaValoracion_lugs.forEach(em::merge);
+        listaValoracion_lugs.forEach((u) -> {
+            if(em.find(Valoracion_lug.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -182,7 +242,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaNotificaciones(List<Notificacion> listaNotificaciones) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaNotificaciones.forEach(em::merge);
+        listaNotificaciones.forEach((u) -> {
+            if(em.find(Notificacion.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -195,7 +261,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaGeolocalizaciones(List<Geolocalizacion> listaGeolocalizaciones) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaGeolocalizaciones.forEach(em::merge);
+        listaGeolocalizaciones.forEach((u) -> {
+            if(em.find(Geolocalizacion.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
@@ -208,7 +280,13 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @Override
     public void setListaFormularios(List<Formulario> listaFormularios) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        listaFormularios.forEach(em::merge);
+        listaFormularios.forEach((u) -> {
+            if(em.find(Formulario.class, u.getId()) != null) {
+                em.merge(u);
+            } else {
+                em.persist(u);
+            }
+        });
     }
 
     @Override
