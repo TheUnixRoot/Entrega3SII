@@ -110,6 +110,7 @@ public class CrearLugarBean {
             if (lugares.get(i).getNombre().equals(nombre)) {
                 b = true;
             }
+            i++;
         }
         return b;
     }
