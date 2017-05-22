@@ -5,7 +5,6 @@
  */
 package grupoj.entrega3ejb.interfaces;
 
-<<<<<<< HEAD
 import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
 import grupoj.prentrega1.Evento;
