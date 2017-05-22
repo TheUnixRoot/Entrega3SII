@@ -5,6 +5,7 @@
  */
 package grupoj.entrega3ejb.interfaces;
 
+<<<<<<< HEAD
 import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
 import grupoj.prentrega1.Evento;
@@ -274,4 +275,5 @@ public interface PersistenceMock {
      * @return anuncio solicitado o null si no existiese
      */
     public Anuncio getAnuncio(Long id);
+
 }
