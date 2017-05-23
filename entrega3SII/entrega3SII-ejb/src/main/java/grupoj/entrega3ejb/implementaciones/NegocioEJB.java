@@ -35,7 +35,7 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class NegocioEJB implements Serializable, PersistenceMock {
     
-    @PersistenceContext(unitName = "grupoj_prEntrega1_jar_1.0-SNAPSHOTPU")
+    @PersistenceContext(unitName = "grupoj_pu1.0")
     private EntityManager em;
     
     public NegocioEJB() {
