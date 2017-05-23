@@ -130,11 +130,13 @@ public class CrearLugarBean {
 //        g.setId(System.currentTimeMillis()-4);
 //        l.setId(System.currentTimeMillis());
         l.setBorrado(false);
-
-        l.setGeolocalizacion(g);
-        g.setLugar(l);
         l.setOcurren_at(new ArrayList<Evento>());
         l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
+        
+        persistencia.setGeolocaclizacion(g);
+        
+        l.setGeolocalizacion(g);
+        g.setLugar(l);
         //        lugares.add(l);
 //        try {
             persistencia.setLugar(l);
