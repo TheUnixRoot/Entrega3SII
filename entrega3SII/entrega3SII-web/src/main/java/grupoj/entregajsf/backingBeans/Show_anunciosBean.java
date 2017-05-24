@@ -39,6 +39,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getTop() {
+    
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -54,6 +55,8 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+        
+        
     }
 
     /**
@@ -62,6 +65,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getBottom() {
+        
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -76,6 +80,8 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+        
+       
     }
 
     /**
@@ -85,6 +91,7 @@ public class Show_anunciosBean {
      * @return Imagen del logotipo empresarial o null en su defecto
      */
     public StreamedContent getSelf() {
+       
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -99,5 +106,6 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+
     }
 }

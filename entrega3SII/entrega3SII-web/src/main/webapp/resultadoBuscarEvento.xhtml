@@ -31,6 +31,11 @@
                                 <p:commandLink value="Ver Evento" style="color:red" action="#{resultadoBean.viajarv()}">
                                     <f:param name="id" value="#{ev.id}"/>
                                 </p:commandLink>
+                                <c:if test="#{controlAutorizacion.periodista}" > 
+                                <p:commandLink  value="Enviar notificación" action="#{resultadoBean.viajarn()}">
+                                    <f:param name="id" value="#{ev.id}"/>
+                                </p:commandLink>
+                                </c:if>
                                 
                             </p:panelGrid>
                         </p:dataGrid>

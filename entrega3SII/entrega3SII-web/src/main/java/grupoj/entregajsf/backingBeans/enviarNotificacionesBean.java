@@ -17,14 +17,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import mockingBeans.PersistenceMock;
 
 /**
  *
  * @author JesusAlberto
+ * @deprecated 
  */
 @ManagedBean
 public class enviarNotificacionesBean {
@@ -313,7 +316,7 @@ public class enviarNotificacionesBean {
         notificacion.setFecha(new Date());
     }
 
-    public void enviaNotificacion(int n) {
+    public void enviaNotificacion() {
 
         /*Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         String s =  params.get("evento");
@@ -327,11 +330,11 @@ public class enviarNotificacionesBean {
         }
 
         seleccionaUsuarios();
-        if (n == 0) {
+        /*if (n == 0) {
             notificacion(0);
         } else {
             notificacion(1);
-        }
+        }*/
 
         for (Usuario selected : selectedUsuarios) {
             selected.getNotificaciones().add(notificacion);
@@ -350,12 +353,13 @@ public class enviarNotificacionesBean {
              if(e.getId().equals(l)){
                  this.selectedEvento=e;
              }
-         }*/
-        return "editarNotificacion.xhtml";
+         }*/        
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        return "editarNotificacion.xhtml?id=" + params.get("id");
     }
 
     public String volver() {
         return "enviarNotificaciones.xhtml";
     }
-
+    
 }

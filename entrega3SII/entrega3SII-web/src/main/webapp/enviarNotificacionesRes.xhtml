@@ -28,8 +28,8 @@
                                         <h:panelGrid columns="1" style="width:100%">
                                             <h:outputText value="#{evento.descripcion}" />
 
-                                             <p:selectOneRadio id="eve" value="#{enviarNotificacionesBean.selectedEventoS}">
-                                                                                <f:selectItem itemLabel="#{evento.nombre}" itemValue="#{evento.nombre}" />
+                                             <p:selectOneRadio id="eve" value="#{crearNotificacionBean.id}">
+                                                            <f:selectItem itemLabel="#{evento.nombre}" itemValue="#{evento.id}" />
                                                                              </p:selectOneRadio>
 
                                         </h:panelGrid>
@@ -40,13 +40,18 @@
                                 <p:outputLabel value="No hay eventos"/>
                             </c:otherwise>
                         </c:choose>
-                        <br></br>
-                        <p:commandButton value="Enviar notificacion" action="#{enviarNotificacionesBean.enviaNotificacion(0)}"/>
 
-                        <p:commandButton  value="Editar notificacion" action="#{enviarNotificacionesBean.editarNotificacion()}"/>
-
-                        <br></br>
                         <p:commandButton value="Vover a buscar"  icon="ui-icon-check" action="#{enviarNotificacionesBean.volver()}"/>
+                        <br></br>
+                        <p:inputTextarea  value="hola" rows="2" cols="50"  maxlength="100"  autoResize="true" />
+                        <br></br>
+                        <p:commandButton ajax="false" value="Enviar notificacion" action="#{crearNotificacionBean.crearNotificacion()}">
+
+                        </p:commandButton>
+                        <p:commandButton  value="Editar notificacion" action="#{enviarNotificacionesBean.editarNotificacion()}">
+
+                        </p:commandButton>
+                        <br></br>
 
                     </h:form>
                 </section>
