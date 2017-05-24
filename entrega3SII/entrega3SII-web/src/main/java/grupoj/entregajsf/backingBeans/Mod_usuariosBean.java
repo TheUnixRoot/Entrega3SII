@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +27,7 @@ import org.primefaces.model.StreamedContent;
  * @author juanp
  */
 @Named(value = "mod_usuariosBean")
-@Dependent
+@RequestScoped
 public class Mod_usuariosBean implements Serializable {
 
     @EJB
@@ -44,18 +45,6 @@ public class Mod_usuariosBean implements Serializable {
     public void init() {
         Map<String, String> req = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         usr = persistencia.getUsuario(Long.parseLong(req.get("id")));
-//        Usuario uuu = new Usuario();
-//        uuu.setId(id);
-//        //System.out.println(id);
-//        if ( this.persistencia.getListaUsuarios().contains(uuu) ) 
-//            this.usr = this.persistencia.getListaUsuarios()
-//                            .get(
-//                                this.persistencia.getListaUsuarios().indexOf(uuu)
-//                            );
-//            
-//        else
-//            this.usr = null;
-//        uuu = null;
     }
 
     public PersistenceMock getPersistencia() {
@@ -72,21 +61,7 @@ public class Mod_usuariosBean implements Serializable {
 
     public void setUsr(Usuario usr) {
         this.usr = usr;
-    }
-
-//    public ControlAutorizacion getControlAutorizacion() {
-//        return controlAutorizacion;
-//    }
-//
-//    public void setControlAutorizacion(ControlAutorizacion controlAutorizacion) {
-//        this.controlAutorizacion = controlAutorizacion;
-//    }
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+        persistencia.setUsuario(usr);
     }
 
     /**
@@ -99,15 +74,7 @@ public class Mod_usuariosBean implements Serializable {
         StreamedContent con = null;
         Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-//            Usuario uu = new Usuario();
-//            uu.setId(Long.parseLong(params.get("id")));
             byte[] mul = persistencia.getUsuario(Long.parseLong(params.get("id")))
-                    //                    persistencia
-                    //                    .getListaUsuarios()
-                    //                    .get(persistencia
-                    //                            .getListaUsuarios()
-                    //                            .indexOf(uu)
-                    //                    )
                     .getMultimedia();
             con = new DefaultStreamedContent(new ByteArrayInputStream(mul));
 
@@ -125,26 +92,9 @@ public class Mod_usuariosBean implements Serializable {
      *
      * @return Vuelve a gestion_usuarios.xhtml siempre
      */
-//    public String change() {
-//        //System.out.println("Changeeeeeeeee");
-//        this.usr.getId();
-//        Iterator<Usuario> it = persistencia.getListaUsuarios().iterator();
-//        boolean find = false;
-//        Usuario uu = null;
-//        while(it.hasNext() && !find) {
-//            uu = it.next();
-//            if (uu.equals(usr)) {
-//                int l = persistencia.getListaUsuarios().indexOf(uu);
-//                List<Usuario> list = persistencia.getListaUsuarios();
-//                list.set(l, usr);
-//                try {
-//                    persistencia.setListaUsuarios(list);
-//                } catch (InterruptedException ex) {
-//                    System.err.println("Error al modificar el usuario");
-//                }
-//                find = true;
-//            }
-//        }
-//        return "gestion_usuarios.xhtml";
-//    }
+    public String change() {
+        System.out.println("Changeeeeeeeee " + usr.getNombre());
+        persistencia.setUsuario(usr);
+        return "gestion_usuarios.xhtml";
+    }
 }
