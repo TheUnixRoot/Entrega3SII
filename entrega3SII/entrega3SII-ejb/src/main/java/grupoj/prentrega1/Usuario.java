@@ -50,6 +50,7 @@ public class Usuario implements Serializable {
     @Column( name = "nombre", nullable = false)
     private String nombre;
     private String apellidos;
+    @Column(columnDefinition="longblob")
     private byte[] multimedia;
     private String telefono;
     @Temporal(TemporalType.DATE)

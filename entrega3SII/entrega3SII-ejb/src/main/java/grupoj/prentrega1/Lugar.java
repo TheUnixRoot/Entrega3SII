@@ -33,6 +33,7 @@ public class Lugar implements Serializable {
     @Column(nullable = false)
     private boolean borrado;
     private String descripcion;
+    @Column(columnDefinition="longblob")
     private byte[] fotos;
     
     // Relacion ocurre Bidireccional Evento <-> Lugar

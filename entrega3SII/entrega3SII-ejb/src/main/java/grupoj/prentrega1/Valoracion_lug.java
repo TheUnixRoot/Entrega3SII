@@ -28,6 +28,7 @@ public class Valoracion_lug implements Serializable {
     @Column(nullable = false)
     private int calificacion;
     private String comentario;
+    @Column(columnDefinition="longblob")
     private byte[] fotos;
 
     // Relacion Bidireccional Usuario <-> Valoracion_lug

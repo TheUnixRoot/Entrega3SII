@@ -28,6 +28,7 @@ public class Valoracion_eve implements Serializable {
     @Column(nullable=false)
     private int calificacion;
     private String comentario;
+    @Column(columnDefinition="longblob")
     private byte[] fotos;
     
     // Relacion Bidireccional Usuario <-> Valoracion_eve

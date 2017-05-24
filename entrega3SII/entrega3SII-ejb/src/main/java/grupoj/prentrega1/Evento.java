@@ -48,6 +48,7 @@ public class Evento implements Serializable {
     private String descripcion;
     private double precio;
     private String donde_comprar;
+    @Column(columnDefinition="longblob")
     private byte[] multimedia;
     
     // Relacion incluye Bidireccional Tag <-> Evento
