@@ -16,11 +16,13 @@ import grupoj.prentrega1.Mensaje;
 import grupoj.prentrega1.Notificacion;
 import grupoj.prentrega1.Periodista;
 import grupoj.prentrega1.Tag;
+import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
 import grupoj.prentrega1.Valoracion_eve;
 import grupoj.prentrega1.Valoracion_lug;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.Local;
 import javax.ejb.Singleton;
 //import javax.ejb.Stateless;
@@ -39,8 +41,22 @@ public class NegocioEJB implements Serializable, PersistenceMock {
     @PersistenceContext(unitName = "grupoj_pu1.0")
     private EntityManager em;
     
-    public NegocioEJB() {
-        
+    @PostConstruct
+    public void init() {
+        // Set-up for first use
+        List<Administrador> listaAdm = em.createQuery("select u from Administrador u", Administrador.class).getResultList();
+        if(listaAdm.isEmpty()) {
+            Administrador adm = new Administrador();
+            adm.setEmail("root@app.com");
+            adm.setPassword("toor");
+            adm.setIdentificador(0L);
+            adm.setSeccion("controlApp");
+            adm.setPuesto("superusuario");
+            adm.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
+            adm.setBorrado(false);
+            adm.setNombre("root");
+            em.persist(adm);
+        }
     }
 
     @Override
