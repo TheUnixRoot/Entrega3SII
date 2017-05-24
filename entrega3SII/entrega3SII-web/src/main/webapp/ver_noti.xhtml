@@ -19,8 +19,13 @@
             <c:if test="${controlAutorizacion.usuario != null}" >
                 <section id="cuerpo">
                     <h:form>
-                        <p:dataGrid columns="1" layout="grid" value="#{ver_notificacionesBean.notificaciones}" var="noti">
-                            <p:panelGrid columns="1" layout="grid">
+                        <p:dataGrid emptyMessage="Aún no tienes ninguna notificación" columns="1" layout="grid" value="#{ver_notificacionesBean.notificaciones}" var="noti">
+                            
+                            <p:panelGrid columns="2" layout="grid">
+                                <p:outputLabel value="Evento: " />
+                                <p:outputLabel value="#{noti.formato}" />
+                                <p:outputLabel value="Fecha de la notificación: " />
+                                <p:outputLabel value="#{noti.fecha}" />
                                 <p:outputLabel value="#{noti.contenido}" />
                             </p:panelGrid>
                         </p:dataGrid>

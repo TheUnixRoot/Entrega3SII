@@ -39,6 +39,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getTop() {
+        try{
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -54,6 +55,10 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+        }catch(NullPointerException e){
+            System.out.println("NO encuentra anuncio en top");
+        }
+        return null;
     }
 
     /**
@@ -62,6 +67,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getBottom() {
+        try{
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -76,6 +82,10 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+        }catch(NullPointerException e){
+            System.out.println("NO encuentra anuncio en top");
+        }
+        return null;
     }
 
     /**
@@ -85,6 +95,7 @@ public class Show_anunciosBean {
      * @return Imagen del logotipo empresarial o null en su defecto
      */
     public StreamedContent getSelf() {
+        try{
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -99,5 +110,9 @@ public class Show_anunciosBean {
         } else {
             return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
         }
+        }catch(NullPointerException e){
+            System.out.println("NO encuentra anuncio en top");
+        }
+        return null;
     }
 }

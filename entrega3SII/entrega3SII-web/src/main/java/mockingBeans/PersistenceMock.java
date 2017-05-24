@@ -71,6 +71,7 @@ public class PersistenceMock implements Serializable {
         listaValoracion_lugs = new ArrayList<>();
         listaGeolocalizaciones = new ArrayList<>();
         listaFormularios = new ArrayList<>();
+        listaNotificaciones = new ArrayList<>();
 
         listaTags2 = new ArrayList<>();
 
