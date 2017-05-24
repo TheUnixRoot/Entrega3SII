@@ -50,4 +50,9 @@ public class ResultadoBean implements Serializable {
         return "ver_Evento.xhtml?id=" + params.get("id");
     }
 
+    public String viajarn() {
+        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        System.out.println("pepe: " + params.get("id"));
+        return "enviarNotificacion.xhtml?id=" + params.get("id");
+    }
 }
