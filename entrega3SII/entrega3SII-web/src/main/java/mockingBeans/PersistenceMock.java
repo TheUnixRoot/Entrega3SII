@@ -72,6 +72,8 @@ public class PersistenceMock implements Serializable {
         listaGeolocalizaciones = new ArrayList<>();
         listaFormularios = new ArrayList<>();
 
+        listaNotificaciones = new ArrayList<>();
+
         listaTags2 = new ArrayList<>();
 
         Tag tag1 = new Tag();
@@ -117,12 +119,14 @@ public class PersistenceMock implements Serializable {
         formulario.setForm_tags(listaTags);
         formulario.setId(System.currentTimeMillis());
         formulario.setHistorialEventos(new ArrayList<Evento>());
+
        /* for(Tag tagg : listaTags){
             if(tagg.getForm()==null){
                 tagg.setForm(listaFormularios);
             }
             //tagg.getForm().add(formulario);
         }*/
+
         listaFormularios.add(formulario);
 
         Usuario usr = new Usuario();
@@ -187,6 +191,7 @@ public class PersistenceMock implements Serializable {
         }
         listaUsuarios.add(adm);
         listaPeriodistas.add(adm);
+
         listaAdministradores.add(adm);
         
         //mensaje para admin de prueba
@@ -199,6 +204,7 @@ public class PersistenceMock implements Serializable {
         msg.setId(Long.MIN_VALUE);
         adm.setRecibirMensaje(new ArrayList<Mensaje>());
         adm.getRecibirMensaje().add(msg);
+
 
         Lugar lugar1 = new Lugar();
         lugar1.setId(1L);
