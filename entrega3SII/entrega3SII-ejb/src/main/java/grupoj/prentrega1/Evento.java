@@ -6,6 +6,7 @@
 package grupoj.prentrega1;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -41,6 +42,7 @@ public class Evento implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fecha_fin;
+    private Time hora;
     @Column(nullable = false)
     private boolean borrado;
     @Column(nullable = false)
@@ -127,6 +129,14 @@ public class Evento implements Serializable {
         this.fecha_fin = fecha_fin;
     }
 
+    public Time getHora() {
+        return hora;
+    }
+
+    public void setHora(Time hora) {
+        this.hora = hora;
+    }
+    
     public byte[] getMultimedia() {
         return multimedia;
     }
