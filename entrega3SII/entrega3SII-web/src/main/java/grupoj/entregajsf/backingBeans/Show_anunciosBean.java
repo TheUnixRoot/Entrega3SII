@@ -5,13 +5,15 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Anuncio;
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+//import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -23,8 +25,8 @@ import org.primefaces.model.StreamedContent;
 @RequestScoped
 public class Show_anunciosBean {
 
-    @Inject
-    PersistenceMock persistencia;
+    @EJB
+    private PersistenceMock persistencia;
 
     /**
      * Create a new instance of Show_anunciosBean
@@ -39,7 +41,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getTop() {
-    
+
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -53,10 +55,13 @@ public class Show_anunciosBean {
             System.out.println("NO encuentra anuncio en top");
             return null;
         } else {
-            return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            try {
+                return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            } catch (NullPointerException nex) {
+                return null;
+            }
         }
-        
-        
+
     }
 
     /**
@@ -65,7 +70,7 @@ public class Show_anunciosBean {
      * @return Imagen del anuncio o null en su defecto
      */
     public StreamedContent getBottom() {
-        
+
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -78,10 +83,13 @@ public class Show_anunciosBean {
         if (!find) {
             return null;
         } else {
-            return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            try {
+                return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            } catch (NullPointerException nex) {
+                return null;
+            }
         }
-        
-       
+
     }
 
     /**
@@ -91,7 +99,7 @@ public class Show_anunciosBean {
      * @return Imagen del logotipo empresarial o null en su defecto
      */
     public StreamedContent getSelf() {
-       
+
         Iterator<Anuncio> it = persistencia.getListaAnuncios().iterator();
         Anuncio adv = null;
         boolean find = false;
@@ -104,7 +112,11 @@ public class Show_anunciosBean {
         if (!find) {
             return null;
         } else {
-            return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            try {
+                return new DefaultStreamedContent(new ByteArrayInputStream(adv.getMultimedia()));
+            } catch (NullPointerException nex) {
+                return null;
+            }
         }
 
     }
