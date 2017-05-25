@@ -21,7 +21,7 @@
                     <h:form>
                         <p:dataGrid emptyMessage="No tienes ningun mensaje todavía" columns="1" layout="grid" value="#{verMensajesBean.mensajes}" var="msg">
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="#{msg.enviadoPor}" />
+                                <p:outputLabel value="#{msg.enviadoPor.email}" />
                                 <p:outputLabel value="#{msg.asunto}" />
                                 <p:outputLabel value="#{msg.texto}" />
                             </p:panelGrid>

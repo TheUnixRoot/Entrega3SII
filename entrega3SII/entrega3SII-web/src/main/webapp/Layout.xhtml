@@ -58,7 +58,8 @@
                                 action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
                                 
                                 <p:menuitem value="Contactar con administrador" 
-                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"/>
+                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"
+                                rendered="${controlAutorizacion.usuario != null}"/>
                                 
                                 <p:menuitem value="Enviar notificaciones" 
                                 action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 

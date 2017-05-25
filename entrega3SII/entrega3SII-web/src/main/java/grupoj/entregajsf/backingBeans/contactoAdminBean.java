@@ -48,17 +48,15 @@ public class contactoAdminBean {
     @PostConstruct
     public void init() {
 //        persistencia = new PersistenceMock();
-        listUsers = persistencia.getListaUsuarios();
+//        listUsers = persistencia.getListaUsuarios();
         user = control.getUsuario();
         message = new Mensaje();
-        admins = new ArrayList();
-
-        for (Usuario u : listUsers) {
-            if (u instanceof Administrador) {
-                admins.add((Administrador) u);
-            }
-        }
-
+        
+//        for (Usuario u : listUsers) {
+//            if (u instanceof Administrador) {
+//                admins.add((Administrador) u);
+//            }
+//        }
     }
 
     public Mensaje getMessage() {
@@ -86,23 +84,26 @@ public class contactoAdminBean {
     }
 
     public String crearMensaje() {
+//        admins = persistencia.getListaAdministradores();
+
         message.setTexto(this.texto);
         message.setAsunto(this.asunto);
         message.setEnviadoPor(user);
-        message.setRecibidoPor(admins);
-        for (Administrador admin : admins) {
-            if (admin.getRecibirMensaje() == null) {
-                List<Mensaje> listaMensajes = new ArrayList<>();
-                admin.setRecibirMensaje(listaMensajes);
-            }
-            admin.getRecibirMensaje().add(message);
-//            try {
-//                // Actualizamos los administradores, que esten enlazados con el msg
-                persistencia.setAdministrador(admin);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+//        message.setRecibidoPor(admins);
+        persistencia.setMensaje(message);
+//        for (Administrador admin : admins) {
+//            if (admin.getRecibirMensaje() == null) {
+//                List<Mensaje> listaMensajes = new ArrayList<>();
+//                admin.setRecibirMensaje(listaMensajes);
 //            }
-        }
+//            admin.getRecibirMensaje().add(message);
+////            try {
+////                // Actualizamos los administradores, que esten enlazados con el msg
+////            persistencia.setAdministrador(admin);
+////            } catch (InterruptedException ex) {
+////                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
+////            }
+//        }
         if (user != null) {
             if (user.getMsg_send() == null) {
                 List<Mensaje> listaMensajes = new ArrayList<>();
@@ -111,7 +112,7 @@ public class contactoAdminBean {
             user.getMsg_send().add(message);
 //            try {
 //                //Actualizamos usuario que envia el mensaje
-                persistencia.setUsuario(user);
+//            persistencia.setUsuario(user);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
 //            }
@@ -119,7 +120,7 @@ public class contactoAdminBean {
         }
 //        try {
 //            // Metemos el mensaje en la persistencia
-            persistencia.setMensaje(message);
+        persistencia.setMensaje(message);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(contactoAdminBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
