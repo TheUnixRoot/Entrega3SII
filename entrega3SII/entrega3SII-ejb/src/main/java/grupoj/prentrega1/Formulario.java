@@ -8,6 +8,7 @@ package grupoj.prentrega1;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,12 +44,12 @@ public class Formulario implements Serializable {
     private List<Evento> historialEventos;
     
     // Relacion "incluye" de la entidad Formulario con la entidad Tag
-    @ManyToMany(mappedBy = "form")
+    @ManyToMany(mappedBy = "form",fetch=FetchType.EAGER)
     private List<Tag> form_tags;
     
     // Relacion "sobre" de la entidad Formulario con la entidad Notificacion
     @ManyToOne
-    @JoinColumn(name = "notificacion_fk" , nullable = false)
+    @JoinColumn(name = "notificacion_fk" /*, nullable = false*/)
     private Notificacion sobre_by;
 
     public void setForm_tags(List<Tag> form_tags) {
