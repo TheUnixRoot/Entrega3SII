@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -27,7 +28,7 @@ import javax.inject.Named;
  * para mi?)
  */
 @Named(value = "configurarNotificaciones")
-@Dependent
+@RequestScoped
 public class configurarNotificaciones {
 
     @EJB
@@ -85,7 +86,8 @@ public class configurarNotificaciones {
         usuLogueado = ctrAut.getUsuario(); // Usuario que se ha logueado, ahora esta el de persistencia.
         if (usuLogueado != null) {
             tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
-
+            
+            System.out.println("Notificacion: " + tipoNotUsuario);
             listaNotifMostrar = new ArrayList<>();
             // Activa y comprueba si estan o no, más normal que esten activas
             notificacionesActivas = true;
