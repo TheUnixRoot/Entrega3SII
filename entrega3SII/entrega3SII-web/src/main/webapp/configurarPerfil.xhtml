@@ -58,7 +58,7 @@
                                 <f:param name="productId" value="formularioGustos.xhtml" />
                                 <p:ajax update="telef" />
                             </p:commandLink>
-                            <p:commandButton value="Volver" action="#{navigationBean.goTo('index.xhtml')}" ajax="false"/>  
+                            <p:commandButton value="Volver" action="#{configurarPerfil.configurar()}" ajax="false"/>  
 
                         </p:panelGrid>    
                         <p:outputLabel value="Advertencia, los cambios se aplican de forma inmediata" style="color: red; font-size: x-large"/>
