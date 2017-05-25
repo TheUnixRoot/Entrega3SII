@@ -86,8 +86,7 @@ public class configurarNotificaciones {
         usuLogueado = ctrAut.getUsuario(); // Usuario que se ha logueado, ahora esta el de persistencia.
         if (usuLogueado != null) {
             tipoNotUsuario = usuLogueado.getTipoNotificacionesRecibir();
-            
-            System.out.println("Notificacion: " + tipoNotUsuario);
+
             listaNotifMostrar = new ArrayList<>();
             // Activa y comprueba si estan o no, más normal que esten activas
             notificacionesActivas = true;
