@@ -15,7 +15,9 @@ import grupoj.prentrega1.Valoracion_eve;
 import grupoj.prentrega1.Valoracion_lug;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -48,6 +50,7 @@ public class verEvento implements Serializable {
     private Usuario usu;
     private Map<String, String> req;
     private PdfCreator pdf;
+    private Date fecha_inicio;
 
     @PostConstruct
     public void init() {
@@ -170,6 +173,21 @@ public class verEvento implements Serializable {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
+    
+    public void setFecha_inicio(Date fechaI){
+        Date fecha = new Date(fechaI.getTime());
+        evento.setFecha_inicio(fecha);
+        Time hora = new Time(fechaI.getHours(),fechaI.getMinutes(),0);
+        evento.setHora(hora);
+    }
+    
+    public Date getFecha_inicio(){
+        Date date = new Date(evento.getFecha_inicio().getTime());
+        date.setHours(evento.getHora().getHours());
+        date.setMinutes(evento.getHora().getMinutes());
+        return date;
+    }
+    
 
     public Map<String, String> getReq() {
         return req;
