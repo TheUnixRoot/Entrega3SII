@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,7 +29,7 @@ import org.primefaces.model.UploadedFile;
  * @author migue
  */
 @Named(value = "mod_eventoBean")
-@Dependent
+@RequestScoped
 public class Mod_eventoBean implements Serializable {
 
     @EJB

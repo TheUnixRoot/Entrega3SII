@@ -19,7 +19,8 @@
     <properties>
       <property name="javax.persistence.schema-generation.scripts.action" value="create"/>
       <property name="javax.persistence.schema-generation.scripts.create-target" value="schema.ddl"/>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/siidb?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" 
+                value="jdbc:mysql://localhost:3306/siidb?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="sii"/>
       <property name="javax.persistence.jdbc.password" value="sii2"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
