@@ -10,10 +10,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="Layout.xhtml">
         <ui:define name="pageName">
-            Ver notificaciones
+            Ver mensajes
         </ui:define>
         <ui:define name="navBarName">
-            <ui:param name="nombrePagina" value="Ver notificaciones" />
+            <ui:param name="nombrePagina" value="Ver mensajes" />
         </ui:define>
         <ui:define name="cuerpo">
             <c:if test="${controlAutorizacion.usuario != null}" >
@@ -21,7 +21,7 @@
                     <h:form>
                         <p:dataGrid emptyMessage="No tienes ningun mensaje todavía" columns="1" layout="grid" value="#{verMensajesBean.mensajes}" var="msg">
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="#{msg.enviadoPor}" />
+                                <p:outputLabel value="#{msg.enviadoPor.email}" />
                                 <p:outputLabel value="#{msg.asunto}" />
                                 <p:outputLabel value="#{msg.texto}" />
                             </p:panelGrid>

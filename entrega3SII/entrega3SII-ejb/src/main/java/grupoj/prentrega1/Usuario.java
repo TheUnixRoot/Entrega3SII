@@ -8,10 +8,13 @@ package grupoj.prentrega1;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,29 +71,29 @@ public class Usuario implements Serializable {
     private List<Evento> verBuscarEventos;
     
     // Relacion "Me_Interesa" de la entidad Usuario con la entidad Eventos
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "jnd_meInteresa",
             joinColumns = @JoinColumn(name = "usuario_fk"),
             inverseJoinColumns = @JoinColumn(name = "evento_fk"))
     private List<Evento> meInteresa;
 
     // Relacion "Recibir" de la entidad Usuario con la entidad Notificacion
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "jnd_notificaciones",
             joinColumns = @JoinColumn(name = "usuario_fk"),
             inverseJoinColumns = @JoinColumn(name = "notificacion_fk"))
     private List<Notificacion> notificaciones;
     
     // Relacion "Subir" de la entidad Usuario con la entidad Evento
-    @OneToMany(mappedBy = "subido_by")
+    @OneToMany(mappedBy = "subido_by", cascade=CascadeType.ALL)
     private List<Evento> subidas;
 
     // Relacion "Dejar" de la entidad Usuario con la entidad Valoracion_eve
-    @OneToMany(mappedBy = "realizado_por")
+    @OneToMany(mappedBy = "realizado_por", cascade=CascadeType.ALL)
     private List<Valoracion_eve> val_eve;
     
     // Relacion "dejar" de la entidad Usuario con la entidad Valoracion_lug
-    @OneToMany(mappedBy = "realizado_por")
+    @OneToMany(mappedBy = "realizado_por", cascade=CascadeType.ALL)
     private List<Valoracion_lug> val_lug;
     
     // Relacion "tiene" de la entidad Usuario con la entidad Formulario
@@ -98,7 +101,7 @@ public class Usuario implements Serializable {
     private Formulario form;
     
     // Relacion "enviar" de la entidad Usuario con la entidad Mensaje
-    @OneToMany(mappedBy = "enviadoPor")
+    @OneToMany(mappedBy = "enviadoPor", cascade=CascadeType.ALL)
     private List<Mensaje> msg_send;
 
     public void setGeolocalizacion(Geolocalizacion geolocalizacion) {

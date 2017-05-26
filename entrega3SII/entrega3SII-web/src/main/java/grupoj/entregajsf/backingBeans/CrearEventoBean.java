@@ -14,6 +14,7 @@ import grupoj.prentrega1.Usuario;
 import grupoj.prentrega1.Valoracion_eve;
 import java.util.ArrayList;
 import java.util.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Scanner;
 import javax.annotation.PostConstruct;
@@ -60,7 +61,12 @@ public class CrearEventoBean {
     @PostConstruct
     public void init() {
 
-        lugares = persistencia.getListaLugares();
+        lugares = new ArrayList<>();
+        for(Lugar e : persistencia.getListaLugares()) {
+            if(!e.isBorrado())
+                lugares.add(e);
+        }
+        
 //        eventos = persistencia.getListaEventos();
     }
 
@@ -246,14 +252,18 @@ public class CrearEventoBean {
             return null;
         }
         Evento e = new Evento();
-        fecha_inicio.setHours(hora.getHours());
-        fecha_inicio.setMinutes(hora.getMinutes());
+        //fecha_inicio.setHours(hora.getHours());
+        //fecha_inicio.setMinutes(hora.getMinutes());
 //        e.setId(System.currentTimeMillis());
+        
+        //System.out.println(fecha_inicio);
+
         e.setNombre(nombre);
         e.setPrecio(precio);
         e.setDonde_comprar(donde_comprar);
         e.setFecha_inicio(fecha_inicio);
         e.setFecha_fin(fecha_fin);
+        e.setHora(new Time(hora.getTime()));
         e.setDescripcion(descripcion);
         e.setOcurre_in(buscarLugar(ocurre_in));
         Lugar lugarEnCuestion = buscarLugar(ocurre_in);

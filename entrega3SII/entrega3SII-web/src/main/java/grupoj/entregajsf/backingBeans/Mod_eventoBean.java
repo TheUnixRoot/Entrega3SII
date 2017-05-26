@@ -9,12 +9,14 @@ import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -28,7 +30,7 @@ import org.primefaces.model.UploadedFile;
  * @author migue
  */
 @Named(value = "mod_eventoBean")
-@Dependent
+@RequestScoped
 public class Mod_eventoBean implements Serializable {
 
     @EJB
@@ -70,11 +72,8 @@ public class Mod_eventoBean implements Serializable {
         this.adv.getFecha_inicio().setMinutes(hora.getMinutes());
     }
 
-    public Date getHora() {
-        Date h = new Date();
-        h.setHours(adv.getFecha_inicio().getHours());
-        h.setMinutes(adv.getFecha_inicio().getMinutes());
-        return h;
+    public Time getHora() {
+        return adv.getHora();
     }
 
     @PostConstruct

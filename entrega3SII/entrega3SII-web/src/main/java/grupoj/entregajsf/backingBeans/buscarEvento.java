@@ -67,7 +67,6 @@ public class buscarEvento {
         precio1 = 0;
         precio2 = 0;
 
-        listaCoincidencias = new HashSet<>();
         listaEventos = persistencia.getListaEventos();
     }
 
@@ -143,29 +142,41 @@ public class buscarEvento {
      * @return Devuelve la pagina resultadoBuscarEvento.xhtml siempre
      */
     public String buscar() {
-        boolean tip = false,
-                lug = false,
-                f1 = false,
-                f2 = false,
-                p2 = false;
+        boolean tip = this.getSelectedTipoEvento() != null,
+                // hay tags seleccionados?
+                lug = this.getSelectedLugares() != null && getSelectedLugares().length > 0,
+                // hay ciudades seleccionadas?
+                f1 = fecha1 != null,
+                // hay fecha de comienzo fijada?
+                f2 = fecha2 != null,
+                // hay fecha de fin fijada?
+                p2 = precio2 != 0;
+        // hay un precio introducido?
 
-        if (this.getSelectedTipoEvento() != null) {
-            tip = true;
-        }
-        if (this.getSelectedLugares() != null
-                && getSelectedLugares().length > 0) {
-            lug = true;
-        }
-        if (fecha1 != null) {
-            f1 = true;
-        }
-        if (fecha2 != null) {
-            f2 = true;
-        }
-        if (precio2 != 0) {
-            p2 = true;
-        }
+//        if (this.getSelectedTipoEvento() != null) {
+//            tip = true;
+//        }
+//        if (this.getSelectedLugares() != null
+//                && getSelectedLugares().length > 0) {
+//            lug = true;
+//        }
+//        if (fecha1 != null) {
+//            f1 = true;
+//        }
+//        if (fecha2 != null) {
+//            f2 = true;
+//        }
+//        if (precio2 != 0) {
+//            p2 = true;
+//        }
+        Set<Evento> tipSet = null,
+                lugSet = null,
+                f1Set = null,
+                f2Set = null,
+                p2Set = null;
+        // Cojo los que estan taggeados por los tags seleccionados
         if (tip) {
+            tipSet = new HashSet<>();
             for (Evento e : listaEventos) {
                 if (e.getTagged_by() != null && !e.getTagged_by().isEmpty()) {
                     int i = 0;
@@ -175,7 +186,7 @@ public class buscarEvento {
                             if (t != null && t.getTexto() != null
                                     && t.getTexto().equalsIgnoreCase(selectedTipoEvento[i])) {
                                 coincide = true;
-                                this.listaCoincidencias.add(e);
+                                tipSet.add(e);
                                 //System.out.println(e.getNombre() + " coincide con " + selectedTipoEvento[i]);
                             }
                         }
@@ -185,6 +196,7 @@ public class buscarEvento {
             }
         }
         if (lug) {
+            lugSet = new HashSet<>();
             for (Evento e : listaEventos) {
                 int i = 0;
                 boolean coincide = false;
@@ -192,27 +204,51 @@ public class buscarEvento {
                     if (e.getOcurre_in().getGeolocalizacion().getCiudad()
                             .equalsIgnoreCase(selectedLugares[i])) {
                         coincide = true;
-                        this.listaCoincidencias.add(e);
+                        lugSet.add(e);
                     }
                     i++;
                 }
             }
         }
-        if (f1 && f2) {
+        if (f1) {
+            f1Set = new HashSet<>();
             for (Evento e : listaEventos) {
-                if ((e.getFecha_inicio().after(fecha1) && e.getFecha_inicio().before(fecha2))
-                        || (e.getFecha_inicio().before(fecha1) && e.getFecha_fin().after(fecha1))) {
-                    this.listaCoincidencias.add(e);
+                if (e.getFecha_inicio().before(fecha1) || e.getFecha_inicio().equals(fecha1)) {
+                    f1Set.add(e);
+                }
+            }
+        }
+        if (f2) {
+            f2Set = new HashSet<>();
+            for (Evento e : listaEventos) {
+                if (e.getFecha_fin().after(fecha2) || e.getFecha_fin().equals(fecha2)) {
+                    f2Set.add(e);
                 }
             }
         }
         if (p2) {
+            p2Set = new HashSet<>();
             for (Evento e : listaEventos) {
                 if ((e.getPrecio() >= precio1) && (e.getPrecio() <= precio2)) {
-                    listaCoincidencias.add(e);
+                    p2Set.add(e);
                 }
             }
         }
+        listaCoincidencias = new HashSet<>(persistencia.getListaEventos());
+
+        if (tipSet != null) {
+            listaCoincidencias.retainAll(tipSet);
+        }
+        if (lugSet != null) {
+            listaCoincidencias.retainAll(lugSet);
+        }
+        if (f1Set != null) {
+            listaCoincidencias.retainAll(f1Set);
+        }
+        if (lugSet != null) {
+            listaCoincidencias.retainAll(lugSet);
+        }
+
         List<Evento> l = new ArrayList<>();
         for (Evento e : listaCoincidencias) {
             if (!e.isBorrado() && e.isValidado()) {

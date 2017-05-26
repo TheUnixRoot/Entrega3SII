@@ -7,16 +7,17 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="Layout.xhtml">
+        <ui:define name="pageName">
+            Ver lugar
+        </ui:define>
         <ui:define name="navBarName">
-            <ui:param name="nombrePagina" value="Información del evento" />
+            <ui:param name="nombrePagina" value="Ver lugar" />
         </ui:define>
         <ui:define name="cuerpo">
             <c:if test="#{controlAutorizacion.periodista}" >
                 <section id="cuerpo">
                     <article id="">
                         <p:layout fullPage="false">
-                            <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false">
-                            </p:layoutUnit>
                             <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
                                 <p:panelGrid columns="1">
                                     <p:graphicImage width="150" value="#{mod_LugarBean.foto2}">

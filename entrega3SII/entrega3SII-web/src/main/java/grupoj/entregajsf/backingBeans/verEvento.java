@@ -15,14 +15,17 @@ import grupoj.prentrega1.Valoracion_eve;
 import grupoj.prentrega1.Valoracion_lug;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.Dependent;
+//import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -36,7 +39,7 @@ import org.primefaces.model.StreamedContent;
  * @author anaes
  */
 @Named(value = "verEvento")
-@Dependent
+@RequestScoped
 public class verEvento implements Serializable {
 
     @EJB
@@ -48,6 +51,7 @@ public class verEvento implements Serializable {
     private Usuario usu;
     private Map<String, String> req;
     private PdfCreator pdf;
+    private Date fecha_inicio;
 
     @PostConstruct
     public void init() {
@@ -170,6 +174,21 @@ public class verEvento implements Serializable {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
+    
+    public void setFecha_inicio(Date fechaI){
+        Date fecha = new Date(fechaI.getTime());
+        evento.setFecha_inicio(fecha);
+        Time hora = new Time(fechaI.getHours(),fechaI.getMinutes(),0);
+        evento.setHora(hora);
+    }
+    
+    public Date getFecha_inicio(){
+        Date date = new Date(evento.getFecha_inicio().getTime());
+        date.setHours(evento.getHora().getHours());
+        date.setMinutes(evento.getHora().getMinutes());
+        return date;
+    }
+    
 
     public Map<String, String> getReq() {
         return req;
@@ -202,7 +221,7 @@ public class verEvento implements Serializable {
                                         "Me interesa!",
                                         "Guardado con éxito!"));
                 usu.getMeInteresa().add(ev);
-                ev.getInteresados_at().add(usu);
+//                ev.getInteresados_at().add(usu);
             } else {
                 FacesContext.getCurrentInstance()
                         .addMessage("growlmsg",
@@ -210,11 +229,11 @@ public class verEvento implements Serializable {
                                         "Ya no me interesa",
                                         "Guardado con éxito"));
                 usu.getMeInteresa().remove(ev);
-                ev.getInteresados_at().remove(usu);
+//                ev.getInteresados_at().remove(usu);
             }
 //            try {
                 persistencia.setUsuario(usu);
-                persistencia.setEvento(ev);
+//                persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }
