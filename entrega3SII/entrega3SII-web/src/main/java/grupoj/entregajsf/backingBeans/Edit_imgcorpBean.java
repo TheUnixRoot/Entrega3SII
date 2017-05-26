@@ -52,14 +52,6 @@ public class Edit_imgcorpBean {
         this.adv.setId(id);
     }
 
-    /*public String getEmpresa() {
-        return this.adv.getEmpresa();
-    }
-
-    public void setEmpresa(String empresa) {
-        this.adv.setEmpresa(empresa);
-    }
-    */
     public Date getFecha_public() {
         return this.adv.getFecha_public();
     }
@@ -68,26 +60,6 @@ public class Edit_imgcorpBean {
         this.adv.setFecha_public(fecha_publicacion);
     }
 
-    /*public int getDias_contratados() {
-        return this.adv.getDias_contratados();
-    }
-
-    public void setDias_contratados(int dias_contratados) {
-        this.adv.setDias_contratados(dias_contratados);
-    }
-    
-    public boolean isLugar() {
-        if (this.adv.getLugar() == null) {
-            return false;
-        }
-        return this.adv.getLugar().equals("top");
-    }
-
-    public void setLugar(boolean lugar) {
-        String res = lugar ? "top" : "bot";
-        this.adv.setLugar(res);
-    }
-    */
     public UploadedFile getMultimedia() {
         return file;
     }
