@@ -6,12 +6,15 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entrega3ejb.interfaces.PersistenceMock;
+import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import org.primefaces.model.UploadedFile;
 
 /**
@@ -23,8 +26,10 @@ import org.primefaces.model.UploadedFile;
 public class Edit_imgcorpBean {
 
     
-        @EJB
+    @EJB
     private PersistenceMock persistencia;
+    @Inject
+    private ControlAutorizacion ca;
     private Anuncio adv;
     private UploadedFile file;
     
@@ -117,30 +122,13 @@ public class Edit_imgcorpBean {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
-//                    try {
-                        persistencia.setAnuncio(a);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    persistencia.setAnuncio(a);                 
                 }
             }
         }
-//        try {
-            persistencia.setAnuncio(adv);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-//        adv.setId(System.currentTimeMillis());
-//        lista.add(adv);
-//        try {
-//            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
-//            persistencia.setListaAnuncios(lista);
-//        } catch (InterruptedException ex) {
-//            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
-//        }
-//        
-        return "gestion_anuncios.xhtml";
+        
+        adv.setAdmin((Administrador)ca.getUsuario());
+        persistencia.setAnuncio(adv);    
+        return "gestion_anuncios.xhtml";  
     }
-
 }
