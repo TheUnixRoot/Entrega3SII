@@ -40,7 +40,7 @@ public class Anuncio implements Serializable {
     private Date fecha_public;
     @Column(nullable = false)
     private int dias_contratados;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition="longblob")
     private byte[] multimedia;
     private String lugar;
 
