@@ -85,7 +85,7 @@ public class Usuario implements Serializable {
     private List<Notificacion> notificaciones;
     
     // Relacion "Subir" de la entidad Usuario con la entidad Evento
-    @OneToMany(mappedBy = "subido_by",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "subido_by", cascade=CascadeType.ALL)
     private List<Evento> subidas;
 
     // Relacion "Dejar" de la entidad Usuario con la entidad Valoracion_eve

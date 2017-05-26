@@ -16,7 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+//import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -44,7 +44,7 @@ public class Formulario implements Serializable {
     private List<Evento> historialEventos;
     
     // Relacion "incluye" de la entidad Formulario con la entidad Tag
-    @ManyToMany(mappedBy = "form",fetch=FetchType.EAGER)
+    @ManyToMany(mappedBy = "form")
     private List<Tag> form_tags;
     
     // Relacion "sobre" de la entidad Formulario con la entidad Notificacion
