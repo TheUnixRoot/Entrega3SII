@@ -16,7 +16,8 @@ import javax.inject.Named;
 
 /**
  *
- * @author juanp
+ * @author juanp 
+ * Platano de canarias
  */
 @Named(value = "resultadoBean")
 @SessionScoped
