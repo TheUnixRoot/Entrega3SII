@@ -9,6 +9,7 @@ import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -71,7 +72,7 @@ public class Mod_eventoBean implements Serializable {
         this.adv.getFecha_inicio().setMinutes(hora.getMinutes());
     }
 
-    public Date getHora() {
+    public Time getHora() {
         return adv.getHora();
     }
 
