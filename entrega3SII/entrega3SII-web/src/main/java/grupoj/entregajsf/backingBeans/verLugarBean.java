@@ -6,8 +6,10 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entrega3ejb.interfaces.PersistenceMock;
+import grupoj.prentrega1.Lugar;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,22 +33,22 @@ public class verLugarBean implements Serializable {
     private PersistenceMock persistencia;
 
 //    No hace falta
-//    private List<Lugar> listaLugares;
+    private List<Lugar> listaLugares;
     @PostConstruct
     public void init() {
         // Se borra
-//        listaLugares = persistencia.getListaLugares();
+        listaLugares = persistencia.getListaLugares();
     }
 
 //    Se borran
-//    public List<Lugar> getListaLugares() {
-//        return listaLugares;
-//    }
+    public List<Lugar> getListaLugares() {
+        return listaLugares;
+    }
 //    Se borran (Quitando subcontrataciones)
-//    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
-//        //this.listaLugares = listaLugares;
-//        persistencia.setListaLugares(listaLugares);
-//    }
+    public void setListaLugares(List<Lugar> listaLugares) throws InterruptedException {
+        //this.listaLugares = listaLugares;
+        persistencia.setListaLugares(listaLugares);
+    }
     /**
      * Develve la imagen del lugar.
      *

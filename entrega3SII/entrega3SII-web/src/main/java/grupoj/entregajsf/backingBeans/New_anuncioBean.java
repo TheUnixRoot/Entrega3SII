@@ -6,6 +6,8 @@
 package grupoj.entregajsf.backingBeans;
 
 import grupoj.entrega3ejb.interfaces.PersistenceMock;
+import grupoj.entregajsf.controlSesion.ControlAutorizacion;
+import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 //import javax.inject.Inject;
 import javax.inject.Named;
 //import mockingBeans.PersistenceMock;
@@ -28,6 +31,8 @@ public class New_anuncioBean {
 
     @EJB
     private PersistenceMock persistencia;
+    @Inject
+    private ControlAutorizacion ca;
     private Anuncio adv;
     private UploadedFile file;
 
@@ -125,6 +130,7 @@ public class New_anuncioBean {
             }
         }
 //        try {
+            adv.setAdmin((Administrador)ca.getUsuario());
             persistencia.setAnuncio(adv);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);

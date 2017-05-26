@@ -45,24 +45,12 @@
                     <h:form>
                         <p:menu>
                             <p:submenu label="#{nombrePagina}" expanded="true">
+                                <p:menuitem value="Busqueda" 
+                                action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
                                 
                                 <p:menuitem value="Gestion de usuarios" 
                                 action="#{navigationBean.goTo('gestion_usuarios.xhtml')}" 
                                 rendered="${controlAutorizacion.administrador}"/>
-                                
-                                <p:menuitem value="Gestion de anuncios" 
-                                action="#{navigationBean.goTo('gestion_anuncios.xhtml')}" 
-                                rendered="${controlAutorizacion.administrador}"/>
-                                
-                                <p:menuitem value="Busqueda" 
-                                action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
-                                
-                                <p:menuitem value="Contactar con administrador" 
-                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"/>
-                                
-                                <p:menuitem value="Enviar notificaciones" 
-                                action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 
-                                rendered="${controlAutorizacion.periodista}"/>
                                 
                                 <p:menuitem value="Gestion de lugares" 
                                 action="#{navigationBean.goTo('gestion_lugar.xhtml')}" 
@@ -70,6 +58,18 @@
                                 
                                 <p:menuitem value="Gestion de eventos" 
                                 action="#{navigationBean.goTo('gestion_evento.xhtml')}" 
+                                rendered="${controlAutorizacion.periodista}"/>
+                                
+                                <p:menuitem value="Gestion de anuncios" 
+                                action="#{navigationBean.goTo('gestion_anuncios.xhtml')}" 
+                                rendered="${controlAutorizacion.administrador}"/>
+                                
+                                <p:menuitem value="Contactar con administrador" 
+                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"
+                                rendered="${controlAutorizacion.usuario != null}"/>
+                                
+                                <p:menuitem value="Enviar notificaciones" 
+                                action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 
                                 rendered="${controlAutorizacion.periodista}"/>
                                 
                                 <p:menuitem value="Nuevo evento" 
@@ -87,6 +87,7 @@
                                 <p:menuitem value="Ver notificaciones" 
                                 action="#{navigationBean.goTo('ver_noti.xhtml')}" 
                                 rendered="#{controlAutorizacion.usuario != null}" />      
+                                
                                 <p:menuitem value="Ver mensajes" 
                                 action="#{navigationBean.goTo('verMensajes.xhtml')}" 
                                 rendered="#{controlAutorizacion.administrador}" />      

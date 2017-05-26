@@ -24,8 +24,8 @@ import javax.inject.Inject;
 @Dependent
 public class verMensajesBean {
 
-    @Inject
-    private ControlAutorizacion controlAutorizacion;
+//    @Inject
+//    private ControlAutorizacion controlAutorizacion;
     @EJB
     private PersistenceMock persistencia;
 
@@ -36,22 +36,22 @@ public class verMensajesBean {
 //    public verMensajesBean() {
 //    }
 //    
-    
-    public ControlAutorizacion getControlAutorizacion() {
-        return controlAutorizacion;
-    }
-
-    public void setControlAutorizacion(ControlAutorizacion controlAutorizacion) {
-        this.controlAutorizacion = controlAutorizacion;
-    }
-
+//    
+//    public ControlAutorizacion getControlAutorizacion() {
+//        return controlAutorizacion;
+//    }
+//
+//    public void setControlAutorizacion(ControlAutorizacion controlAutorizacion) {
+//        this.controlAutorizacion = controlAutorizacion;
+//    }
+//
 
     public List<Mensaje> getMensajes() {
         
-        Administrador adm = persistencia.getAdministrador(controlAutorizacion.getUsuario().getId());
+//        Administrador adm = persistencia.getAdministrador(controlAutorizacion.getUsuario().getId());
         
-        List<Mensaje> list = adm.getRecibirMensaje();
-        System.out.println(list.get(0));
+        List<Mensaje> list = persistencia.getListaMensajes();
+//        System.out.println(list.get(0));
         return list;
     }
 

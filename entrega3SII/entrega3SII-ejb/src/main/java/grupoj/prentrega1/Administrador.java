@@ -6,8 +6,10 @@
 package grupoj.prentrega1;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -24,7 +26,7 @@ public class Administrador extends Periodista {
     private Long identificador;
 
     // Relacion "recibir" de la entidad Administrador con la entidad Mensaje
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)//(fetch=FetchType.EAGER)
     @JoinTable(name = "jnd_recibir_mensaje",
             joinColumns = @JoinColumn(name = "administrador_fk"),
             inverseJoinColumns = @JoinColumn(name = "mensaje_fk"))

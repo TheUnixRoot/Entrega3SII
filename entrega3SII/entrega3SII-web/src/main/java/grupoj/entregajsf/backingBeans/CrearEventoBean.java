@@ -61,7 +61,12 @@ public class CrearEventoBean {
     @PostConstruct
     public void init() {
 
-        lugares = persistencia.getListaLugares();
+        lugares = new ArrayList<>();
+        for(Lugar e : persistencia.getListaLugares()) {
+            if(!e.isBorrado())
+                lugares.add(e);
+        }
+        
 //        eventos = persistencia.getListaEventos();
     }
 
