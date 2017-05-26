@@ -7,27 +7,24 @@ package grupoj.entregajsf.backingBeans;
 
 import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.entregajsf.controlSesion.ControlAutorizacion;
-import grupoj.prentrega1.Evento;
-import grupoj.prentrega1.Formulario;
-import grupoj.prentrega1.Tag;
-import grupoj.prentrega1.Usuario;
+import grupoj.prentrega1.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.inject.Named;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-//import mockingBeans.PersistenceMock;
 
 /**
  *
- * @author JesusAlberto
+ * @author jesus
  */
-@ManagedBean
+@Named(value = "formularioGustosBean")
+@RequestScoped
 public class formularioGustosBean {
 
     //private PersistenceMock persistencia;
@@ -53,10 +50,24 @@ public class formularioGustosBean {
         Formulario f = this.user.getForm();
         if (f == null) {
             f = new Formulario();
-            f.setId(System.currentTimeMillis());
+            //f.setId(null);
             List<Evento> h = new ArrayList<>();
             f.setHistorialEventos(h);
             f.setUsuario(user);
+            
+            /*Notificacion notificacion = new Notificacion();
+      
+            notificacion.setContenido("Hay un evento proximo que te puede interesar");
+      
+            notificacion.setFecha(new Date());
+            
+            notificacion.setFormato("patata");
+            
+            persistencia.setNotificacion(notificacion);
+            
+            f.setSobre_by(notificacion);*/
+            
+            persistencia.setFormulario(f);
             this.user.setForm(f);
         }
         this.formulario = this.user.getForm();
@@ -64,22 +75,27 @@ public class formularioGustosBean {
         if (tags == null) {
             tags = new ArrayList<>();
             this.formulario.setForm_tags(tags);
+            //persistencia.setFormulario(f);
         }
 
 //        try {
 //            // Actualizar formulario y usuario
-            persistencia.setFormulario(this.formulario);
+           /* List l = persistencia.getListaFormularios();
+            l.add(this.formulario);
+            persistencia.setListaFormularios(l);*/
+           // persistencia.setFormulario(this.formulario);
             persistencia.setUsuario(this.user);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(formularioGustosBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
+    
         this.selectedGustos = new String[10];
         int i = 0;
         for (Tag g : tags) {
             this.selectedGustos[i] = g.getTexto();
             i++;
         }
+       
         gustos = new ArrayList<>();
         List<Tag> lgustos = persistencia.getListaTags();
         for (Tag g : lgustos) {
@@ -161,4 +177,5 @@ public class formularioGustosBean {
                 .addMessage("login:growlmensaje", new FacesMessage(FacesMessage.SEVERITY_INFO, "Datos enviados correctamente", "Datos enviados correctamente"));
         return null;
     }
+    
 }
