@@ -110,7 +110,7 @@ public class crearNotificacionBean {
        
        
        n.setFecha(new Date());
-       n.setFormato(evento.getNombre());
+       n.setEv(evento);
        List<Usuario> listaUsuarios =evento.getInteresados_at();
       n.setUsuarios(listaUsuarios);
        for (Usuario u : listaUsuarios){
