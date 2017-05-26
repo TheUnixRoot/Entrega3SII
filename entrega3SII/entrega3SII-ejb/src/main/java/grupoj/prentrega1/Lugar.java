@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,6 +33,7 @@ public class Lugar implements Serializable {
     private String nombre;
     @Column(nullable = false)
     private boolean borrado;
+    @Column(length = 500)
     private String descripcion;
     @Column(columnDefinition="longblob")
     private byte[] fotos;

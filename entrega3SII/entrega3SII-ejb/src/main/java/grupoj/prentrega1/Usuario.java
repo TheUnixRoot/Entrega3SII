@@ -9,10 +9,12 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -83,7 +85,7 @@ public class Usuario implements Serializable {
     private List<Notificacion> notificaciones;
     
     // Relacion "Subir" de la entidad Usuario con la entidad Evento
-    @OneToMany(mappedBy = "subido_by", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "subido_by",fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Evento> subidas;
 
     // Relacion "Dejar" de la entidad Usuario con la entidad Valoracion_eve
