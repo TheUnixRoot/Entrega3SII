@@ -123,11 +123,12 @@ public class configurarPerfil {
         usuario.setFechaNacimiento(fechaNacimiento);
         usuario.setMultimedia(foto);
          */
-        List<Usuario> listaUsuario = persistencia.getListaUsuarios();
+        /*List<Usuario> listaUsuario = persistencia.getListaUsuarios();
         listaUsuario.set(
                 listaUsuario.indexOf(usuario), usuario);
 //        try {
-            persistencia.setListaUsuarios(listaUsuario);
+            persistencia.setListaUsuarios(listaUsuario);*/
+            persistencia.setUsuario(usuario);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(configurarPerfil.class.getName()).log(Level.SEVERE, null, ex);
 //        }
