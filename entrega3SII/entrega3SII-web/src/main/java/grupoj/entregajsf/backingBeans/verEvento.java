@@ -24,7 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.Dependent;
+//import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -38,7 +39,7 @@ import org.primefaces.model.StreamedContent;
  * @author anaes
  */
 @Named(value = "verEvento")
-@Dependent
+@RequestScoped
 public class verEvento implements Serializable {
 
     @EJB
@@ -220,7 +221,7 @@ public class verEvento implements Serializable {
                                         "Me interesa!",
                                         "Guardado con éxito!"));
                 usu.getMeInteresa().add(ev);
-                ev.getInteresados_at().add(usu);
+//                ev.getInteresados_at().add(usu);
             } else {
                 FacesContext.getCurrentInstance()
                         .addMessage("growlmsg",
@@ -228,11 +229,11 @@ public class verEvento implements Serializable {
                                         "Ya no me interesa",
                                         "Guardado con éxito"));
                 usu.getMeInteresa().remove(ev);
-                ev.getInteresados_at().remove(usu);
+//                ev.getInteresados_at().remove(usu);
             }
 //            try {
                 persistencia.setUsuario(usu);
-                persistencia.setEvento(ev);
+//                persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }

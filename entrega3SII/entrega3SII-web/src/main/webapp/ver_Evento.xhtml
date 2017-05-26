@@ -39,7 +39,7 @@
                                 <p:outputLabel value="Donde comprar entradas" style="font-weight: bold" />
                                 <p:outputLabel value="#{verEvento.evento.donde_comprar}" style="font-size: large"/>
                                 <h:form>
-                                    <p:commandButton id="botonlike" value="Me interesa! #{verEvento.evento.interesados_at.size()}" 
+                                    <p:commandButton id="botonlike" value="Me interesa! ${verEvento.evento.interesados_at.size()}" 
                                                      action="#{verEvento.meInteresa()}" 
                                                      update="botonlike growlmsg">
                                         <f:param name="id" value="#{verEvento.evento.id}"/>
