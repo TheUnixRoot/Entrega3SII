@@ -11,11 +11,12 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 //import javax.inject.Inject;
@@ -30,7 +31,7 @@ import org.primefaces.model.UploadedFile;
  * @author juanp
  */
 @Named(value = "mod_anunciosBean")
-@Dependent
+@RequestScoped
 public class Mod_anunciosBean implements Serializable {
 
     @EJB
@@ -51,14 +52,14 @@ public class Mod_anunciosBean implements Serializable {
 //                    persistencia.getListaAnuncios()
 //                            .indexOf(adv));
     }
-
-    public PersistenceMock getPersistencia() {
-        return persistencia;
-    }
-
-    public void setPersistencia(PersistenceMock persistencia) {
-        this.persistencia = persistencia;
-    }
+//
+//    public PersistenceMock getPersistencia() {
+//        return persistencia;
+//    }
+//
+//    public void setPersistencia(PersistenceMock persistencia) {
+//        this.persistencia = persistencia;
+//    }
 
     public Anuncio getAdv() {
         return adv;
