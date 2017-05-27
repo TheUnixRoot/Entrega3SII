@@ -103,8 +103,8 @@ public class verEvento implements Serializable {
 
 //            try {
 //                // Actualizar cambios en usuario y eventos
-                persistencia.setUsuario(this.usu);
-                persistencia.setEvento(this.evento);
+            persistencia.setUsuario(this.usu);
+            persistencia.setEvento(this.evento);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }
@@ -177,21 +177,20 @@ public class verEvento implements Serializable {
     public void setUsu(Usuario usu) {
         this.usu = usu;
     }
-    
-    public void setFecha_inicio(Date fechaI){
+
+    public void setFecha_inicio(Date fechaI) {
         Date fecha = new Date(fechaI.getTime());
         evento.setFecha_inicio(fecha);
-        Time hora = new Time(fechaI.getHours(),fechaI.getMinutes(),0);
+        Time hora = new Time(fechaI.getHours(), fechaI.getMinutes(), 0);
         evento.setHora(hora);
     }
-    
-    public Date getFecha_inicio(){
+
+    public Date getFecha_inicio() {
         Date date = new Date(evento.getFecha_inicio().getTime());
         date.setHours(evento.getHora().getHours());
         date.setMinutes(evento.getHora().getMinutes());
         return date;
     }
-    
 
     public Map<String, String> getReq() {
         return req;
@@ -201,63 +200,68 @@ public class verEvento implements Serializable {
         this.req = req;
     }
 
-    
     public void facebook() throws IOException {
-        Faces.getExternalContext().redirect("https://www.facebook.com/sharer/sharer.php?u=" 
-                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+        Faces.getExternalContext().redirect("https://www.facebook.com/sharer/sharer.php?u="
+                + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
                 + "?id=" + this.evento.getId());
     }
-    
+
     public void twitter() throws IOException {
-        Faces.getExternalContext().redirect("https://twitter.com/intent/tweet?url=" 
-                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+        Faces.getExternalContext().redirect("https://twitter.com/intent/tweet?url="
+                + ((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
                 + "?id=" + this.evento.getId()
                 + "&text=Mirad%20este%20evento%21%20");
     }
-    
+
     public void meInteresa() {
-        usu = control.getUsuario();
-        if (usu == null) {
-            FacesContext.getCurrentInstance()
-                    .addMessage("growlmsg",
-                            new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                    "Inicia sesión",
-                                    "Para añadir me interesa, inicia sesión"));
-        } else {
-            Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            Evento ev = persistencia.getEvento(Long.parseLong(map.get("id")));
+        try {
+            usu = control.getUsuario();
+            if (usu == null) {
+                FacesContext.getCurrentInstance()
+                        .addMessage("growlmsg",
+                                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                        "Inicia sesión",
+                                        "Para añadir me interesa, inicia sesión"));
+            } else {
+                Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+                Evento ev = persistencia.getEvento(Long.parseLong(map.get("id")));
 //            ev = persistencia.getListaEventos()
 //                    .get(
 //                            persistencia.getListaEventos()
 //                                    .indexOf(ev)
 //                    );
-            if (!(usu.getMeInteresa().contains(ev)) && !(ev.getInteresados_at().contains(usu))) {
-                FacesContext.getCurrentInstance()
-                        .addMessage("growlmsg",
-                                new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                        "Me interesa!",
-                                        "Guardado con éxito!"));
-                usu.getMeInteresa().add(ev);
-                // Lo añadimos a ambos 
-                ev.getInteresados_at().add(usu);
+                if (!(usu.getMeInteresa().contains(ev)) && !(ev.getInteresados_at().contains(usu))) {
+                    FacesContext.getCurrentInstance()
+                            .addMessage("growlmsg",
+                                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                            "Me interesa!",
+                                            "Guardado con éxito!"));
+                    usu.getMeInteresa().add(ev);
+                    // Lo añadimos a ambos 
+                    ev.getInteresados_at().add(usu);
 //                ev.getInteresados_at().add(usu);
-            } else {
-                FacesContext.getCurrentInstance()
-                        .addMessage("growlmsg",
-                                new FacesMessage(FacesMessage.SEVERITY_INFO,
-                                        "Ya no me interesa",
-                                        "Guardado con éxito"));
-                usu.getMeInteresa().remove(ev);
-                // Borramos al usuario de los interesados en el evento
-                ev.getInteresados_at().remove(usu);
+                } else {
+                    FacesContext.getCurrentInstance()
+                            .addMessage("growlmsg",
+                                    new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                            "Ya no me interesa",
+                                            "Guardado con éxito"));
+                    usu.getMeInteresa().remove(ev);
+                    // Borramos al usuario de los interesados en el evento
+                    ev.getInteresados_at().remove(usu);
 //                ev.getInteresados_at().remove(usu);
-            }
+                }
 //            try {
                 persistencia.setUsuario(usu);
                 persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }
+            }
+        } catch (Exception e) {
+            usu = persistencia.getUsuario(this.control.getUsuario().getId());
+            usu.getMeInteresa().remove(this.evento);
+            persistencia.setUsuario(usu);
         }
     }
 

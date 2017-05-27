@@ -28,6 +28,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 /**
  *
@@ -72,7 +73,9 @@ public class Usuario implements Serializable {
     
     // Relacion "Me_Interesa" de la entidad Usuario con la entidad Eventos
     @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name = "jnd_meInteresa",
+    @JoinTable(uniqueConstraints={
+    @UniqueConstraint(columnNames = {"usuario_fk", "evento_fk"})},
+        name = "jnd_meInteresa",
             joinColumns = @JoinColumn(name = "usuario_fk"),
             inverseJoinColumns = @JoinColumn(name = "evento_fk"))
     private List<Evento> meInteresa;
