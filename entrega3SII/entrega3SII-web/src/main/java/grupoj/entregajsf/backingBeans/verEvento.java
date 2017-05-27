@@ -237,7 +237,7 @@ public class verEvento implements Serializable {
             }
 //            try {
                 persistencia.setUsuario(usu);
-//                persistencia.setEvento(ev);
+                persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }
