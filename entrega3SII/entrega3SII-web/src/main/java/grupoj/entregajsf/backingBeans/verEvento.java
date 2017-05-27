@@ -30,6 +30,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 //import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -244,6 +245,19 @@ public class verEvento implements Serializable {
         }
     }
 
+    public String getFacebook() {
+        return "https://www.facebook.com/sharer/sharer.php?u=" 
+                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+                + "?id=" + this.evento.getId();
+    }
+    
+    public String getTwitter() {
+        return "https://twitter.com/intent/tweet?url=" 
+                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+                + "?id=" + this.evento.getId()
+                + "&text=Mirad%20este%20evento%21%20";
+    }
+    
     public StreamedContent getFile() {
 //        Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 //        Evento evprima = new Evento();
