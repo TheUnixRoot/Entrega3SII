@@ -214,7 +214,7 @@ public class verEvento implements Serializable {
 //                            persistencia.getListaEventos()
 //                                    .indexOf(ev)
 //                    );
-            if (!usu.getMeInteresa().contains(ev)) {
+            if (!(usu.getMeInteresa().contains(ev)) && !(ev.getInteresados_at().contains(usu))) {
                 FacesContext.getCurrentInstance()
                         .addMessage("growlmsg",
                                 new FacesMessage(FacesMessage.SEVERITY_INFO,

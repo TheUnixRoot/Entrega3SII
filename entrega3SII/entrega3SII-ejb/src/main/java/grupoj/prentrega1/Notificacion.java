@@ -43,8 +43,8 @@ public class Notificacion implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     
-    @Column(nullable=false)
-    private String formato;
+    @ManyToOne
+    private Evento ev;
 
     @OneToMany(mappedBy = "sobre_by")
     private List<Formulario> sobre_src;
@@ -79,14 +79,12 @@ public class Notificacion implements Serializable {
         this.periodistas = periodistas;
     }
 
-    
-    
-    public String getFormato() {
-        return formato;
+    public Evento getEv() {
+        return ev;
     }
 
-    public void setFormato(String formato) {
-        this.formato = formato;
+    public void setEv(Evento ev) {
+        this.ev = ev;
     }
     
     public String getContenido() {
