@@ -236,6 +236,7 @@ public class verEvento implements Serializable {
 //                ev.getInteresados_at().remove(usu);
             }
 //            try {
+                System.out.println("Nº me interesa:" + evento.getInteresados_at().size());
                 persistencia.setUsuario(usu);
                 persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
