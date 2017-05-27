@@ -43,7 +43,7 @@ public class Notificacion implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     
-    @Column(nullable=false)
+    @ManyToOne
     private Evento ev;
 
     @OneToMany(mappedBy = "sobre_by")
