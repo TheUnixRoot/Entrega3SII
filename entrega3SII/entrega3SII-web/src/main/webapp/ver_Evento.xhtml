@@ -46,6 +46,17 @@
                                     </p:commandButton>
                                 </h:form>
                                 <h:form>
+                                    <p:commandLink value="Compartir en facebook!" action="${verEvento.facebook()}">
+                                        <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:commandLink>
+                                </h:form>
+                                <h:form>
+                                    <p:commandLink value="Compartir en twitter!" action="${verEvento.twitter()}">
+                                            <f:param name="id" value="#{verEvento.evento.id}"/>
+                                    </p:commandLink>
+                                </h:form>
+                                
+                                <h:form>
                                     <p:commandButton ajax="false" value="Generar pdf">
                                         <p:fileDownload  value="#{verEvento.file}" >
                                         </p:fileDownload>

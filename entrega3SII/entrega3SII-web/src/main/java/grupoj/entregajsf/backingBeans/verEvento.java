@@ -198,6 +198,20 @@ public class verEvento implements Serializable {
         this.req = req;
     }
 
+    
+    public void facebook() throws IOException {
+        Faces.getExternalContext().redirect("https://www.facebook.com/sharer/sharer.php?u=" 
+                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+                + "?id=" + this.evento.getId());
+    }
+    
+    public void twitter() throws IOException {
+        Faces.getExternalContext().redirect("https://twitter.com/intent/tweet?url=" 
+                + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
+                + "?id=" + this.evento.getId()
+                + "&text=Mirad%20este%20evento%21%20");
+    }
+    
     public void meInteresa() {
         usu = control.getUsuario();
         if (usu == null) {
