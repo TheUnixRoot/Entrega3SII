@@ -5,6 +5,7 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Formulario;
 import grupoj.prentrega1.Notificacion;
@@ -14,13 +15,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
-import mockingBeans.PersistenceMock;
+
 
 /**
  *
@@ -30,7 +31,7 @@ import mockingBeans.PersistenceMock;
 @RequestScoped
 public class crearNotificacionBean {
 
-    @Inject
+    @EJB
     private PersistenceMock persistencia;
     private List<Notificacion> listaNotificaciones;
     private Notificacion n;
@@ -45,7 +46,7 @@ public class crearNotificacionBean {
         id = Long.parseLong(req.get("id"));
         this.evento = persistencia.getEvento(id);
         n = new Notificacion();
-        listaNotificaciones = persistencia.getListaNotificaciones();
+       // listaNotificaciones = persistencia.getListaNotificaciones();
         
             
     }
@@ -106,13 +107,13 @@ public class crearNotificacionBean {
    public void crearNotificacion() throws InterruptedException{
        
        
-       n.setId(System.currentTimeMillis());
+       //n.setId(System.currentTimeMillis());
        
        
        n.setFecha(new Date());
-       n.setFormato(evento.getNombre());
+       n.setEv(evento);
        List<Usuario> listaUsuarios =evento.getInteresados_at();
-      n.setUsuarios(listaUsuarios);
+      //n.setUsuarios(listaUsuarios);
        for (Usuario u : listaUsuarios){
            
            List<Notificacion> lnoti = u.getNotificaciones();
@@ -126,7 +127,7 @@ public class crearNotificacionBean {
          }
        
        
-       persistencia.setNotificacion(n);
+       //persistencia.setNotificacion(n);
        
        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación enviada con éxito", "Notificación enviada con éxito");
             FacesContext.getCurrentInstance().addMessage("growlmensaje", fm);
