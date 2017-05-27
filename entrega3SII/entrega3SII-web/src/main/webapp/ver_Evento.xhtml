@@ -46,14 +46,14 @@
                                     </p:commandButton>
                                 </h:form>
                                 <h:form>
-                                    <p:commandLink value="Compartir en facebook!" action="${verEvento.facebook}">
+                                    <p:commandLink value="Compartir en facebook!" action="${verEvento.facebook()}">
                                         <f:param name="id" value="#{verEvento.evento.id}"/>
                                     </p:commandLink>
                                 </h:form>
                                 <h:form>
-                                    <p:link value="Compartir en twitter!" outcome="${verEvento.twitter}">
+                                    <p:commandLink value="Compartir en twitter!" action="${verEvento.twitter()}">
                                             <f:param name="id" value="#{verEvento.evento.id}"/>
-                                    </p:link>
+                                    </p:commandLink>
                                 </h:form>
                                 
                                 <h:form>

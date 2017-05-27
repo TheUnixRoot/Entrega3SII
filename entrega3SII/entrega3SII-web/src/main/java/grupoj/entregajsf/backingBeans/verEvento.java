@@ -14,6 +14,7 @@ import grupoj.prentrega1.Usuario;
 import grupoj.prentrega1.Valoracion_eve;
 import grupoj.prentrega1.Valoracion_lug;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
+import org.omnifaces.util.Faces;
 //import mockingBeans.PersistenceMock;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -245,17 +247,17 @@ public class verEvento implements Serializable {
         }
     }
 
-    public String getFacebook() {
-        return "https://www.facebook.com/sharer/sharer.php?u=" 
+    public void facebook() throws IOException {
+        Faces.getExternalContext().redirect("https://www.facebook.com/sharer/sharer.php?u=" 
                 + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
-                + "?id=" + this.evento.getId();
+                + "?id=" + this.evento.getId());
     }
     
-    public String getTwitter() {
-        return "https://twitter.com/intent/tweet?url=" 
+    public void twitter() throws IOException {
+        Faces.getExternalContext().redirect("https://twitter.com/intent/tweet?url=" 
                 + ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getRequestURL().toString()
                 + "?id=" + this.evento.getId()
-                + "&text=Mirad%20este%20evento%21%20";
+                + "&text=Mirad%20este%20evento%21%20");
     }
     
     public StreamedContent getFile() {
