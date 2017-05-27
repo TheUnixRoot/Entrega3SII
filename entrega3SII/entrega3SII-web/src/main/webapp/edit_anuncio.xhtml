@@ -20,7 +20,7 @@
                         <p:layoutUnit position="center" closable="false" collapsible="false" resizable="false">
                             <h:form id="formu" enctype="multipart/form-data">
                                 <p:panelGrid id="panel" columns="1" layout="grid" >
-                                    <p:growl id="messages" showDetail="true" />
+                                    <p:growl id="messages" showDetail="true" autoUpdate="true"/>
                                     <p:graphicImage width="150" value="#{mod_anunciosBean.multimedia}">
                                         <f:param name="id" value="#{mod_anunciosBean.adv.id}"/>
                                     </p:graphicImage>
@@ -48,12 +48,15 @@
                                         <f:param name="id" value="#{mod_anunciosBean.adv.id}"/>
                                     </p:selectBooleanButton>
 
-                                    <p:outputLabel value="Lugar" style="font-size: large" />
-                                    <p:selectBooleanButton onLabel="Arriba" offLabel="Abajo" value="#{mod_anunciosBean.lugar}" 
-                                                           onIcon="fa-arrow-up" offIcon="fa-arrow-left" 
-                                                           style="font-size: large" >
-                                        <f:param name="id" value="#{mod_anunciosBean.adv.id}"/>
-                                    </p:selectBooleanButton>
+                                    <c:if test="#{!mod_anunciosBean.adv.lugar.endsWith('self')}" >
+                                        <p:outputLabel value="Lugar" style="font-size: large" />
+                                        <p:selectBooleanButton onLabel="Arriba" offLabel="Abajo" value="#{mod_anunciosBean.lugar}" 
+                                                               onIcon="fa-arrow-up" offIcon="fa-arrow-left" 
+                                                               style="font-size: large" >
+                                            <f:param name="id" value="#{mod_anunciosBean.adv.id}"/>
+                                        </p:selectBooleanButton>
+                                    </c:if>
+                                    
                                     <p:commandButton value="Actualizar anuncio" action="#{mod_anunciosBean.grabar()}"
                                                      update="corporative topbanner bottombanner" ajax="false">
                                         <f:param name="id" value="#{mod_anunciosBean.adv.id}"/>

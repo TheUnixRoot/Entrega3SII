@@ -22,7 +22,6 @@
                             <h:form enctype="multipart/form-data">
 
                                 <p:panelGrid columns="1" layout="grid" >
-                                    <p:growl id="messages" showDetail="true" />
                                     <p:fileUpload skinSimple="true" mode="simple" value="#{crearLugarBean.file}"/>
                                 </p:panelGrid>
 
@@ -43,7 +42,7 @@
                                     <p:commandButton value="Enviar" ajax="false" action="#{crearLugarBean.insertarLugar()}"/>
 
                                 </p:panelGrid>
-                                <p:growl id="mensaje" autoUpdate="true"></p:growl> 
+                                <p:growl id="mensaje" showDetail="true" autoUpdate="true"></p:growl> 
                             </h:form>
                         </p:layoutUnit>
                     </p:layout>

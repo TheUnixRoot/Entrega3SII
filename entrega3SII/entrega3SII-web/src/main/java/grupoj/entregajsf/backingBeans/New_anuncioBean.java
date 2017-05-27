@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -93,7 +95,15 @@ public class New_anuncioBean {
 
     public void setMultimedia(UploadedFile multimedia) {
         if (multimedia.getContents() != null && multimedia.getContents().length > 0) {
-            adv.setMultimedia(multimedia.getContents());
+            if (multimedia.getContents().length < 4194300 && multimedia.getContents().length > 0) {
+                adv.setMultimedia(multimedia.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                adv.setMultimedia(new byte[1]);
+            }
         } else {
             adv.setMultimedia(new byte[1]);
         }
@@ -117,12 +127,16 @@ public class New_anuncioBean {
     public String grabar() {
         List<Anuncio> lista = persistencia.getListaAnuncios();
 
+        if (adv.getMultimedia().length < 3) {
+            return null;
+        }
+
         if (adv.isOnline()) {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
 //                    try {
-                        persistencia.setAnuncio(a);
+                    persistencia.setAnuncio(a);
 //                    } catch (InterruptedException ex) {
 //                        Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
@@ -130,8 +144,8 @@ public class New_anuncioBean {
             }
         }
 //        try {
-            adv.setAdmin((Administrador)ca.getUsuario());
-            persistencia.setAnuncio(adv);
+        adv.setAdmin((Administrador) ca.getUsuario());
+        persistencia.setAnuncio(adv);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }

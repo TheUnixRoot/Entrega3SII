@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //import mockingBeans.PersistenceMock;
@@ -36,6 +38,7 @@ public class SignupBean {
     @EJB
     private PersistenceMock persistencia;
     private Usuario usuario;
+    private byte[] flag;
 
     /**
      * Creates a new instance of SignupBean
@@ -110,7 +113,15 @@ public class SignupBean {
 
     public void setFoto(UploadedFile foto) {
         if (foto.getContents().length > 0) {
-            this.usuario.setMultimedia(foto.getContents());
+            if (foto.getContents().length < 4194300 && foto.getContents().length > 0) {
+                this.usuario.setMultimedia(foto.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                flag = foto.getContents();
+            }
         } else {
             this.usuario.setMultimedia(new byte[1]);
         }
@@ -127,6 +138,8 @@ public class SignupBean {
      * @return Vuelve a index.xhtml siempre
      */
     public String submit() {
+        if(flag != null)
+            return null;
 //        List<Usuario> list = persistencia.getListaUsuarios();
 //        usuario.setId(System.currentTimeMillis());
         usuario.setBorrado(false);
