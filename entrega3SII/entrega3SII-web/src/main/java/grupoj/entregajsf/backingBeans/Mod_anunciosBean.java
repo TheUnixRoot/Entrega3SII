@@ -104,8 +104,17 @@ public class Mod_anunciosBean implements Serializable {
      */
     public void setMultimedia2(UploadedFile multimedia) {
         if (multimedia.getContents().length > 0) {
-            adv.setMultimedia(multimedia.getContents());
-        }
+            if (multimedia.getContents().length < 4194300 && multimedia.getContents().length > 0) {
+                adv.setMultimedia(multimedia.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                adv.setMultimedia(new byte[1]);
+            }
+        } 
+
         this.file = multimedia;
     }
 
@@ -128,13 +137,15 @@ public class Mod_anunciosBean implements Serializable {
     public String grabar() {
 
         List<Anuncio> lista = persistencia.getListaAnuncios();
-
+        if (adv.getMultimedia().length < 3) {
+            return null;
+        }
         if (adv.isOnline()) {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
 //                    try {
-                        persistencia.setAnuncio(a);
+                    persistencia.setAnuncio(a);
 //                    } catch (InterruptedException ex) {
 //                        Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
@@ -162,7 +173,7 @@ public class Mod_anunciosBean implements Serializable {
 //            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
 //        }
 //        try {
-            persistencia.setAnuncio(adv);
+        persistencia.setAnuncio(adv);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(Mod_anunciosBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }

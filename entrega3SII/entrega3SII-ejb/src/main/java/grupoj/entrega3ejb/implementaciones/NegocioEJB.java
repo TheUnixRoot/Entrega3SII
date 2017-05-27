@@ -47,6 +47,7 @@ public class NegocioEJB implements Serializable, PersistenceMock {
         List<Administrador> listaAdm = em.createQuery("select u from Administrador u", Administrador.class).getResultList();
         if(listaAdm.isEmpty()) {
             Administrador adm = new Administrador();
+            adm.setMultimedia(new byte[1]);
             adm.setEmail("root@app.com");
             adm.setPassword("toor");
             adm.setIdentificador(0L);

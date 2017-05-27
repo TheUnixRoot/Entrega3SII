@@ -14,6 +14,8 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.primefaces.model.UploadedFile;
 
@@ -40,6 +42,8 @@ public class Edit_imgcorpBean {
         
          adv = new Anuncio();
          adv.setLugar("self");
+         adv.setEmpresa("Diario Sur");
+         adv.setDias_contratados(Integer.MAX_VALUE);
     }
     
  
@@ -66,7 +70,15 @@ public class Edit_imgcorpBean {
 
     public void setMultimedia(UploadedFile multimedia) {
         if (multimedia.getContents() != null && multimedia.getContents().length > 0) {
-            adv.setMultimedia(multimedia.getContents());
+            if (multimedia.getContents().length < 4194300 && multimedia.getContents().length > 0) {
+                adv.setMultimedia(multimedia.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                adv.setMultimedia(new byte[1]);
+            }
         } else {
             adv.setMultimedia(new byte[1]);
         }
@@ -89,7 +101,10 @@ public class Edit_imgcorpBean {
      */
     public String grabar() {
         List<Anuncio> lista = persistencia.getListaAnuncios();
-
+        
+        if(adv.getMultimedia().length < 3)
+            return null;
+        
         if (adv.isOnline()) {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
