@@ -80,7 +80,16 @@ public class CrearLugarBean {
 
     public void setFile(UploadedFile file) {
         if (file.getContents() != null && file.getContents().length > 0) {
-            l.setFotos(file.getContents());
+            if (file.getContents().length < 4194300) {
+                l.setFotos(file.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("mensaje",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                
+                l.setFotos(new byte[1]);
+            }
         } else {
             l.setFotos(new byte[1]);
         }
@@ -127,20 +136,24 @@ public class CrearLugarBean {
 
             return null;
         }
+        
+        if(file.getContents().length >= 4194300)
+            return null;
+        
 //        g.setId(System.currentTimeMillis()-4);
 //        l.setId(System.currentTimeMillis());
         l.setBorrado(false);
         l.setOcurren_at(new ArrayList<Evento>());
         l.setValoraciones_sobre(new ArrayList<Valoracion_lug>());
-        
+
         persistencia.setGeolocaclizacion(g);
-        
+
         l.setGeolocalizacion(g);
         g.setLugar(l);
         //        lugares.add(l);
 //        try {
-            persistencia.setLugar(l);
-            persistencia.setGeolocaclizacion(g);
+        persistencia.setLugar(l);
+        persistencia.setGeolocaclizacion(g);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(CrearLugarBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }

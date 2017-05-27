@@ -221,6 +221,8 @@ public class verEvento implements Serializable {
                                         "Me interesa!",
                                         "Guardado con éxito!"));
                 usu.getMeInteresa().add(ev);
+                // Lo añadimos a ambos 
+                ev.getInteresados_at().add(usu);
 //                ev.getInteresados_at().add(usu);
             } else {
                 FacesContext.getCurrentInstance()
@@ -229,11 +231,13 @@ public class verEvento implements Serializable {
                                         "Ya no me interesa",
                                         "Guardado con éxito"));
                 usu.getMeInteresa().remove(ev);
+                // Borramos al usuario de los interesados en el evento
+                ev.getInteresados_at().remove(usu);
 //                ev.getInteresados_at().remove(usu);
             }
 //            try {
                 persistencia.setUsuario(usu);
-//                persistencia.setEvento(ev);
+                persistencia.setEvento(ev);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }

@@ -11,39 +11,42 @@ import grupoj.prentrega1.Administrador;
 import grupoj.prentrega1.Anuncio;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-//import javax.inject.Inject;
-import javax.inject.Named;
-//import mockingBeans.PersistenceMock;
 import org.primefaces.model.UploadedFile;
 
 /**
  *
- * @author juanp
+ * @author jesus
  */
-@Named(value = "new_anuncioBean")
+@Named(value = "edit_imgcorpBean")
 @RequestScoped
-public class New_anuncioBean {
+public class Edit_imgcorpBean {
 
+    
     @EJB
     private PersistenceMock persistencia;
     @Inject
     private ControlAutorizacion ca;
     private Anuncio adv;
     private UploadedFile file;
-
+    
     /**
-     * Creates a new instance of New_anuncioBean
+     * Creates a new instance of Edit_imgcorpBean
      */
-    public New_anuncioBean() {
-        adv = new Anuncio();
+    public Edit_imgcorpBean() {
+        
+         adv = new Anuncio();
+         adv.setLugar("self");
+         adv.setEmpresa("Diario Sur");
+         adv.setDias_contratados(Integer.MAX_VALUE);
     }
+    
+ 
 
     public long getId() {
         return this.adv.getId();
@@ -53,40 +56,12 @@ public class New_anuncioBean {
         this.adv.setId(id);
     }
 
-    public String getEmpresa() {
-        return this.adv.getEmpresa();
-    }
-
-    public void setEmpresa(String empresa) {
-        this.adv.setEmpresa(empresa);
-    }
-
     public Date getFecha_public() {
         return this.adv.getFecha_public();
     }
 
     public void setFecha_public(Date fecha_publicacion) {
         this.adv.setFecha_public(fecha_publicacion);
-    }
-
-    public int getDias_contratados() {
-        return this.adv.getDias_contratados();
-    }
-
-    public void setDias_contratados(int dias_contratados) {
-        this.adv.setDias_contratados(dias_contratados);
-    }
-
-    public boolean isLugar() {
-        if (this.adv.getLugar() == null) {
-            return false;
-        }
-        return this.adv.getLugar().equals("top");
-    }
-
-    public void setLugar(boolean lugar) {
-        String res = lugar ? "top" : "bot";
-        this.adv.setLugar(res);
     }
 
     public UploadedFile getMultimedia() {
@@ -126,40 +101,21 @@ public class New_anuncioBean {
      */
     public String grabar() {
         List<Anuncio> lista = persistencia.getListaAnuncios();
-
-        if (adv.getMultimedia().length < 3) {
+        
+        if(adv.getMultimedia().length < 3)
             return null;
-        }
-
+        
         if (adv.isOnline()) {
             for (Anuncio a : lista) {
                 if (a.getLugar().equals(adv.getLugar())) {
                     a.setOnline(false);
-//                    try {
-                    persistencia.setAnuncio(a);
-//                    } catch (InterruptedException ex) {
-//                        Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
+                    persistencia.setAnuncio(a);                 
                 }
             }
         }
-//        try {
-        adv.setAdmin((Administrador) ca.getUsuario());
-        persistencia.setAnuncio(adv);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(New_anuncioBean.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-
-//        adv.setId(System.currentTimeMillis());
-//        lista.add(adv);
-//        try {
-//            System.out.println("Como esta la imagen??? " + adv.getMultimedia().length);
-//            persistencia.setListaAnuncios(lista);
-//        } catch (InterruptedException ex) {
-//            System.err.println("Error al crear anuncio en persistencia " + ex.getMessage());
-//        }
-//        
-        return "gestion_anuncios.xhtml";
+        
+        adv.setAdmin((Administrador)ca.getUsuario());
+        persistencia.setAnuncio(adv);    
+        return "gestion_anuncios.xhtml";  
     }
-
 }

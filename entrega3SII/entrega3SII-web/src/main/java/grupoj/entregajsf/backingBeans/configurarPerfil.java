@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //import mockingBeans.PersistenceMock;
@@ -40,7 +42,7 @@ public class configurarPerfil {
     private byte[] foto;
      */
     private Usuario usuario;
-
+    private byte[] flag;
     /*
     private String nombre;
     private String apellidos;
@@ -85,7 +87,15 @@ public class configurarPerfil {
     public void setFoto2(UploadedFile foto) {
         //System.out.println("jummm");
         if (foto.getContents().length > 0) {
-            this.usuario.setMultimedia(foto.getContents());
+            if (foto.getContents().length < 4194300 && foto.getContents().length > 0) {
+                this.usuario.setMultimedia(foto.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                flag = foto.getContents();
+            }
         }
     }
 
@@ -114,6 +124,8 @@ public class configurarPerfil {
     }
 
     public String configurar() {
+        if(flag != null)
+            return null;
         /*
         usuario.setNombre(nombre);
         usuario.setApellidos(apellidos);

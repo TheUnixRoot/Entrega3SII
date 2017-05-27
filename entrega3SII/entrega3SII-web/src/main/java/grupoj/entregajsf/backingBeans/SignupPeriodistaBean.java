@@ -19,6 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 //import mockingBeans.PersistenceMock;
@@ -37,6 +39,7 @@ public class SignupPeriodistaBean {
     @EJB
     private PersistenceMock persistencia;
     private Periodista periodista;
+    private byte[] flag;
 
     /**
      * Creates a new instance of SignupBean
@@ -111,7 +114,15 @@ public class SignupPeriodistaBean {
 
     public void setFoto(UploadedFile foto) {
         if (foto.getContents().length > 0) {
-            this.periodista.setMultimedia(foto.getContents());
+            if (foto.getContents().length < 4194300 && foto.getContents().length > 0) {
+                this.periodista.setMultimedia(foto.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                flag = foto.getContents();
+            }
         } else {
             this.periodista.setMultimedia(new byte[1]);
         }
@@ -144,6 +155,8 @@ public class SignupPeriodistaBean {
      * @return Vuelve a gestion_usuarios.xhtml siempre
      */
     public String submit() {
+        if(flag != null)
+            return null;
 //        List<Usuario> list = persistencia.getListaUsuarios();
 //        periodista.setId(System.currentTimeMillis());
         periodista.setBorrado(false);

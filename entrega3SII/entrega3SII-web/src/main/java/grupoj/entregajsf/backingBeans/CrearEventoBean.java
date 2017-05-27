@@ -57,16 +57,18 @@ public class CrearEventoBean {
     private UIComponent enviar;
     private byte[] foto;
     private String tags;
+    private byte[] flag;
 
     @PostConstruct
     public void init() {
 
         lugares = new ArrayList<>();
-        for(Lugar e : persistencia.getListaLugares()) {
-            if(!e.isBorrado())
+        for (Lugar e : persistencia.getListaLugares()) {
+            if (!e.isBorrado()) {
                 lugares.add(e);
+            }
         }
-        
+
 //        eventos = persistencia.getListaEventos();
     }
 
@@ -164,7 +166,15 @@ public class CrearEventoBean {
 
     public void setFile(UploadedFile file) {
         if (file.getContents().length > 0) {
-            this.foto = file.getContents();
+            if (file.getContents().length < 4194300 && file.getContents().length > 0) {
+                this.foto = file.getContents();
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                flag = file.getContents();
+            }
         } else {
             this.foto = new byte[1];
         }
@@ -251,13 +261,16 @@ public class CrearEventoBean {
 
             return null;
         }
+        
+        if(flag != null)
+            return null;
+        
         Evento e = new Evento();
         //fecha_inicio.setHours(hora.getHours());
         //fecha_inicio.setMinutes(hora.getMinutes());
 //        e.setId(System.currentTimeMillis());
-        
-        //System.out.println(fecha_inicio);
 
+        //System.out.println(fecha_inicio);
         e.setNombre(nombre);
         e.setPrecio(precio);
         e.setDonde_comprar(donde_comprar);
@@ -277,7 +290,7 @@ public class CrearEventoBean {
         List<Tag> tle = new ArrayList<>();
         List<Tag> tln = new ArrayList<>();
         List<Tag> tp = persistencia.getListaTags();
-        
+
         try (Scanner sc = new Scanner(tags)) {
             sc.useDelimiter("(,( )*)+");
             while (sc.hasNext()) {

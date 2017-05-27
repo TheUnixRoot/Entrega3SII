@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +36,7 @@ public class Mod_LugarBean implements Serializable {
     private PersistenceMock persistencia;
     private Lugar adv;
     private Long ids;
+    private byte[] img;
 
     public Long getIds() {
         return ids;
@@ -49,9 +51,17 @@ public class Mod_LugarBean implements Serializable {
     }
 
     public void setFoto(UploadedFile foto) {
-
         if (foto.getContents().length > 0) {
-            this.adv.setFotos(foto.getContents());
+
+            if (foto.getContents().length < 4194300 && foto.getContents().length > 0) {
+                this.adv.setFotos(foto.getContents());
+            } else {
+                FacesContext.getCurrentInstance()
+                        .addMessage("messages",
+                                new FacesMessage(FacesMessage.SEVERITY_ERROR, "Imagen demasiado grande",
+                                        "Debe pesar menos de 4Mb"));
+                img = foto.getContents();
+            }
         }
     }
 
@@ -103,11 +113,14 @@ public class Mod_LugarBean implements Serializable {
     public String modificarLugar() {
 
 //        try {
-            //        List<Lugar> lista =persistencia.getListaLugares();
+        //        List<Lugar> lista =persistencia.getListaLugares();
 //
 //        lista.set(persistencia.getListaLugares().indexOf(adv), adv);
 //
-            persistencia.setLugar(adv);
+        if (img != null) {
+            return null;
+        }
+        persistencia.setLugar(adv);
 //        } catch (InterruptedException ex) {
 //            Logger.getLogger(Mod_LugarBean.class.getName()).log(Level.SEVERE, null, ex);
 //        }
