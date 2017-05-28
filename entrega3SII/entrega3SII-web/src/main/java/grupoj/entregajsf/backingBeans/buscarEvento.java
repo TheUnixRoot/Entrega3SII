@@ -142,7 +142,7 @@ public class buscarEvento {
      * @return Devuelve la pagina resultadoBuscarEvento.xhtml siempre
      */
     public String buscar() {
-        boolean tip = this.getSelectedTipoEvento() != null,
+        boolean tip = this.getSelectedTipoEvento() != null && getSelectedTipoEvento().length > 0,
                 // hay tags seleccionados?
                 lug = this.getSelectedLugares() != null && getSelectedLugares().length > 0,
                 // hay ciudades seleccionadas?
@@ -176,6 +176,7 @@ public class buscarEvento {
                 p2Set = null;
         // Cojo los que estan taggeados por los tags seleccionados
         if (tip) {
+//            System.out.println("Tag!");
             tipSet = new HashSet<>();
             for (Evento e : listaEventos) {
                 if (e.getTagged_by() != null && !e.getTagged_by().isEmpty()) {
@@ -196,6 +197,7 @@ public class buscarEvento {
             }
         }
         if (lug) {
+//            System.out.println("Lug!");
             lugSet = new HashSet<>();
             for (Evento e : listaEventos) {
                 int i = 0;
@@ -211,6 +213,7 @@ public class buscarEvento {
             }
         }
         if (f1) {
+//            System.out.println("F1!");
             f1Set = new HashSet<>();
             for (Evento e : listaEventos) {
                 if (e.getFecha_inicio().before(fecha1) || e.getFecha_inicio().equals(fecha1)) {
@@ -219,6 +222,7 @@ public class buscarEvento {
             }
         }
         if (f2) {
+//            System.out.println("f2!");
             f2Set = new HashSet<>();
             for (Evento e : listaEventos) {
                 if (e.getFecha_fin().after(fecha2) || e.getFecha_fin().equals(fecha2)) {
@@ -227,6 +231,7 @@ public class buscarEvento {
             }
         }
         if (p2) {
+//            System.out.println("p2!");
             p2Set = new HashSet<>();
             for (Evento e : listaEventos) {
                 if ((e.getPrecio() >= precio1) && (e.getPrecio() <= precio2)) {
@@ -236,16 +241,16 @@ public class buscarEvento {
         }
         listaCoincidencias = new HashSet<>(persistencia.getListaEventos());
 
-        if (tipSet != null) {
+        if (tip) {
             listaCoincidencias.retainAll(tipSet);
         }
-        if (lugSet != null) {
+        if (lug) {
             listaCoincidencias.retainAll(lugSet);
         }
-        if (f1Set != null) {
+        if (f1) {
             listaCoincidencias.retainAll(f1Set);
         }
-        if (lugSet != null) {
+        if (lug) {
             listaCoincidencias.retainAll(lugSet);
         }
 
