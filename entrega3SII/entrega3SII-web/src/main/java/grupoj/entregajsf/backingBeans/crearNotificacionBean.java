@@ -5,10 +5,12 @@
  */
 package grupoj.entregajsf.backingBeans;
 
+import grupoj.emailSender.SendEmail;
 import grupoj.entrega3ejb.interfaces.PersistenceMock;
 import grupoj.prentrega1.Evento;
 import grupoj.prentrega1.Formulario;
 import grupoj.prentrega1.Notificacion;
+import grupoj.prentrega1.TipoNotificacion;
 import grupoj.prentrega1.Usuario;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +24,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
-
 /**
  *
  * @author Migue
@@ -35,20 +36,19 @@ public class crearNotificacionBean {
     private PersistenceMock persistencia;
     private List<Notificacion> listaNotificaciones;
     private Notificacion n;
-     private Evento evento;
+    private Evento evento;
     private Long id;
-     private Map<String, String> req;
-    
+    private Map<String, String> req;
+
     @PostConstruct
     public void init() {
-    
+
         req = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         id = Long.parseLong(req.get("id"));
         this.evento = persistencia.getEvento(id);
         n = new Notificacion();
-       // listaNotificaciones = persistencia.getListaNotificaciones();
-        
-            
+        // listaNotificaciones = persistencia.getListaNotificaciones();
+
     }
 
     public PersistenceMock getPersistencia() {
@@ -99,45 +99,48 @@ public class crearNotificacionBean {
         this.listaNotificaciones = listaNotificaciones;
     }
 
-    
-    
-    
-    
-    
-   public void crearNotificacion() throws InterruptedException{
-       
-       
-       //n.setId(System.currentTimeMillis());
-       
-       
-       n.setFecha(new Date());
-       n.setEv(evento);
-       List<Usuario> listaUsuarios =evento.getInteresados_at();
-      //n.setUsuarios(listaUsuarios);
-       for (Usuario u : listaUsuarios){
-           
-           List<Notificacion> lnoti = u.getNotificaciones();
-           if(lnoti == null) {
-               lnoti = new ArrayList<>();
-               u.setNotificaciones(lnoti);
-           }
-               lnoti.add(n);
-           persistencia.setUsuario(u);
-           
-         }
-       
-       
-       //persistencia.setNotificacion(n);
-       
-       FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación enviada con éxito", "Notificación enviada con éxito");
-            FacesContext.getCurrentInstance().addMessage("growlmensaje", fm);
-       
-       
-       
-       
-       
-       
-   }
+    public void crearNotificacion() throws InterruptedException {
+
+        //n.setId(System.currentTimeMillis());
+        n.setFecha(new Date());
+        n.setEv(evento);
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        List<Usuario> listaEmail = new ArrayList<>();
+        
+        for(Usuario u : evento.getInteresados_at()) {
+            if(u.getTipoNotificacionesRecibir().equals(TipoNotificacion.Ambos) 
+                    || u.getTipoNotificacionesRecibir().equals(TipoNotificacion.Cuenta)) {
+                listaUsuarios.add(u);
+            }
+            if(u.getTipoNotificacionesRecibir().equals(TipoNotificacion.Ambos)
+                    || u.getTipoNotificacionesRecibir().equals(TipoNotificacion.Email)) {
+                listaEmail.add(u);
+            }
+        }
+        
+        
+        //n.setUsuarios(listaUsuarios);
+        for (Usuario u : listaUsuarios) {
+
+            List<Notificacion> lnoti = u.getNotificaciones();
+            if (lnoti == null) {
+                lnoti = new ArrayList<>();
+                u.setNotificaciones(lnoti);
+            }
+            lnoti.add(n);
+            persistencia.setUsuario(u);
+
+        }
+        
+        // Sending emails
+        for(Usuario u : listaEmail) {
+            SendEmail.sendNotificacion(n, u);
+        }
+
+        //persistencia.setNotificacion(n);
+        FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_INFO, "Notificación enviada con éxito", "Notificación enviada con éxito");
+        FacesContext.getCurrentInstance().addMessage("growlmensaje", fm);
+
+    }
 
 }
-
