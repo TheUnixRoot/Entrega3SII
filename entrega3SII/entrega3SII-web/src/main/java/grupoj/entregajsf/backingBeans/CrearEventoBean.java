@@ -250,6 +250,7 @@ public class CrearEventoBean {
                 b = true;
                 lg = persistencia.getListaLugares().get(i);
             }
+            ++i;
         }
         return lg;
     }

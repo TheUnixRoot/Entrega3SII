@@ -259,6 +259,11 @@ public class verEvento implements Serializable {
 //            }
             }
         } catch (Exception e) {
+            FacesContext.getCurrentInstance()
+                    .addMessage("growlmsg",
+                            new FacesMessage(FacesMessage.SEVERITY_INFO,
+                                    "Ya no me interesa",
+                                    "Guardado con éxito"));
             usu = persistencia.getUsuario(this.control.getUsuario().getId());
             usu.getMeInteresa().remove(this.evento);
             persistencia.setUsuario(usu);
