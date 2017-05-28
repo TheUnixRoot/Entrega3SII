@@ -207,22 +207,22 @@ public class verEvento implements Serializable {
                                     "Inicia sesión",
                                     "Para añadir me interesa, inicia sesión"));
         } else {
-            Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-            Evento ev = persistencia.getEvento(Long.parseLong(map.get("id")));
+//            Map<String, String> map = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+//            Evento ev = persistencia.getEvento(Long.parseLong(map.get("id")));
 //            ev = persistencia.getListaEventos()
 //                    .get(
 //                            persistencia.getListaEventos()
 //                                    .indexOf(ev)
 //                    );
-            if (!(usu.getMeInteresa().contains(ev)) && !(ev.getInteresados_at().contains(usu))) {
+            if (!(usu.getMeInteresa().contains(evento)) && !(evento.getInteresados_at().contains(usu))) {
                 FacesContext.getCurrentInstance()
                         .addMessage("growlmsg",
                                 new FacesMessage(FacesMessage.SEVERITY_INFO,
                                         "Me interesa!",
                                         "Guardado con éxito!"));
-                usu.getMeInteresa().add(ev);
+                usu.getMeInteresa().add(evento);
                 // Lo añadimos a ambos 
-                ev.getInteresados_at().add(usu);
+                evento.getInteresados_at().add(usu);
 //                ev.getInteresados_at().add(usu);
             } else {
                 FacesContext.getCurrentInstance()
@@ -230,15 +230,15 @@ public class verEvento implements Serializable {
                                 new FacesMessage(FacesMessage.SEVERITY_INFO,
                                         "Ya no me interesa",
                                         "Guardado con éxito"));
-                usu.getMeInteresa().remove(ev);
+                usu.getMeInteresa().remove(evento);
                 // Borramos al usuario de los interesados en el evento
-                ev.getInteresados_at().remove(usu);
+                evento.getInteresados_at().remove(usu);
 //                ev.getInteresados_at().remove(usu);
             }
 //            try {
                 System.out.println("Nº me interesa:" + evento.getInteresados_at().size());
                 persistencia.setUsuario(usu);
-                persistencia.setEvento(ev);
+                persistencia.setEvento(evento);
 //            } catch (InterruptedException ex) {
 //                Logger.getLogger(verEvento.class.getName()).log(Level.SEVERE, null, ex);
 //            }
