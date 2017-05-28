@@ -64,7 +64,7 @@ public class SendEmail {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(toUser));
             message.setSubject("Nueva notificacion sobre " + eve + "!");
-            message.setText(contenido);
+            message.setText(contenido + "\nPara dejar de recibir notificaciones acerca de eventos que le han interesado, por favor, dirijase a su cuenta en el sitio y desactive manualmente el envio al email");
 
             Transport.send(message);
 
