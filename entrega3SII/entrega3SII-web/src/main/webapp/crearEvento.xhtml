@@ -53,8 +53,8 @@
                                 <p:outputLabel value="Descripcion:"/>
                                 <p:inputTextarea id="descripcion" value="#{crearEventoBean.descripcion}" required="true" requiredMessage="El campo no puede estar vacio"/>
 
-                                <p:outputLabel value="Tags:" />
-                                <p:inputText value="#{crearEventoBean.tags}" placeholder="Introduzca las etiquetas del evento separadas por , " />
+                                <p:outputLabel value="Tags (Introduzca las etiquetas del evento separadas por , ):" />
+                                <p:inputText value="#{crearEventoBean.tags}" />
 
                                 <p:outputLabel value="Fecha inicio:"/>
                                 <p:calendar  mode="inline" id="fechai" value="#{crearEventoBean.fecha_inicio}" required="true" requiredMessage="El campo no puede estar vacio"/>
