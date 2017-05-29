@@ -68,11 +68,10 @@ public class Mod_eventoBean implements Serializable {
     }
 
     public void setHora(Date hora) {
-        this.adv.getFecha_inicio().setHours(hora.getHours());
-        this.adv.getFecha_inicio().setMinutes(hora.getMinutes());
+        this.adv.setHora(new Time(hora.getTime()));
     }
 
-    public Time getHora() {
+    public Date getHora() {
         return adv.getHora();
     }
 
