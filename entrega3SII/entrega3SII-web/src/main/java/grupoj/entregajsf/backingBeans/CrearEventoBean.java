@@ -309,7 +309,7 @@ public class CrearEventoBean {
 //                    System.out.println(st);
                     Tag t = new Tag();
 //                    t.setId(System.currentTimeMillis());
-                    t.setTexto(st);
+                    t.setTexto(st.toUpperCase());
                     List<Evento> let = new ArrayList();
                     let.add(e);
                     t.setEventos(let);
