@@ -103,7 +103,7 @@ public class verEvento implements Serializable {
 
 //            try {
 //                // Actualizar cambios en usuario y eventos
-            persistencia.setFormulario(usu.getForm());
+//            persistencia.setFormulario(usu.getForm());
             persistencia.setUsuario(this.usu);
             persistencia.setEvento(this.evento);
 //            } catch (InterruptedException ex) {
