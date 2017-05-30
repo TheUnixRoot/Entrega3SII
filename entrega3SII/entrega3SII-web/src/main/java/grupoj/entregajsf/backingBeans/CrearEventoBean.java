@@ -263,6 +263,13 @@ public class CrearEventoBean {
             return null;
         }
         
+        if(fecha_inicio.after(fecha_fin)) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Fecha no válida", "La fecha de inicio debe ser anterior a la de finalizacion");
+            FacesContext.getCurrentInstance().addMessage("mensaje", fm);
+
+            return null;
+        }
+        
         if(flag != null)
             return null;
         

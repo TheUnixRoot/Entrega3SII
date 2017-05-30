@@ -89,7 +89,7 @@
                 </section>
             </c:if>
             <c:if test="#{!controlAutorizacion.administrador}" >
-                <p:outputLabel value="Cierre sesión para crear un nuevo usuario." />
+                <p:outputLabel value="403 Forbidden" />
             </c:if>
         </ui:define>
     </ui:composition>

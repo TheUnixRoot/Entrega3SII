@@ -63,6 +63,7 @@ public class NegocioEJB implements Serializable, PersistenceMock {
             adm.setTipoNotificacionesRecibir(TipoNotificacion.Ambos);
             adm.setBorrado(false);
             adm.setNombre("root");
+            adm.setTelefono("000000000");
             em.persist(adm);
         }
     }
