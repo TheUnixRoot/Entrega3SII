@@ -22,7 +22,7 @@
                                     
                                     <p:panelGrid columns="1" layout="grid" >
                                         <p:growl id="messages" showDetail="true" autoUpdate="true" />
-                                        <p:fileUpload skinSimple="true" mode="simple" value="#{new_anuncioBean.multimedia}"/>
+                                        <p:fileUpload skinSimple="true" mode="simple" required="true" requiredMessage="Debe subir una foto como anuncio" value="#{new_anuncioBean.multimedia}"/>
                                     </p:panelGrid>
                                     
                                     <p:panelGrid columns="1">

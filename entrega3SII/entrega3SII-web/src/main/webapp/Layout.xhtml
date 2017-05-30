@@ -15,10 +15,11 @@
     </h:head>
     <h:body id="body">
         <p:layout fullPage="true" id="layFull">
-            
-            <p:layoutUnit position="north" closable="false" collapsible="false" resizable="false" >
-            
-                <header>
+
+
+            <header>  
+                <p:layoutUnit style="overflow-y: hidden" position="north" closable="false" collapsible="false" resizable="false" >
+
                     <p:panelGrid columns="3" >
                         <p:graphicImage id="corporative" value="#{show_anunciosBean.self}" height="120"/>
                         <p:outputLabel value="dummyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" style="width: 1000em; visibility: hidden"/>
@@ -28,90 +29,90 @@
                         <p:menubar>
                             <p:menuitem value="Index" action="index.xhtml" />
                             <p:menuitem value="Login" action="login.xhtml" rendered="${controlAutorizacion.usuario == null}" />
-                            <p:menuitem value="Logout" action="login.xhtml" rendered="${controlAutorizacion.usuario != null}" />
-                            <p:menuitem value="SignUp" action="sign_up.xhtml"/>
+                            <p:menuitem value="Logout" action="#{controlAutorizacion.logout()}" rendered="${controlAutorizacion.usuario != null}" />
+                            <p:menuitem value="SignUp" action="sign_up.xhtml" rendered="${controlAutorizacion.usuario == null}" />
                         </p:menubar>
                     </h:form>
 
-                
-                </header>
-            
-            </p:layoutUnit>
+
+
+                </p:layoutUnit>
+            </header>
 
             <p:layoutUnit position="west" closable="false" collapsible="false" resizable="false" >
-            
+
                 <aside id="asideNavBar">
                     <ui:insert name="navBarName" />
                     <h:form>
                         <p:menu>
                             <p:submenu label="#{nombrePagina}" expanded="true">
                                 <p:menuitem value="Busqueda" 
-                                action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
-                                
+                                            action="#{navigationBean.goTo('buscarEvento.xhtml')}"/>
+
                                 <p:menuitem value="Gestion de usuarios" 
-                                action="#{navigationBean.goTo('gestion_usuarios.xhtml')}" 
-                                rendered="${controlAutorizacion.administrador}"/>
-                                
+                                            action="#{navigationBean.goTo('gestion_usuarios.xhtml')}" 
+                                            rendered="${controlAutorizacion.administrador}"/>
+
                                 <p:menuitem value="Gestion de lugares" 
-                                action="#{navigationBean.goTo('gestion_lugar.xhtml')}" 
-                                rendered="${controlAutorizacion.periodista}"/>
-                                
+                                            action="#{navigationBean.goTo('gestion_lugar.xhtml')}" 
+                                            rendered="${controlAutorizacion.periodista}"/>
+
                                 <p:menuitem value="Gestion de eventos" 
-                                action="#{navigationBean.goTo('gestion_evento.xhtml')}" 
-                                rendered="${controlAutorizacion.periodista}"/>
-                                
+                                            action="#{navigationBean.goTo('gestion_evento.xhtml')}" 
+                                            rendered="${controlAutorizacion.periodista}"/>
+
                                 <p:menuitem value="Gestion de anuncios" 
-                                action="#{navigationBean.goTo('gestion_anuncios.xhtml')}" 
-                                rendered="${controlAutorizacion.administrador}"/>
-                                
+                                            action="#{navigationBean.goTo('gestion_anuncios.xhtml')}" 
+                                            rendered="${controlAutorizacion.administrador}"/>
+
                                 <p:menuitem value="Contactar con administrador" 
-                                action="#{navigationBean.goTo('contactoAdmin.xhtml')}"
-                                rendered="${controlAutorizacion.usuario != null}"/>
-                                
+                                            action="#{navigationBean.goTo('contactoAdmin.xhtml')}"
+                                            rendered="${controlAutorizacion.usuario != null}"/>
+
                                 <p:menuitem value="Enviar notificaciones" 
-                                action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 
-                                rendered="${controlAutorizacion.periodista}"/>
-                                
+                                            action="#{navigationBean.goTo('enviarNotificaciones.xhtml')}" 
+                                            rendered="${controlAutorizacion.periodista}"/>
+
                                 <p:menuitem value="Nuevo evento" 
-                                action="#{navigationBean.goTo('crearEvento.xhtml')}" 
-                                rendered="${controlAutorizacion.usuario != null}"/>
-                                
+                                            action="#{navigationBean.goTo('crearEvento.xhtml')}" 
+                                            rendered="${controlAutorizacion.usuario != null}"/>
+
                                 <p:menuitem value="Configuración de perfil" 
-                                action="#{navigationBean.goTo('configurarPerfil.xhtml')}" 
-                                rendered="${controlAutorizacion.usuario != null}"/>
-                                
+                                            action="#{navigationBean.goTo('configurarPerfil.xhtml')}" 
+                                            rendered="${controlAutorizacion.usuario != null}"/>
+
                                 <p:menuitem value="Configuración de notificaciones" 
-                                action="#{navigationBean.goTo('configurarNotificaciones.xhtml')}" 
-                                rendered="${controlAutorizacion.usuario != null}"/>
-                                
+                                            action="#{navigationBean.goTo('configurarNotificaciones.xhtml')}" 
+                                            rendered="${controlAutorizacion.usuario != null}"/>
+
                                 <p:menuitem value="Ver notificaciones" 
-                                action="#{navigationBean.goTo('ver_noti.xhtml')}" 
-                                rendered="#{controlAutorizacion.usuario != null}" />      
-                                
+                                            action="#{navigationBean.goTo('ver_noti.xhtml')}" 
+                                            rendered="#{controlAutorizacion.usuario != null}" />      
+
                                 <p:menuitem value="Ver mensajes" 
-                                action="#{navigationBean.goTo('verMensajes.xhtml')}" 
-                                rendered="#{controlAutorizacion.administrador}" />      
+                                            action="#{navigationBean.goTo('verMensajes.xhtml')}" 
+                                            rendered="#{controlAutorizacion.administrador}" />      
                             </p:submenu>
                         </p:menu>
                     </h:form>
-                    
+
 
                     <div name="anuncioAbajoIzquierda" id="divAnunAI" style="margin-top: 10pt">
                         <p:graphicImage id="bottombanner" value="#{show_anunciosBean.bottom}" width="180"/>
                     </div>
                 </aside>
-            
+
             </p:layoutUnit>
             <p:layoutUnit position="center">
                 <ui:insert name="cuerpo">
                     Default section
                 </ui:insert>
-            
+
             </p:layoutUnit>
-            
+
             <footer id="footer">
-            <!-- esto es el pie de pagina -->
-        </footer>
+                <!-- esto es el pie de pagina -->
+            </footer>
         </p:layout>
     </h:body>
 </html>
