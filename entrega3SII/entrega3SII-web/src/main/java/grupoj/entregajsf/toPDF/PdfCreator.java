@@ -62,6 +62,9 @@ public class PdfCreator {
             img.scaleToFit(300, 300);
             title.add(img);
         }
+        Date d = new Date(ev.getFecha_inicio().getTime());
+        d.setHours(ev.getHora().getHours());
+        d.setMinutes(ev.getHora().getMinutes());
         evento.add(title);
         evento.add(new Paragraph(" "));
         evento.add(new Paragraph(ev.getDescripcion(), subFont));
@@ -72,7 +75,7 @@ public class PdfCreator {
         evento.add(new Paragraph(" "));
         evento.add(new Paragraph(ev.getDescripcion(), subFont));
         evento.add(new Paragraph(" "));
-        evento.add(new Paragraph("Fecha de inicio: " + new SimpleDateFormat("dd/MM/yyyy-HH:mm").format(ev.getFecha_inicio()), subFont));
+        evento.add(new Paragraph("Fecha de inicio: " + new SimpleDateFormat("dd/MM/yyyy-HH:mm").format(d), subFont));
         evento.add(new Paragraph("Fecha de fin:" + new SimpleDateFormat("dd/MM/yyyy-HH:mm").format(ev.getFecha_fin()), subFont));
         evento.add(new Paragraph(" "));
         evento.add(new Paragraph(ev.getDonde_comprar(), smallBold));

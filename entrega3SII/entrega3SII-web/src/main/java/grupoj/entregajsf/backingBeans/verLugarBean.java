@@ -14,6 +14,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -26,7 +27,7 @@ import org.primefaces.model.StreamedContent;
  * @author migue
  */
 @Named(value = "verLugarBean")
-@Dependent
+@RequestScoped
 public class verLugarBean implements Serializable {
 
     @EJB
