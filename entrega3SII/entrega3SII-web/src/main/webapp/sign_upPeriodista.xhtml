@@ -27,10 +27,14 @@
                                     <p:panelGrid columns="1" id="psign">
                                         
                                         <p:outputLabel value="Nombre" style="font-size: large" />
-                                        <p:inputText value="#{signupPeriodistaBean.nombre}" style="font-size: large" />
+                                        <p:inputText id="nombre" value="#{signupPeriodistaBean.nombre}" style="font-size: large" required="true" requiredMessage="Complete el campo Nombre del formulario" />
+                                        
+                                        <p:message for="nombre" id="nombremsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Apellidos" style="font-size: large" />
-                                        <p:inputText value="#{signupPeriodistaBean.apellidos}" style="font-size: large" />
+                                        <p:inputText id="apellidos" value="#{signupPeriodistaBean.apellidos}" style="font-size: large" required="true" requiredMessage="Complete el campo apellidos del formulario" />
+                                        
+                                        <p:message for="apellidos" id="apellidosmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Email*: " style="font-size: large" />
                                         <p:inputText id="email" value="#{signupPeriodistaBean.email}" style="font-size: large"
@@ -56,16 +60,24 @@
                                         <p:message for="confirmPassword" id="confirmpassmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Teléfono" style="font-size: large" />
-                                        <p:inputText value="#{signupPeriodistaBean.telefono}" style="font-size: large" />
+                                        <p:inputText id="telf" value="#{signupPeriodistaBean.telefono}" style="font-size: large" required="true" requiredMessage="introduzca un numero de telefono" />
+                                        
+                                        <p:message for="telf" id="telfmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Seccion" style="font-size: large" />
-                                        <p:inputText value="#{signupPeriodistaBean.seccion}" style="font-size: large" />
+                                        <p:inputText id="seccion" value="#{signupPeriodistaBean.seccion}" style="font-size: large" required="true" requiredMessage="complete el campo seccion del formulario" />
+                                        
+                                        <p:message for="seccion" id="seccionmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Puesto" style="font-size: large" />
-                                        <p:inputText value="#{signupPeriodistaBean.puesto}" style="font-size: large" />
+                                        <p:inputText id="puesto" value="#{signupPeriodistaBean.puesto}" style="font-size: large" required="true" requiredMessage="Complete el campo puesto del formulario." />
+                                        
+                                        <p:message for="puesto" id="puestomsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Fecha de nacimiento" style="font-size: large" />
-                                        <p:calendar pattern="dd-MM-yyyy" mask="true" value="#{signupPeriodistaBean.fechaNacimiento}" style="font-size: large"/>
+                                        <p:calendar id="fech" pattern="dd-MM-yyyy" mask="true" value="#{signupPeriodistaBean.fechaNacimiento}" style="font-size: large" required="true" requiredMessage="Complete el campo fecha del formulario"/>
+                                    
+                                        <p:message for="fech" id="fechmsg" style="font-size: large"/>
                                     </p:panelGrid>
                                     <p:commandButton ajax="false" action="#{signupPeriodistaBean.submit()}" value="Registrarse" update="psign" style="font-size: large"/>
                                 </h:form>

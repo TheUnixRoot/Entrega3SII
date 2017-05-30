@@ -56,10 +56,14 @@
                                         <p:message for="confirmPassword" id="confirmpassmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Teléfono" style="font-size: large" />
-                                        <p:inputText value="#{signupBean.telefono}" style="font-size: large" />
+                                        <p:inputText id="telf" value="#{signupBean.telefono}" style="font-size: large" required="true" requiredMessage="Introduzca un numero de telefono" />
+                                        
+                                        <p:message for="telf" id="telfmsg" style="font-size: large"/>
                                         
                                         <p:outputLabel value="Fecha de nacimiento" style="font-size: large" />
-                                        <p:calendar pattern="dd-MM-yyyy" mask="true" value="#{signupBean.fechaNacimiento}" style="font-size: large"/>
+                                        <p:calendar id="fech" pattern="dd-MM-yyyy" mask="true" value="#{signupBean.fechaNacimiento}" style="font-size: large" required="true" requiredMessage="Complete el campo fecha de nacimiento del formulario."/>
+                                    
+                                        <p:message for="fech" id="fechmsg" style="font-size: large"/>
                                     </p:panelGrid>
                                     <p:commandButton ajax="false" action="#{signupBean.submit()}" value="Registrarse" update="psign" style="font-size: large"/>
                                 </h:form>
