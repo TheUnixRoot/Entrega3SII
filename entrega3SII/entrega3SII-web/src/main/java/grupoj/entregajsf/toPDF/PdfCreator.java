@@ -56,7 +56,7 @@ public class PdfCreator {
         doc.addTitle(ev.getNombre());
         Paragraph evento = new Paragraph();
         Paragraph title = new Paragraph(ev.getNombre(), catFont);
-        title.add("  ");
+        title.add("\n\n  ");
         if(ev.getMultimedia() != null && ev.getMultimedia().length > 3) {
             Image img = Image.getInstance(ev.getMultimedia());
             img.scaleToFit(300, 300);

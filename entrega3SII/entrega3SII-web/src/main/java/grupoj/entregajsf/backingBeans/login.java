@@ -76,6 +76,12 @@ public class login {
         }
 
         if (encontrado) {
+            if (ctrl.getUsuario().isBorrado()) {
+                ctrl.logout();
+                FacesContext.getCurrentInstance()
+                        .addMessage("login:mensaje", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario borrado", "Cuenta borrada, no se puede acceder a ella"));
+                this.setContrasenia(null);
+            }
             return "index.xhtml";
         }
         FacesContext.getCurrentInstance()
