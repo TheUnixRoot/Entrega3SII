@@ -8,3 +8,10 @@ and open the template in the editor.
     Author     : juanp
 */
 
+#layTop{
+    overflow: hidden !important;
+    min-height: 150pt;
+}
+.layNorth {
+    overflow: hidden !important;
+}

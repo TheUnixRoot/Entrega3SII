@@ -16,14 +16,13 @@
     <h:body id="body">
         <p:layout fullPage="true" id="layFull">
 
-
             <header>  
-                <p:layoutUnit style="overflow-y: hidden" position="north" closable="false" collapsible="false" resizable="false" >
+                <p:layoutUnit id="layTop" styleClass="layNorth" position="north" closable="false" collapsible="false" resizable="false" >
 
                     <p:panelGrid columns="3" >
-                        <p:graphicImage id="corporative" value="#{show_anunciosBean.self}" height="120"/>
+                        <p:graphicImage id="corporative" value="#{show_anunciosBean.self}" height="120pt"/>
                         <p:outputLabel value="dummyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy" style="width: 1000em; visibility: hidden"/>
-                        <p:graphicImage id="topbanner" value="#{show_anunciosBean.top}" height="80"/>
+                        <p:graphicImage id="topbanner" value="#{show_anunciosBean.top}" height="80pt"/>
                     </p:panelGrid>
                     <h:form>
                         <p:menubar>
